@@ -1,0 +1,61 @@
+2023-11-17 06:13:14.815 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - Starting TemplateModelServiceImplTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 4080 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:13:14.817 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - No active profile set, falling back to 1 default profile: "default"
+2023-11-17 06:18:36.764 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - Starting TemplateModelServiceImplTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 12276 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:18:36.766 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - The following 1 profile is active: "dev"
+2023-11-17 06:24:48.338 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - Starting TemplateModelServiceImplTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 10644 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:24:48.340 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - The following 1 profile is active: "dev"
+2023-11-17 06:30:19.435 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - Starting TemplateModelServiceImplTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 4236 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:30:19.437 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - The following 1 profile is active: "dev"
+2023-11-17 06:32:23.149 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - Starting TemplateModelServiceImplTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 2152 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:32:23.150 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - The following 1 profile is active: "dev"
+2023-11-17 06:33:37.478 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - Starting TemplateModelServiceImplTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 8484 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:33:37.480 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - The following 1 profile is active: "dev"
+2023-11-17 06:34:43.530 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - Starting TemplateModelServiceImplTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 6724 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:34:43.532 [INFO ] com.sndshun.template.service.impl.TemplateModelServiceImplTest - The following 1 profile is active: "dev"
+2023-11-17 06:53:17.745 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Starting TemplateModelServiceTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 9736 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:53:17.747 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - The following 1 profile is active: "dev"
+2023-11-17 06:53:18.005 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Started TemplateModelServiceTest in 0.924 seconds (JVM running for 2.139)
+2023-11-17 06:56:41.158 [INFO ] com.sndshun.template.TestStr - Starting TestStr using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 12464 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:56:41.159 [INFO ] com.sndshun.template.TestStr - The following 1 profile is active: "dev"
+2023-11-17 06:57:20.685 [INFO ] com.sndshun.template.TestStr - Starting TestStr using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 12496 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:57:20.687 [INFO ] com.sndshun.template.TestStr - The following 1 profile is active: "dev"
+2023-11-17 06:59:02.449 [INFO ] com.sndshun.template.TestStr - Starting TestStr using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 17124 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 06:59:02.451 [INFO ] com.sndshun.template.TestStr - The following 1 profile is active: "dev"
+2023-11-17 06:59:04.178 [INFO ] org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2023-11-17 07:00:16.395 [INFO ] com.sndshun.template.TestStr - Starting TestStr using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 16468 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 07:00:16.397 [INFO ] com.sndshun.template.TestStr - The following 1 profile is active: "dev"
+2023-11-17 07:00:20.074 [INFO ] com.sndshun.template.TestStr - Started TestStr in 4.337 seconds (JVM running for 5.616)
+2023-11-17 07:00:20.714 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Starting...
+2023-11-17 07:00:21.491 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Start completed.
+2023-11-17 07:00:22.011 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown initiated...
+2023-11-17 07:00:22.015 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown completed.
+2023-11-17 07:13:22.192 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Starting TemplateModelServiceTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 11932 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 07:13:22.194 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - The following 1 profile is active: "dev"
+2023-11-17 07:13:25.729 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Started TemplateModelServiceTest in 4.171 seconds (JVM running for 5.417)
+2023-11-17 07:13:26.300 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Starting...
+2023-11-17 07:13:27.011 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Start completed.
+2023-11-17 07:13:27.427 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown initiated...
+2023-11-17 07:13:27.432 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown completed.
+2023-11-17 07:25:50.201 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Starting TemplateModelServiceTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 5656 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 07:25:50.203 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - The following 1 profile is active: "dev"
+2023-11-17 07:25:53.825 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Started TemplateModelServiceTest in 4.251 seconds (JVM running for 5.515)
+2023-11-17 07:25:54.505 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Starting...
+2023-11-17 07:25:55.216 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Start completed.
+2023-11-17 07:25:55.628 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown initiated...
+2023-11-17 07:25:55.633 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown completed.
+2023-11-17 07:28:16.332 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Starting TemplateModelServiceTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 7572 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 07:28:16.334 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - The following 1 profile is active: "dev"
+2023-11-17 07:28:20.008 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Started TemplateModelServiceTest in 4.332 seconds (JVM running for 5.645)
+2023-11-17 07:28:20.737 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Starting...
+2023-11-17 07:28:21.469 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Start completed.
+2023-11-17 07:28:21.889 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown initiated...
+2023-11-17 07:28:21.893 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown completed.
+2023-11-17 08:08:24.758 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Starting TemplateModelServiceTest using Java 1.8.0_332 on LAPTOP-0NUSURJV with PID 15632 (started by 33256 in D:\sndshun-framework\sndshun-framework-template)
+2023-11-17 08:08:24.761 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - The following 1 profile is active: "dev"
+2023-11-17 08:08:28.345 [INFO ] com.sndshun.template.service.TemplateModelServiceTest - Started TemplateModelServiceTest in 4.224 seconds (JVM running for 5.479)
+2023-11-17 08:08:28.928 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Starting...
+2023-11-17 08:08:29.672 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Start completed.
+2023-11-17 08:08:30.099 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown initiated...
+2023-11-17 08:08:30.104 [INFO ] com.zaxxer.hikari.HikariDataSource - framework-email - Shutdown completed.

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sndshun</groupId>
+    <artifactId>sndshun-framework</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>sndshun-framework-commons</module>
+        <module>sndshun-framework-email</module>
+        <module>sndshun-spring-boot-starter-test</module>
+        <module>sndshun-test</module>
+        <module>sndshun-framework-jpa-hibernate-starter</module>
+        <module>sndshun-framework-mybatis-plus-starter</module>
+        <module>sndshun-framework-template</module>
+        <module>sndshun-spring-boot-starter-caffeine</module>
+        <module>sndshun-framework-dict</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!--jar统一输出路径-->
+        <copy.jar.directory>D:\sndshun-framework\jar</copy.jar.directory>
+        <spring.boot.version>2.7.17</spring.boot.version>
+
+        <sndshun.framework.version>1.0-SNAPSHOT</sndshun.framework.version>
+
+        <mybatis.plus.version>3.5.4</mybatis.plus.version>
+        <mysql.connector.version>8.0.33</mysql.connector.version>
+        <jsoup.version>1.16.1</jsoup.version>
+
+        <lombok.version>1.18.28</lombok.version>
+        <hutool.version>5.8.21</hutool.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- 统一依赖管理 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>com.sndshun.test</groupId>
+                <artifactId>sndshun-spring-boot-starter-test</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.sndshun.jpa.hibernate</groupId>
+                <artifactId>sndshun-framework-jpa-hibernate-starter</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndshun.mybatis.plus</groupId>
+                <artifactId>sndshun-framework-mybatis-plus-starter</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+
+
+
+            <dependency>
+                <groupId>com.sndshun.commons</groupId>
+                <artifactId>sndshun-framework-commons</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndshun.template</groupId>
+                <artifactId>sndshun-framework-template</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connector.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jsoup</groupId>
+                <artifactId>jsoup</artifactId>
+                <version>${jsoup.version}</version>
+            </dependency>
+
+
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <!-- 环境标识，需要与配置文件的名称相对应 -->
+                <profiles.active>dev</profiles.active>
+                <nacos.server>127.0.0.1:8848</nacos.server>
+                <registry.address>127.0.0.1</registry.address>
+                <nacos.namespace>f1f389b1-7c46-4490-99ae-56de369dd342</nacos.namespace>
+                <nacos.discovery.group>DEFAULT_GROUP</nacos.discovery.group>
+                <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
+                <logstash.address>127.0.0.1:4560</logstash.address>
+            </properties>
+            <activation>
+                <!-- 默认环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <profiles.active>test</profiles.active>
+                <nacos.server>127.0.0.1:8848</nacos.server>
+                <registry.address>127.0.0.1</registry.address>
+                <nacos.namespace>9f86214e-daa2-44f8-af3e-7b6263601b19</nacos.namespace>
+                <nacos.discovery.group>DEFAULT_GROUP</nacos.discovery.group>
+                <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
+                <logstash.address>127.0.0.1:4560</logstash.address>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <properties>
+                <profiles.active>prod</profiles.active>
+                <nacos.server>127.0.0.1:8848</nacos.server>
+                <registry.address>127.0.0.1</registry.address>
+                <nacos.discovery.group>DEFAULT_GROUP</nacos.discovery.group>
+                <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
+                <logstash.address>127.0.0.1:4560</logstash.address>
+            </properties>
+        </profile>
+    </profiles>
+
+    <build>
+        <!--替换profiles环境变量值-->
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.source}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring.boot.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

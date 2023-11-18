@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sndshun.email.mapper.EmailModelMapper">
+
+    <resultMap type="com.sndshun.email.entity.EmailModelEntity" id="EmailModelMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="subject" column="subject" jdbcType="VARCHAR"/>
+        <result property="fromAddress" column="from_address" jdbcType="VARCHAR"/>
+        <result property="receiveAddress" column="receive_address" jdbcType="VARCHAR"/>
+        <result property="sendDate" column="send_date" jdbcType="TIMESTAMP"/>
+        <result property="seen" column="seen" jdbcType="INTEGER"/>
+        <result property="priority" column="priority" jdbcType="VARCHAR"/>
+        <result property="replySign" column="reply_sign" jdbcType="INTEGER"/>
+        <result property="size" column="size" jdbcType="INTEGER"/>
+        <result property="templateId" column="template_id" jdbcType="INTEGER"/>
+        <result property="templateData" column="template_data" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="messageNumber" column="message_number" jdbcType="INTEGER"/>
+        <result property="attachment" column="attachment" jdbcType="VARCHAR"/>
+        <result property="tenantId" column="tenant_id" jdbcType="VARCHAR"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="logicDelete" column="logic_delete" jdbcType="INTEGER"/>
+        <result property="createdBy" column="created_by" jdbcType="VARCHAR"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="updated_by" jdbcType="VARCHAR"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+        idsubjectfromreceive_addresssend_dateseenpriorityreply_signsizetemplate_idtemplate_datacontentmessage_numberattachmenttenant_idversionlogic_deletecreated_bycreated_timeupdated_byupdated_time    </sql>
+
+    <!--用于粘贴复制-->
+    <select id="test" resultMap="EmailModelMap">
+        select
+        idsubjectfromreceive_addresssend_dateseenpriorityreply_signsizetemplate_idtemplate_datacontentmessage_numberattachmenttenant_idversionlogic_deletecreated_bycreated_timeupdated_byupdated_time
+        from framework.email_model
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="subject != null and subject != ''">
+                and subject = #{subject}
+            </if>
+            <if test="fromAddress != null and fromAddress != ''">
+                and from_address = #{fromAddress}
+            </if>
+            <if test="receiveAddress != null and receiveAddress != ''">
+                and receive_address = #{receiveAddress}
+            </if>
+            <if test="sendDate != null">
+                and send_date = #{sendDate}
+            </if>
+            <if test="seen != null">
+                and seen = #{seen}
+            </if>
+            <if test="priority != null and priority != ''">
+                and priority = #{priority}
+            </if>
+            <if test="replySign != null">
+                and reply_sign = #{replySign}
+            </if>
+            <if test="size != null">
+                and size = #{size}
+            </if>
+            <if test="templateId != null">
+                and template_id = #{templateId}
+            </if>
+            <if test="templateData != null and templateData != ''">
+                and template_data = #{templateData}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="messageNumber != null">
+                and message_number = #{messageNumber}
+            </if>
+            <if test="attachment != null and attachment != ''">
+                and attachment = #{attachment}
+            </if>
+            <if test="tenantId != null and tenantId != ''">
+                and tenant_id = #{tenantId}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="logicDelete != null">
+                and logic_delete = #{logicDelete}
+            </if>
+            <if test="createdBy != null and createdBy != ''">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedBy != null and updatedBy != ''">
+                and updated_by = #{updatedBy}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

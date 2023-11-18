@@ -1,0 +1,61 @@
+{
+  "dicts": [
+    {
+      "defKey": "template_type",
+      "defName": "模板类型",
+      "sort": "",
+      "intro": "html/css/js/",
+      "id": "26C956FD-DC4C-4D7C-AECA-2F0747379A23",
+      "items": [
+        {
+          "defKey": "template_type",
+          "defName": "模板类型",
+          "sort": "",
+          "parentKey": "0",
+          "intro": "模板类型分类",
+          "enabled": true,
+          "attr1": "1100",
+          "attr2": "-1",
+          "attr3": "",
+          "id": "52344B69-32DA-46B9-ACD0-21D957900009"
+        },
+        {
+          "defKey": "template_html",
+          "defName": "html",
+          "sort": "",
+          "parentKey": "1100",
+          "intro": "",
+          "enabled": true,
+          "attr1": "1101",
+          "attr2": "1",
+          "attr3": "",
+          "id": "400AB10E-8C9D-4858-B4BB-83FBCC497030"
+        },
+        {
+          "defKey": "template_css",
+          "defName": "css",
+          "sort": "",
+          "parentKey": "1100",
+          "intro": "",
+          "enabled": true,
+          "attr1": "1102",
+          "attr2": "2",
+          "attr3": "",
+          "id": "24ADC475-054F-4774-BBFA-FC52C0A7FCA0"
+        },
+        {
+          "defKey": "template_js",
+          "defName": "js",
+          "sort": "",
+          "parentKey": "1100",
+          "intro": "",
+          "enabled": true,
+          "attr1": "1103",
+          "attr2": "3",
+          "attr3": "",
+          "id": "D0B0834F-CE6B-43DC-9610-47122857B121"
+        }
+      ]
+    }
+  ]
+}

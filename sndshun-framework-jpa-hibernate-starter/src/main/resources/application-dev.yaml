@@ -1,0 +1,29 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: sndshun-framework-email
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.3.101:3306/framework?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: root
+    hikari:
+      pool-name: framework-email
+      minimum-idle: 5
+      maximum-pool-size: 15
+      idle-timeout: 60000
+      max-lifetime: 600000
+      connection-timeout: 30000
+      auto-commit: true
+      connection-test-query: select 1
+  jpa:
+    #SpringBoot在请求开始前自动初始化一个数据库会话
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+      naming:
+        #使用自定义命名风格
+        physical-strategy: com.sndshun.jpa.hibernate.JpaNamingStrategyStandardImpl
+    show-sql: true

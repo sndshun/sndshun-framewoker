@@ -1,0 +1,364 @@
+{
+  "profile": {
+    "default": {
+      "entityInitFields": [
+        {
+          "defKey": "tenant_id",
+          "defName": "租户号",
+          "comment": "",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "assign_id",
+          "refDict": "",
+          "uiHint": "",
+          "id": "ADB3AD14-6603-43E2-8261-114E32442B5B"
+        },
+        {
+          "defKey": "version",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "0",
+          "hideInGraph": false,
+          "refDict": "",
+          "uiHint": "",
+          "id": "92BF430E-01FA-4AEF-944F-25A142632654"
+        },
+        {
+          "defKey": "logic_delete",
+          "defName": "逻辑删除",
+          "comment": "0：正常 1：删除",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "0",
+          "hideInGraph": false,
+          "refDict": "",
+          "extProps": {},
+          "domain": "YesNo",
+          "id": "00B7C93F-3E69-4EA5-A910-948250B16CAD",
+          "uiHint": ""
+        },
+        {
+          "defKey": "created_by",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "assign_id",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "uiHint": "",
+          "id": "C8BE2C7A-8251-4ADD-BB4F-411C5754DA62"
+        },
+        {
+          "defKey": "created_time",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "current_timestamp",
+          "hideInGraph": false,
+          "refDict": "",
+          "uiHint": "",
+          "id": "4E471FD6-3E73-4A90-B660-51598A482409"
+        },
+        {
+          "defKey": "updated_by",
+          "defName": "最后更新人",
+          "comment": "",
+          "domain": "assign_id",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "refDict": "",
+          "uiHint": "",
+          "id": "0DC24AA9-4CD0-45D8-95CF-FA546BE343AB"
+        },
+        {
+          "defKey": "updated_time",
+          "defName": "最后更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "current_timestamp on update current_timestamp",
+          "hideInGraph": false,
+          "refDict": "",
+          "uiHint": "",
+          "id": "09F64AC4-4DEE-428F-AF64-4C103884E1AC"
+        }
+      ],
+      "entityInitProperties": {
+        "partitioned by": "(date string)",
+        "row format delimited": "",
+        "fields terminated by ','": "",
+        "collection items terminated by '-'": "",
+        "map keys terminated by ':'": "",
+        "store as textfile;": ""
+      }
+    },
+    "sql": {
+      "delimiter": ""
+    },
+    "generatorDoc": {
+      "docTemplate": ""
+    },
+    "relationFieldSize": "15",
+    "uiHint": [
+      {
+        "defKey": "Input",
+        "defName": "普通输入框",
+        "id": "642D2E0A-8846-4549-BE56-8C0473F26EDE"
+      },
+      {
+        "defKey": "Select",
+        "defName": "下拉输入框",
+        "id": "FB111359-2B73-4443-926C-08A98E446448"
+      },
+      {
+        "defKey": "CheckBox",
+        "defName": "复选框",
+        "id": "0CB8A6C9-1115-4FC0-B51E-5C028065082F"
+      },
+      {
+        "defKey": "RadioBox",
+        "defName": "单选框",
+        "id": "5C04987A-260F-4B7C-A5D5-22A181AAE9CA"
+      },
+      {
+        "defKey": "Double",
+        "defName": "小数输入",
+        "id": "8D5BAFE4-E15C-4707-A047-8EE59C58E70F"
+      },
+      {
+        "defKey": "Integer",
+        "defName": "整数输入",
+        "id": "9999AF2A-A44E-415C-A2DC-D7C613BD0073"
+      },
+      {
+        "defKey": "Money",
+        "defName": "金额输入",
+        "id": "2B0C3D0C-7BAF-4B36-81AD-9362B5E5DC2E"
+      },
+      {
+        "defKey": "Date",
+        "defName": "日期输入",
+        "id": "E4D94E14-F695-487F-AFC2-4D888009B7DA"
+      },
+      {
+        "defKey": "DataYearMonth",
+        "defName": "年月输入",
+        "id": "936927E3-DD2D-4096-87FD-074CDE278D59"
+      },
+      {
+        "defKey": "Text",
+        "defName": "长文本输入",
+        "id": "D89DD4F1-ADAC-4469-BF8D-B3FF41AE7963"
+      },
+      {
+        "defKey": "RichText",
+        "defName": "富文本输入",
+        "id": "C134EB1F-4CFF-49E0-882F-2C6FB275CB20"
+      }
+    ],
+    "headers": [
+      {
+        "refKey": "defKey",
+        "hideInGraph": false,
+        "value": "字段代码",
+        "freeze": false
+      },
+      {
+        "refKey": "defName",
+        "hideInGraph": false,
+        "value": "显示名称",
+        "freeze": false
+      },
+      {
+        "refKey": "primaryKey",
+        "hideInGraph": false,
+        "value": "主键",
+        "freeze": false
+      },
+      {
+        "refKey": "autoIncrement",
+        "hideInGraph": true,
+        "value": "自增",
+        "freeze": false
+      },
+      {
+        "refKey": "notNull",
+        "hideInGraph": true,
+        "value": "不为空",
+        "freeze": false
+      },
+      {
+        "refKey": "domain",
+        "hideInGraph": true,
+        "value": "数据域",
+        "freeze": false
+      },
+      {
+        "refKey": "defaultValue",
+        "hideInGraph": true,
+        "value": "默认值",
+        "freeze": false
+      },
+      {
+        "refKey": "comment",
+        "hideInGraph": true,
+        "value": "说明",
+        "freeze": false
+      },
+      {
+        "refKey": "type",
+        "hideInGraph": false,
+        "value": "数据类型",
+        "freeze": false
+      },
+      {
+        "refKey": "len",
+        "hideInGraph": false,
+        "value": "长度",
+        "freeze": false
+      },
+      {
+        "refKey": "scale",
+        "hideInGraph": false,
+        "value": "小数位数",
+        "freeze": false
+      },
+      {
+        "refKey": "refDict",
+        "hideInGraph": true,
+        "value": "数据字典",
+        "freeze": false
+      },
+      {
+        "refKey": "isStandard",
+        "hideInGraph": false,
+        "value": "标准字段",
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "uiHint",
+        "hideInGraph": true,
+        "value": "UI建议",
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "extProps",
+        "hideInGraph": true,
+        "value": "拓展属性",
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr1",
+        "value": "属性1",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr2",
+        "value": "属性2",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr3",
+        "value": "属性3",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr4",
+        "value": "属性4",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr5",
+        "value": "属性5",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr6",
+        "value": "属性6",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr7",
+        "value": "属性7",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr8",
+        "value": "属性8",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      },
+      {
+        "refKey": "attr9",
+        "value": "属性9",
+        "hideInGraph": true,
+        "enable": false,
+        "freeze": false
+      }
+    ],
+    "DDLToggleCase": "L"
+  },
+  "dictSQLTemplate": {
+    "type": "dbDDL",
+    "applyFor": "dictSQLTemplate",
+    "content": "{{~it.dict.items:item:i}}\nINSERT INTO dict(id,parent_id,code,dict_key,dict_value,sort,remark) VALUES({{=item.attr1}},{{=item.parentKey}},'{{=item.defKey}}','{{=item.attr2}}','{{=item.defName}}',{{=i+1}},'{{=item.intro}}');\n{{~}}"
+  }
+}
