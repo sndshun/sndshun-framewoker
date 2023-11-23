@@ -18,6 +18,7 @@
         <module>sndshun-framework-template</module>
         <module>sndshun-spring-boot-starter-caffeine</module>
         <module>sndshun-framework-dict</module>
+        <module>sndshun-spring-boot-starter-web</module>
     </modules>
 
     <properties>
@@ -53,6 +54,16 @@
             <dependency>
                 <groupId>com.sndshun.test</groupId>
                 <artifactId>sndshun-spring-boot-starter-test</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndshun.web</groupId>
+                <artifactId>sndshun-spring-boot-starter-web</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndshun.caffeine</groupId>
+                <artifactId>sndshun-spring-boot-starter-caffeine</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
 

@@ -11,4 +11,12 @@ import com.sndshun.dict.entity.DictEntity;
  */
 public interface DictService extends IService<DictEntity> {
 
+    /**
+     * @param id 编号
+     * @return {@link DictEntity }
+     * @author sndshun
+     * @date 2023/11/24 12:26:56
+     */
+    DictEntity getByIdCache(Integer id);
+
 }

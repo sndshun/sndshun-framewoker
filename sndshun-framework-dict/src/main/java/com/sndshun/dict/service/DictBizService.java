@@ -11,4 +11,5 @@ import com.sndshun.dict.entity.DictBizEntity;
  */
 public interface DictBizService extends IService<DictBizEntity> {
 
+
 }
