@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @Author sndshun
  * @Date 2023/11/17 0:11
  * @Version 1.0
- * @Description: TODO
+ * @Description: todo 整体待修改
  */
 @SpringBootTest
 class ToEmailTest {

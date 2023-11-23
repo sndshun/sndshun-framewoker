@@ -19,6 +19,17 @@
         <module>sndshun-spring-boot-starter-caffeine</module>
         <module>sndshun-framework-dict</module>
         <module>sndshun-spring-boot-starter-web</module>
+        <module>sndshun-spring-boot-starter-redis</module>
+        <module>sndshun-framework-rbac0</module>
+        <module>sndshun-framework-rbac1</module>
+        <module>sndshun-framework-abac</module>
+        <module>sndshun-framework-acl</module>
+        <module>sndshun-framework-rbac2</module>
+        <module>sndshun-framework-rbac3</module>
+        <module>sndshun-framewrok-blog</module>
+        <module>sndshun-framework-bbc</module>
+        <module>sndshun-framewoker-cms</module>
+        <module>sndshun-framework-im</module>
     </modules>
 
     <properties>
