@@ -3,6 +3,7 @@ package com.sndshun.caffeine;
 
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -26,6 +27,7 @@ public class CaffeineConfig {
      *
      * @return 缓存管理器
      */
+    @ConditionalOnProperty(prefix = "system",name = "cache",havingValue = "caffeine")
     @Bean("caffeineCacheManager")
     public CacheManager cacheManager() {
         CaffeineCacheManager cacheManager = new CaffeineCacheManager();

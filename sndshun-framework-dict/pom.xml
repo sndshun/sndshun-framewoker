@@ -20,12 +20,12 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.sndshun.web</groupId>
+            <groupId>com.sndshun</groupId>
             <artifactId>sndshun-spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sndshun.caffeine</groupId>
-            <artifactId>sndshun-spring-boot-starter-caffeine</artifactId>
+            <groupId>com.sndshun</groupId>
+            <artifactId>sndshun-frameworker-doublecache</artifactId>
         </dependency>
     </dependencies>
 

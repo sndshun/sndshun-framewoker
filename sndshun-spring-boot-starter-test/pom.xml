@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.sndshun.test</groupId>
+    <groupId>com.sndshun</groupId>
     <artifactId>sndshun-spring-boot-starter-test</artifactId>
 
     <properties>

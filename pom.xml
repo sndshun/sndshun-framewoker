@@ -30,6 +30,7 @@
         <module>sndshun-framework-bbc</module>
         <module>sndshun-framewoker-cms</module>
         <module>sndshun-framework-im</module>
+        <module>sndshun-frameworker-doublecache</module>
     </modules>
 
     <properties>
@@ -63,28 +64,39 @@
 
 
             <dependency>
-                <groupId>com.sndshun.test</groupId>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-spring-boot-starter-test</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.sndshun.web</groupId>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-spring-boot-starter-web</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.sndshun.caffeine</groupId>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-spring-boot-starter-caffeine</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.sndshun</groupId>
+                <artifactId>sndshun-spring-boot-starter-redis</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndshun</groupId>
+                <artifactId>sndshun-frameworker-doublecache</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+
 
             <dependency>
-                <groupId>com.sndshun.jpa.hibernate</groupId>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-framework-jpa-hibernate-starter</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.sndshun.mybatis.plus</groupId>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-framework-mybatis-plus-starter</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
@@ -92,12 +104,12 @@
 
 
             <dependency>
-                <groupId>com.sndshun.commons</groupId>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-framework-commons</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.sndshun.template</groupId>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-framework-template</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>

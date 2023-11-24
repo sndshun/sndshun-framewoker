@@ -9,7 +9,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.sndshun.mybatis.plus</groupId>
     <artifactId>sndshun-framework-mybatis-plus-starter</artifactId>
 
     <properties>

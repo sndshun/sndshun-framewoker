@@ -9,7 +9,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.sndshun.caffeine</groupId>
     <artifactId>sndshun-spring-boot-starter-caffeine</artifactId>
 
     <properties>

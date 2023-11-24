@@ -9,7 +9,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.sndshun.template</groupId>
     <artifactId>sndshun-framework-template</artifactId>
 
     <properties>
@@ -20,15 +19,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.sndshun.commons</groupId>
+            <groupId>com.sndshun</groupId>
             <artifactId>sndshun-framework-commons</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sndshun.test</groupId>
+            <groupId>com.sndshun</groupId>
             <artifactId>sndshun-spring-boot-starter-test</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.sndshun.mybatis.plus</groupId>
+            <groupId>com.sndshun</groupId>
             <artifactId>sndshun-framework-mybatis-plus-starter</artifactId>
         </dependency>
 
