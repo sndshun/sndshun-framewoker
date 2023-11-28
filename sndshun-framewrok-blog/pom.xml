@@ -25,7 +25,7 @@
         </dependency>
         <dependency>
             <groupId>com.sndshun</groupId>
-            <artifactId>sndshun-frameworker-doublecache</artifactId>
+            <artifactId>sndshun-framework-doublecache</artifactId>
         </dependency>
     </dependencies>
 

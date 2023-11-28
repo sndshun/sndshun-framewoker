@@ -28,9 +28,9 @@
         <module>sndshun-framework-rbac3</module>
         <module>sndshun-framewrok-blog</module>
         <module>sndshun-framework-bbc</module>
-        <module>sndshun-framewoker-cms</module>
+        <module>sndshun-framework-cms</module>
         <module>sndshun-framework-im</module>
-        <module>sndshun-frameworker-doublecache</module>
+        <module>sndshun-framework-doublecache</module>
     </modules>
 
     <properties>
@@ -85,7 +85,7 @@
             </dependency>
             <dependency>
                 <groupId>com.sndshun</groupId>
-                <artifactId>sndshun-frameworker-doublecache</artifactId>
+                <artifactId>sndshun-framework-doublecache</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
 
