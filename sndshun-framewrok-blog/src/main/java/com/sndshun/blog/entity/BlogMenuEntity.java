@@ -3,6 +3,7 @@ package com.sndshun.blog.entity;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("blog_menu")
 public class BlogMenuEntity extends Model<BlogMenuEntity> {
     /**
      * 主键

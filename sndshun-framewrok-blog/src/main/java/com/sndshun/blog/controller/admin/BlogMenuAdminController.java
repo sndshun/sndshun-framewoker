@@ -19,8 +19,8 @@ import java.util.List;
  * @since 2023-11-27 17:05:42
  */
 @RestController
-@RequestMapping("blogMenu")
-public class BlogMenuController {
+@RequestMapping("blog/admin/menu")
+public class BlogMenuAdminController {
     /**
      * 服务对象
      */
@@ -37,6 +37,17 @@ public class BlogMenuController {
     @GetMapping
     public Result<?> selectAll(Page<BlogMenuEntity> page, BlogMenuEntity blogMenu) {
         return Result.ok(this.blogMenuService.page(page, new QueryWrapper<>(blogMenu)));
+    }
+
+    /**
+     * 查询所有菜单树形结构展示
+     * @return {@link Result }<{@link ? }>
+     * @author sndshun
+     * @date 2023/11/28 11:42:53
+     */
+    @GetMapping("tree")
+    public Result<?> selectTree() {
+        return Result.ok(this.blogMenuService.blogMenuTreeAll());
     }
 
     /**

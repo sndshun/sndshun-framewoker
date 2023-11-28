@@ -23,6 +23,10 @@
             <groupId>com.sndshun</groupId>
             <artifactId>sndshun-spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sndshun</groupId>
+            <artifactId>sndshun-frameworker-doublecache</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
