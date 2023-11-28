@@ -1,7 +1,6 @@
 发现的问题
 todo doubleCache 在分布式环境下需要通知进程内缓存数据变更 可使用mq通知或redis6.0+的消息队列
 todo openapi 文档集成
-todo maven单模块打包
 奇思妙想
 
 
