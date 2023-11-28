@@ -8,6 +8,7 @@
     <artifactId>sndshun-framework</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <description>mi</description>
     <modules>
         <module>sndshun-framework-commons</module>
         <module>sndshun-framework-email</module>
@@ -26,7 +27,7 @@
         <module>sndshun-framework-acl</module>
         <module>sndshun-framework-rbac2</module>
         <module>sndshun-framework-rbac3</module>
-        <module>sndshun-framewrok-blog</module>
+        <module>sndshun-framework-blog</module>
         <module>sndshun-framework-bbc</module>
         <module>sndshun-framework-cms</module>
         <module>sndshun-framework-im</module>

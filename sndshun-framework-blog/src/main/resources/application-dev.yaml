@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: sndshun-framework-blog
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.3.101:3306/framework?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: root
+    hikari:
+      pool-name: framework-email
+      minimum-idle: 5
+      maximum-pool-size: 15
+      idle-timeout: 60000
+      max-lifetime: 600000
+      connection-timeout: 30000
+      auto-commit: true
+      connection-test-query: select 1
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    #不序列化空属性
+    default-property-inclusion: non_null
+  redis:
+    host: 192.168.3.101
+    port: 6379
+    password: root
+    database: 0
+  freemarker:
+    check-template-location: false
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: logic_delete
+      #逻辑删除值
+      logic-delete-value: 1
+      #逻辑未删除值
+      logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  compression:
+    #开启gzip压缩
+    enabled: true
+    #压缩数据类型
+    mime-types: application/json
+
+system:
+  cache: doublecache
+  doubleCache:
+    allowNull: false  #是否可缓存 Null
+    #caffeine 初始缓存数量
+    init: 128
+    #caffeine 最大缓存数量
+    max: 1024
+    #Caffeine过期时间单位秒 基于最后访问时间  7天
+    caffeineExpire: 604800
+    #Redis缓存过期时间单位秒 14天
+    redisExpire: 1209600
+

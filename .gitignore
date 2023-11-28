@@ -1,6 +1,7 @@
 target/
 logs/
 db/.back_sndshun-framework
+jar/
 
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/

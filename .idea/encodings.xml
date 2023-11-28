@@ -7,6 +7,8 @@
     <file url="file://$PROJECT_DIR$/sndshun-framework-acl/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-bbc/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-bbc/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sndshun-framework-blog/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sndshun-framework-blog/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-cms/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-cms/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-commons/src/main/java" charset="UTF-8" />
@@ -35,8 +37,6 @@
     <file url="file://$PROJECT_DIR$/sndshun-framework-rbac3/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-template/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-template/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sndshun-framewrok-blog/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/sndshun-framewrok-blog/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-spring-boot-starter-caffeine/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-spring-boot-starter-caffeine/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-spring-boot-starter-redis/src/main/java" charset="UTF-8" />
