@@ -45,7 +45,14 @@ public class Result<T> implements Serializable {
      * @return
      */
     public static <T> Result<T> ok(ResultCode resultCode, T data) {
-        Result<T> r = new Result<T>(resultCode.SUCCESS.getCode(), resultCode.SUCCESS.getMsg(), data);
+        Result<T> r = new Result<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg(), data);
+        return r;
+    }
+
+    public static <T> Result<T> ok(ResultCode resultCode) {
+        Result r = new Result();
+        r.setCode(resultCode.getCode());
+        r.setMessage(resultCode.getMsg());
         return r;
     }
 
@@ -55,7 +62,7 @@ public class Result<T> implements Serializable {
      * @param resultCode
      * @return
      */
-    public static Result error(ResultCode resultCode) {
+    public static <T> Result<T> error(ResultCode resultCode) {
         Result r = new Result();
         r.setCode(resultCode.getCode());
         r.setMessage(resultCode.getMsg());

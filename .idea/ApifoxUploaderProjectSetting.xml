@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ApifoxUploaderProjectSetting">
     <option name="apifoxAccessToken" value="APS-x9aPPlSakVMjUccqiGofXHaaqpJPcfjR" />
-    <option name="apifoxApiOverwriteMode" value="智能合并" />
     <option name="apifoxProjectIds">
       <array>
         <option value="# ModuleName:ProjectID" />
@@ -10,8 +9,11 @@
         <option value="component:3535501" />
         <option value="sndshun-framework:3607087" />
         <option value="sndshun-framework-email:3607087" />
+        <option value="sndshun-framework-file:3674214" />
+        <option value="sndshun-framework-blog:3674214" />
       </array>
     </option>
+    <option name="apifoxSyncFolder" value="true" />
     <option name="yapiTokens" value="" />
   </component>
 </project>

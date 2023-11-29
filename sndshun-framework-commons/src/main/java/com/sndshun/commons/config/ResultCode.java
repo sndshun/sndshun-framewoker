@@ -48,7 +48,11 @@ public enum ResultCode {
     INTERFACE_EXCEED_LOAD(60006, "接口负载过高"),
 
     /* 权限错误：70001-79999 */
-    PERMISSION_NO_ACCESS(70001, "无访问权限");
+    PERMISSION_NO_ACCESS(70001, "无访问权限"),
+
+    /*文件相关错误：80001-89999*/
+    OSS_BUCKET_EXIST(80001, "对象存储桶名称已存在"),
+    OSS_BUCKET_IS_EXIST(80002, "对象存储桶名称不存在");
 
     private final Integer code;
     private final String msg;
