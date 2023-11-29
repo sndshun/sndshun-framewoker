@@ -1,5 +1,6 @@
 package com.sndshun.file.service.strategy;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sndshun.commons.config.ResultCode;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.commons.tools.StringUtils;
@@ -14,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -36,6 +38,9 @@ public class MinioOssServiceImpl implements OssService {
      */
     private final OssProperties ossProperties;
 
+    @Resource
+    private ObjectMapper objectMapper;
+
     @Autowired
     public MinioOssServiceImpl(MinioClient minioClient, OssProperties ossProperties) {
         this.minioClient = minioClient;
@@ -49,7 +54,7 @@ public class MinioOssServiceImpl implements OssService {
             log.info("MinioOssServiceImpl listBuckets start");
             List<Bucket> buckets = minioClient.listBuckets();
             log.info("MinioOssServiceImpl listBuckets end");
-            return Result.ok(buckets.toString());
+            return Result.ok(objectMapper.writeValueAsString(buckets));
         } catch (ServerException | InsufficientDataException | ErrorResponseException | IOException |
                  NoSuchAlgorithmException | InvalidKeyException | InvalidResponseException | XmlParserException |
                  InternalException e) {
