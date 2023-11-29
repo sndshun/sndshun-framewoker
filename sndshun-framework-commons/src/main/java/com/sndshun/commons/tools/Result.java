@@ -33,8 +33,7 @@ public class Result<T> implements Serializable {
      * @return
      */
     public static <T> Result<T> ok(T data) {
-        Result<T> r = new Result<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg(), data);
-        return r;
+        return new Result<T>(ResultCode.SUCCESS.getCode(), ResultCode.SUCCESS.getMsg(), data);
     }
 
     /**
