@@ -20,9 +20,9 @@ spring:
     #不序列化空属性
     default-property-inclusion: non_null
   redis:
-    host: a3f6aedd8df57c93
+    host: 124.70.45.144
     port: 6379
-    password: root
+    password: a3f6aedd8df57c93
     database: 0
     connect-timeout: 3000
   freemarker:

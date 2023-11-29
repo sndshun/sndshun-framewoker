@@ -3,9 +3,13 @@ package com.sndshun.redis;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.interceptor.CacheErrorHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -18,10 +22,10 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
-
+@Slf4j
 @EnableCaching   //开启缓存功能，作用于缓存配置类上或者作用于springboot启动类上
 @Configuration
-public class RedisConfig {
+public class RedisConfig extends CachingConfigurerSupport {
     /**
      * 创建一个RedisTemplate实例，用于操作Redis数据库。
      * 其中，redisTemplate是一个泛型为<String, Object>的模板对象，可以存储键值对数据；
@@ -82,5 +86,41 @@ public class RedisConfig {
                 .cacheDefaults(config)
                 .build();
         return cacheManager;
+    }
+
+
+    /**
+     * 配置redis查询失败时处理方法 不影响继续向数据库查询
+     * @return {@link CacheErrorHandler }
+     * @author sndshun
+     * @date 2023/11/29 04:47:34
+     */
+    @Override
+    @Bean
+    public CacheErrorHandler errorHandler() {
+        CacheErrorHandler cacheErrorHandler = new CacheErrorHandler() {
+
+            @Override
+            public void handleCacheGetError(RuntimeException exception, Cache cache, Object key) {
+                log.error("redis异常：key=[{}]", key, exception);
+            }
+
+            @Override
+            public void handleCachePutError(RuntimeException exception, Cache cache, Object key, Object value) {
+                log.error("redis异常：key=[{}]", key, exception);
+            }
+
+            @Override
+            public void handleCacheEvictError(RuntimeException exception, Cache cache, Object key) {
+                log.error("redis异常：key=[{}]", key, exception);
+            }
+
+            @Override
+            public void handleCacheClearError(RuntimeException exception, Cache cache) {
+                log.error("redis异常：", exception);
+            }
+        };
+
+        return cacheErrorHandler;
     }
 }
