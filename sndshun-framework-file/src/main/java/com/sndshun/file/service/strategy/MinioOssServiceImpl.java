@@ -1,11 +1,18 @@
 package com.sndshun.file.service.strategy;
 
+import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sndshun.commons.config.ResultCode;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.commons.tools.StringUtils;
 import com.sndshun.file.config.OssProperties;
 import com.sndshun.file.entity.OssFile;
 import com.sndshun.file.service.OssService;
+import com.sndshun.web.JacksonUtil;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
@@ -13,13 +20,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * Minio 对象存储服务
@@ -38,8 +46,6 @@ public class MinioOssServiceImpl implements OssService {
      */
     private final OssProperties ossProperties;
 
-    @Resource
-    private ObjectMapper objectMapper;
 
     @Autowired
     public MinioOssServiceImpl(MinioClient minioClient, OssProperties ossProperties) {
@@ -54,7 +60,12 @@ public class MinioOssServiceImpl implements OssService {
             log.info("MinioOssServiceImpl listBuckets start");
             List<Bucket> buckets = minioClient.listBuckets();
             log.info("MinioOssServiceImpl listBuckets end");
-            return Result.ok(objectMapper.writeValueAsString(buckets));
+            Map<String, String> map = new HashMap<>();
+            buckets.forEach(item->{
+                //todo 有毒
+                map.put(item.name(), item.creationDate().format(DateTimeFormatter.ofPattern(JacksonUtil.DEFAULT_DATE_TIME_FORMAT)));
+            });
+            return Result.ok(JacksonUtil.toJSONString(map));
         } catch (ServerException | InsufficientDataException | ErrorResponseException | IOException |
                  NoSuchAlgorithmException | InvalidKeyException | InvalidResponseException | XmlParserException |
                  InternalException e) {

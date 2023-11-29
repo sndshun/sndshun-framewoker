@@ -21,6 +21,11 @@ public class FileController extends BaseController {
         this.ossService = ossService;
     }
 
+    @GetMapping("/bucket/list")
+    public Result<?> bucketList() {
+        return ossService.listBuckets();
+    }
+
     /**
      * 桶是否存在
      *
