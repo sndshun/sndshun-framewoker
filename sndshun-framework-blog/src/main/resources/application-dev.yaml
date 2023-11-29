@@ -7,7 +7,7 @@ spring:
     username: root
     password: root
     hikari:
-      pool-name: framework-email
+      pool-name: framework-blog
       minimum-idle: 5
       maximum-pool-size: 15
       idle-timeout: 60000
@@ -24,6 +24,7 @@ spring:
     port: 6379
     password: root
     database: 0
+    connect-timeout: 3000
   freemarker:
     check-template-location: false
 

@@ -4,6 +4,7 @@ spring:
     port: 6379
     password: root
     database: 0
+    connect-timeout: 3000
 
 system:
   cache:
