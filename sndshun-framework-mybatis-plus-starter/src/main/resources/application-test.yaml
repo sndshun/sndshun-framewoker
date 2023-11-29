@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: sndshun-framework-mybatis
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://124.70.45.144:3306/framework?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8
+    username: root
+    password: 12d8870390857f96
+    hikari:
+      pool-name: framework-mybatis
+      minimum-idle: 5
+      maximum-pool-size: 15
+      idle-timeout: 60000
+      max-lifetime: 600000
+      connection-timeout: 30000
+      auto-commit: true
+      connection-test-query: select 1
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    #不序列化空属性
+    default-property-inclusion: non_null
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: logic_delete
+      #逻辑删除值
+      logic-delete-value: 1
+      #逻辑未删除值
+      logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+server:
+  compression:
+    #开启gzip压缩
+    enabled: true
+    #压缩数据类型
+    mime-types: application/json
