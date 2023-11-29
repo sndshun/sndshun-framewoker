@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.sndshun</groupId>
-        <artifactId>sndshun-framework</artifactId>
+        <artifactId>service-api</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>sndshun-spring-boot-starter-web</artifactId>
+    <artifactId>service-api-starter</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -24,18 +24,14 @@
         </dependency>
         <dependency>
             <groupId>com.sndshun</groupId>
-            <artifactId>sndshun-framework-mybatis-plus-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
+            <artifactId>sndshun-spring-boot-starter-web</artifactId>
         </dependency>
 
+        <!-- openapi springboot1x-2x 可用的最新版本1.7.0 -->
         <dependency>
-            <groupId>com.sndshun</groupId>
-            <artifactId>sndshun-spring-boot-starter-test</artifactId>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
         </dependency>
     </dependencies>
-
 
 </project>

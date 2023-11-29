@@ -51,12 +51,17 @@ public class DoubleCache extends AbstractValueAdaptingCache {
 
         //再从redis中查找
         String redisKey=this.cacheName+":"+ key;
-        obj = redisTemplate.opsForValue().get(redisKey);
-        if (Objects.nonNull(obj)){
-            log.info("进程外缓存中获取 redis"+obj.toString());
-            caffeineCache.put(key,obj);
+        try {
+            obj = redisTemplate.opsForValue().get(redisKey);
+            if (Objects.nonNull(obj)){
+                log.info("进程外缓存中获取 redis"+obj.toString());
+                caffeineCache.put(key,obj);
+            }
+            return obj;
+        } catch (Exception e) {
+            log.warn("进程外缓存连接失败");
+            return null;
         }
-        return obj;
     }
 
     @Override

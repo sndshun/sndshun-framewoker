@@ -3,9 +3,9 @@ spring:
     name: sndshun-framework-blog
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.3.101:3306/framework?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8
+    url: jdbc:mysql://124.70.45.144:3306/framework?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8
     username: root
-    password: root
+    password: 12d8870390857f96
     hikari:
       pool-name: framework-blog
       minimum-idle: 5
@@ -20,7 +20,7 @@ spring:
     #不序列化空属性
     default-property-inclusion: non_null
   redis:
-    host: 192.168.3.101
+    host: a3f6aedd8df57c93
     port: 6379
     password: root
     database: 0
