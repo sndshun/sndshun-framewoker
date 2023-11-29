@@ -32,6 +32,7 @@
         <module>sndshun-framework-cms</module>
         <module>sndshun-framework-im</module>
         <module>sndshun-framework-doublecache</module>
+        <module>sndshun-framework-file</module>
     </modules>
 
     <properties>

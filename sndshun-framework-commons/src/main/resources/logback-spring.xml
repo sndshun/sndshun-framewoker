@@ -121,6 +121,8 @@
         <logger name="io.netty" level="info"/>
         <logger name="io.lettuce" level="info"/>
         <logger name="reactor.util" level="info"/>
+        <logger name="io.swagger" level="info"/>
+        <logger name="org.springdoc" level="info"/>
 
         <logger name="com.sndshun" level="debug"/>
         <root level="debug">

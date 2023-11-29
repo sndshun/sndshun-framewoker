@@ -21,6 +21,8 @@
     <file url="file://$PROJECT_DIR$/sndshun-framework-doublecache/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-email/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-email/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sndshun-framework-file/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sndshun-framework-file/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-im/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-im/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sndshun-framework-jpa-hibernate-starter/src/main/java" charset="UTF-8" />
