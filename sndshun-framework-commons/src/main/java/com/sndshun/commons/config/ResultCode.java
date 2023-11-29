@@ -52,7 +52,13 @@ public enum ResultCode {
 
     /*文件相关错误：80001-89999*/
     OSS_BUCKET_EXIST(80001, "对象存储桶名称已存在"),
-    OSS_BUCKET_IS_EXIST(80002, "对象存储桶名称不存在");
+    OSS_BUCKET_IS_EXIST(80002, "对象存储桶名称不存在"),
+    OSS_DEL_OK(80003, "删除存储桶成功"),
+    OSS_DEL_ERROR(80004, "删除存储桶失败，请联系管理员"),
+    OSS_UPLOAD_OK(80005, "上传成功"),
+    OSS_UPLOAD_ERROR(80006, "上传失败"),
+    ;
+
 
     private final Integer code;
     private final String msg;
