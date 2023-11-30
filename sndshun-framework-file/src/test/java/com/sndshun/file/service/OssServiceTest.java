@@ -3,8 +3,12 @@ package com.sndshun.file.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.google.common.base.Preconditions;
 import com.sndshun.commons.tools.Result;
+import javafx.util.Pair;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
@@ -14,6 +18,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -69,6 +77,6 @@ class OssServiceTest {
 
     @Test
     void initDefaultBucket() {
-       ossService.initDefaultBucket();
+        ossService.initDefaultBucket();
     }
 }

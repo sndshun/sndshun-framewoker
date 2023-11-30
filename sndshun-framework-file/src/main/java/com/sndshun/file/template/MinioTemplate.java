@@ -170,19 +170,7 @@ public class MinioTemplate {
         return minioClient.getPresignedPostFormData(policy);
     }
 
-    /**
-     * 初始化默认存储桶
-     */
-    @PostConstruct
-    public void initDefaultBucket() {
-        String defaultBucketName = ossProperties.getDefaultBucketName();
-        if (bucketExists(defaultBucketName)) {
-            System.out.println("默认存储桶已存在");
-        } else {
-            System.out.println("创建默认存储桶");
-            makeBucket(ossProperties.getDefaultBucketName());
-        }
-    }
+
 }
 
 

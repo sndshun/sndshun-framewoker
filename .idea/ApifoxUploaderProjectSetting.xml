@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ApifoxUploaderProjectSetting">
     <option name="apifoxAccessToken" value="APS-x9aPPlSakVMjUccqiGofXHaaqpJPcfjR" />
+    <option name="apifoxDataSchemaGroupByRequest" value="true" />
     <option name="apifoxProjectIds">
       <array>
         <option value="# ModuleName:ProjectID" />
@@ -11,6 +12,7 @@
         <option value="sndshun-framework-email:3607087" />
         <option value="sndshun-framework-file:3674214" />
         <option value="sndshun-framework-blog:3674214" />
+        <option value="service-dict-api:3674214" />
       </array>
     </option>
     <option name="apifoxSyncFolder" value="true" />

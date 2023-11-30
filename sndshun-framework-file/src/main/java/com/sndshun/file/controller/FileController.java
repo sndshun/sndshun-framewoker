@@ -22,8 +22,11 @@ public class FileController extends BaseController {
     }
 
     @GetMapping("/bucket/list")
-    public Result<?> bucketList() {
-        return ossService.listBuckets();
+    public Result<String> bucketList() {
+        log.info("FileController bucketList start");
+        Result<String> result = ossService.listBuckets();
+        log.info("FileController bucketList end");
+        return result;
     }
 
     /**

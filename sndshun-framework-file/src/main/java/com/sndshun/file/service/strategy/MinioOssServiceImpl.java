@@ -2,17 +2,16 @@ package com.sndshun.file.service.strategy;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.alibaba.fastjson.JSON;
+import com.qcloud.cos.utils.Jackson;
 import com.sndshun.commons.config.ResultCode;
+import com.sndshun.commons.tools.DateUtils;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.commons.tools.StringUtils;
 import com.sndshun.file.config.OssProperties;
 import com.sndshun.file.entity.OssFile;
 import com.sndshun.file.service.OssService;
-import com.sndshun.web.JacksonUtil;
+import com.sndshun.file.vo.BucketVo;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
@@ -21,12 +20,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -46,26 +43,28 @@ public class MinioOssServiceImpl implements OssService {
      */
     private final OssProperties ossProperties;
 
-
     @Autowired
     public MinioOssServiceImpl(MinioClient minioClient, OssProperties ossProperties) {
         this.minioClient = minioClient;
         this.ossProperties = ossProperties;
     }
 
-
     @Override
     public Result<String> listBuckets() {
         try {
             log.info("MinioOssServiceImpl listBuckets start");
             List<Bucket> buckets = minioClient.listBuckets();
-            log.info("MinioOssServiceImpl listBuckets end");
-            Map<String, String> map = new HashMap<>();
-            buckets.forEach(item->{
-                //todo 有毒
-                map.put(item.name(), item.creationDate().format(DateTimeFormatter.ofPattern(JacksonUtil.DEFAULT_DATE_TIME_FORMAT)));
+            List<BucketVo> bucketVos = new ArrayList<>();
+            buckets.forEach(item -> {
+                Date date = DateUtils.toDate(item.creationDate());
+                String creationDate = DateUtils.dateToStringYyyyMMddHHMmSs(date);
+                BucketVo bucketVo = new BucketVo();
+                bucketVo.setBucketName(item.name()).setCreateTime(creationDate);
+                bucketVos.add(bucketVo);
             });
-            return Result.ok(JacksonUtil.toJSONString(map));
+            String result = Jackson.toJsonString(bucketVos);
+            log.info("MinioOssServiceImpl listBuckets end");
+            return Result.ok(result);
         } catch (ServerException | InsufficientDataException | ErrorResponseException | IOException |
                  NoSuchAlgorithmException | InvalidKeyException | InvalidResponseException | XmlParserException |
                  InternalException e) {

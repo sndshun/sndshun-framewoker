@@ -32,7 +32,7 @@ public class MinioConfiguration {
     @Bean
     @ConditionalOnBean({MinioClient.class})
     @ConditionalOnMissingBean(MinioOssServiceImpl.class)
-    public MinioOssServiceImpl MinioOssServiceImpl(MinioClient minioClient, OssProperties ossProperties) {
+    public MinioOssServiceImpl minioOssServiceImpl(MinioClient minioClient, OssProperties ossProperties) {
         return new MinioOssServiceImpl(minioClient, ossProperties);
     }
 }
