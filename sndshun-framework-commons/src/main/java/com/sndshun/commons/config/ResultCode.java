@@ -57,6 +57,7 @@ public enum ResultCode {
     OSS_DEL_ERROR(80004, "删除存储桶失败，请联系管理员"),
     OSS_UPLOAD_OK(80005, "上传成功"),
     OSS_UPLOAD_ERROR(80006, "上传失败"),
+    OSS_SEARCH_BUCKET_ERROR(80007, "暂无数据"),
     ;
 
 

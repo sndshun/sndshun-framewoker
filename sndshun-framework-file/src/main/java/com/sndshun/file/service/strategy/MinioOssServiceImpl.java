@@ -8,9 +8,11 @@ import com.sndshun.commons.tools.DateUtils;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.commons.tools.StringUtils;
 import com.sndshun.file.config.OssProperties;
+import com.sndshun.file.convert.MinioConvert;
 import com.sndshun.file.entity.OssFile;
 import com.sndshun.file.service.OssService;
 import com.sndshun.file.vo.minio.BucketVo;
+import com.sndshun.file.vo.minio.MinioBucketVo;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
@@ -157,20 +159,27 @@ public class MinioOssServiceImpl implements OssService {
 
     @Override
     public Result<String> getBucketObjectMsg(String bucketName, boolean recursive) {
+        log.info("MinioOssServiceImpl getBucketObjectMsg start");
         try {
             ListObjectsArgs listObjectsArgs = ListObjectsArgs.builder().bucket(bucketName).recursive(recursive).build();
             Iterable<io.minio.Result<Item>> itemLists = minioClient.listObjects(listObjectsArgs);
+            Set<MinioBucketVo> minioBucketVos = new HashSet<>();
             itemLists.forEach(items -> {
                 try {
-                    //TODO 先搁置
-                    String item = items.get().etag();
+                    Item item = items.get();
+                    MinioBucketVo minioBucketVo = MinioConvert.itemToMinioBucketVo(item);
+                    minioBucketVos.add(minioBucketVo);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             });
-            return Result.ok(null);
+            String result = Jackson.toJsonString(minioBucketVos);
+            log.info("MinioOssServiceImpl getBucketObjectMsg end");
+            return minioBucketVos.size() > 0 ? Result.ok(result) : Result.error(ResultCode.OSS_SEARCH_BUCKET_ERROR);
         } catch (Exception e) {
-            return null;
+            log.error(e.getLocalizedMessage());
+            log.info("MinioOssServiceImpl getBucketObjectMsg end");
+            return Result.error(ResultCode.OSS_SEARCH_BUCKET_ERROR);
         }
     }
 

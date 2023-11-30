@@ -13,10 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -78,5 +75,17 @@ class OssServiceTest {
     @Test
     void initDefaultBucket() {
         ossService.initDefaultBucket();
+    }
+
+    @Test
+    void getBucketObject() {
+        InputStream test = ossService.getBucketObject("test", "files/2023-11-29/18747e3f-ae4c-4e75-a8bb-0a0b5e077a0d/gp.webp");
+        System.out.println(test.toString());
+    }
+
+    @Test
+    void getBucketObjectMsg() {
+        Result<String> test = ossService.getBucketObjectMsg("test", true);
+        System.out.println(test.getData());
     }
 }
