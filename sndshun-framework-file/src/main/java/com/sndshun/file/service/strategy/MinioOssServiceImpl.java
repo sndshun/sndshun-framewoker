@@ -2,7 +2,6 @@ package com.sndshun.file.service.strategy;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
 import com.qcloud.cos.utils.Jackson;
 import com.sndshun.commons.config.ResultCode;
 import com.sndshun.commons.tools.DateUtils;
@@ -11,10 +10,11 @@ import com.sndshun.commons.tools.StringUtils;
 import com.sndshun.file.config.OssProperties;
 import com.sndshun.file.entity.OssFile;
 import com.sndshun.file.service.OssService;
-import com.sndshun.file.vo.BucketVo;
+import com.sndshun.file.vo.minio.BucketVo;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
+import io.minio.messages.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -123,7 +123,8 @@ public class MinioOssServiceImpl implements OssService {
             if (StrUtil.isEmpty(bucketName)) {
                 bucketName = ossProperties.getDefaultBucketName();
             }
-            minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(uuidFileName).stream(inputStream, inputStream.available(), -1).build());
+            PutObjectArgs build = PutObjectArgs.builder().bucket(bucketName).object(uuidFileName).stream(inputStream, inputStream.available(), -1).build();
+            minioClient.putObject(build);
             OssFile ossFile = new OssFile(uuidFileName, originalFileName);
             return Result.ok(ResultCode.OSS_UPLOAD_OK, ossFile.toString());
         } catch (Exception e) {
@@ -141,6 +142,59 @@ public class MinioOssServiceImpl implements OssService {
     }
 
     @Override
+    public InputStream getBucketObject(String bucketName, String ossFilePath) {
+        log.info("MinioOssServiceImpl getBucketObject start");
+        try {
+            GetObjectArgs getObjectArgs = GetObjectArgs.builder().bucket(bucketName).object(ossFilePath).build();
+            GetObjectResponse object = minioClient.getObject(getObjectArgs);
+            log.info("MinioOssServiceImpl getBucketObject end");
+            return object;
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Result<String> getBucketObjectMsg(String bucketName, boolean recursive) {
+        try {
+            ListObjectsArgs listObjectsArgs = ListObjectsArgs.builder().bucket(bucketName).recursive(recursive).build();
+            Iterable<io.minio.Result<Item>> itemLists = minioClient.listObjects(listObjectsArgs);
+            itemLists.forEach(items -> {
+                try {
+                    //TODO 先搁置
+                    String item = items.get().etag();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+            return Result.ok(null);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public InputStream breakpointDownload(String bucketName, String fileName, long offset, long length) {
+        try {
+            return minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).offset(offset).length(length).build());
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+            return null;
+        }
+    }
+
+    @Override
+    public Result<String> shardUpload(InputStream file, Integer currIndex, Integer totalPieces, String md5) {
+        return null;
+    }
+
+    @Override
+    public Result<String> shardMerge(String bucketName, String targetName, Integer totalPieces, String md5) {
+        return null;
+    }
+
+    @Override
     @PostConstruct
     public void initDefaultBucket() {
         try {
@@ -150,6 +204,7 @@ public class MinioOssServiceImpl implements OssService {
             StringUtils.isBooleanTrue(exist);
             /*不存在手动创建*/
             makeBucket(ossProperties.getDefaultBucketName());
+            log.info("初始化默认桶成功~~~~~");
             log.info("MinioOssServiceImpl initDefaultBucket end");
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
@@ -175,6 +230,6 @@ public class MinioOssServiceImpl implements OssService {
      * @return
      */
     public String generateOssUuidFileName(String originalFilename) {
-        return "files" + StrUtil.SLASH + DateUtil.format(new Date(), "yyyy-MM-dd") + StrUtil.SLASH + UUID.randomUUID() + StrUtil.SLASH + originalFilename;
+        return StrUtil.SLASH + DateUtil.format(new Date(), "yyyy-MM-dd") + StrUtil.SLASH + UUID.randomUUID() + StrUtil.SLASH + originalFilename;
     }
 }

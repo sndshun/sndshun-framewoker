@@ -45,4 +45,13 @@ public class FileController extends BaseController {
         return result;
     }
 
+    @GetMapping("/bucket/{bucketName}")
+    public Result<String> getBucketObjectMsg(@PathVariable String bucketName) {
+        log.info("FileController bucketExists start");
+        boolean empty = StringUtils.isEmpty(bucketName);
+        StringUtils.isBooleanTrue(empty);
+        Result<String> result = ossService.getBucketObjectMsg(bucketName, true);
+        log.info("FileController bucketExists end");
+        return result;
+    }
 }

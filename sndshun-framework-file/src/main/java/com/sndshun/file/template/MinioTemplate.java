@@ -36,100 +36,10 @@ public class MinioTemplate {
      */
     OssProperties ossProperties;
 
-    /**
-     * 查询所有存储桶
-     *
-     * @return Bucket 集合
-     */
-    @SneakyThrows
-    public List<Bucket> listBuckets() {
-        return minioClient.listBuckets();
-    }
+
 
     /**
-     * 桶是否存在
      *
-     * @param bucketName 桶名
-     * @return 是否存在
-     */
-    @SneakyThrows
-    public boolean bucketExists(String bucketName) {
-        boolean b = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
-        System.out.println(b);
-        return b;
-    }
-
-    /**
-     * 创建存储桶
-     *
-     * @param bucketName 桶名
-     */
-    @SneakyThrows
-    public void makeBucket(String bucketName) {
-        if (!bucketExists(bucketName)) {
-            minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
-        }
-    }
-
-    /**
-     * 删除一个空桶 如果存储桶存在对象不为空时，删除会报错。
-     *
-     * @param bucketName 桶名
-     */
-    @SneakyThrows
-    public void removeBucket(String bucketName) {
-        minioClient.removeBucket(RemoveBucketArgs.builder().bucket(bucketName).build());
-    }
-
-    /**
-     * 上传文件
-     *
-     * @param inputStream      流
-     * @param originalFileName 原始文件名
-     * @param bucketName       桶名
-     * @return OssFile
-     */
-    @SneakyThrows
-    public OssFile putObject(InputStream inputStream, String bucketName, String originalFileName) {
-        String uuidFileName = generateOssUuidFileName(originalFileName);
-        try {
-            if (StrUtil.isEmpty(bucketName)) {
-                bucketName = ossProperties.getDefaultBucketName();
-            }
-            minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(uuidFileName).stream(inputStream, inputStream.available(), -1).build());
-            return new OssFile(uuidFileName, originalFileName);
-        } finally {
-            if (inputStream != null) {
-                inputStream.close();
-            }
-        }
-    }
-
-    /**
-     * 返回临时带签名、过期时间一天、Get请求方式的访问URL
-     *
-     * @param bucketName  桶名
-     * @param ossFilePath Oss文件路径
-     * @return
-     */
-    @SneakyThrows
-    public String getPresignedObjectUrl(String bucketName, String ossFilePath) {
-        return minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().method(Method.GET).bucket(bucketName).object(ossFilePath).expiry(60 * 60 * 24).build());
-    }
-
-    /**
-     * GetObject接口用于获取某个文件（Object）。此操作需要对此Object具有读权限。
-     *
-     * @param bucketName  桶名
-     * @param ossFilePath Oss文件路径
-     */
-    @SneakyThrows
-    public InputStream getObject(String bucketName, String ossFilePath) {
-        return minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(ossFilePath).build());
-    }
-
-    /**
-     * 查询桶的对象信息
      *
      * @param bucketName 桶名
      * @param recursive  是否递归查询
@@ -140,15 +50,6 @@ public class MinioTemplate {
         return minioClient.listObjects(ListObjectsArgs.builder().bucket(bucketName).recursive(recursive).build());
     }
 
-    /**
-     * 生成随机文件名，防止重复
-     *
-     * @param originalFilename 原始文件名
-     * @return
-     */
-    public String generateOssUuidFileName(String originalFilename) {
-        return "files" + StrUtil.SLASH + DateUtil.format(new Date(), "yyyy-MM-dd") + StrUtil.SLASH + UUID.randomUUID() + StrUtil.SLASH + originalFilename;
-    }
 
     /**
      * 获取带签名的临时上传元数据对象，前端可获取后，直接上传到Minio

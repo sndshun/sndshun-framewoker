@@ -1,4 +1,4 @@
-package com.sndshun.file.vo;
+package com.sndshun.file.vo.minio;
 
 import lombok.Data;
 
