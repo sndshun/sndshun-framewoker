@@ -11,6 +11,7 @@ import com.sndshun.file.config.OssProperties;
 import com.sndshun.file.convert.MinioConvert;
 import com.sndshun.file.entity.OssFile;
 import com.sndshun.file.service.OssService;
+import com.sndshun.file.util.FileUtils;
 import com.sndshun.file.vo.minio.BucketVo;
 import com.sndshun.file.vo.minio.MinioBucketVo;
 import io.minio.*;
@@ -92,9 +93,7 @@ public class MinioOssServiceImpl implements OssService {
     public Result<String> makeBucket(String bucketName) {
         try {
             log.info("MinioOssServiceImpl makeBucket start");
-            boolean result = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
-            StringUtils.isBooleanTrue(result);
-            minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+            createBucket(bucketName);
             log.info("MinioOssServiceImpl makeBucket end");
             return Result.ok(ResultCode.SUCCESS);
         } catch (Exception e) {
@@ -120,13 +119,12 @@ public class MinioOssServiceImpl implements OssService {
 
     @Override
     public Result<String> upload(InputStream inputStream, String bucketName, String originalFileName) {
-        String uuidFileName = generateOssUuidFileName(originalFileName);
+        String uuidFileName = FileUtils.generateOssUuidFileName(originalFileName);
         try {
             if (StrUtil.isEmpty(bucketName)) {
                 bucketName = ossProperties.getDefaultBucketName();
             }
-            PutObjectArgs build = PutObjectArgs.builder().bucket(bucketName).object(uuidFileName).stream(inputStream, inputStream.available(), -1).build();
-            minioClient.putObject(build);
+            uploadFileStream(bucketName, originalFileName, inputStream);
             OssFile ossFile = new OssFile(uuidFileName, originalFileName);
             return Result.ok(ResultCode.OSS_UPLOAD_OK, ossFile.toString());
         } catch (Exception e) {
@@ -200,7 +198,29 @@ public class MinioOssServiceImpl implements OssService {
 
     @Override
     public Result<String> shardMerge(String bucketName, String targetName, Integer totalPieces, String md5) {
-        return null;
+        try {
+            // 把当前分片上传至临时桶
+            Iterable<io.minio.Result<Item>> results = this.getFilesByPrefix(ossProperties.getDefaultBucketName(), md5.concat("/"), false);
+            if (!bucketExist(ossProperties.getDefaultBucketName())) {
+                this.createBucket(ossProperties.getDefaultBucketName());
+            }
+            return null;
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+            return null;
+        }
+    }
+
+    /**
+     * 获取路径下文件列表
+     *
+     * @param bucketName 存储桶
+     * @param prefix     文件名称
+     * @param recursive  是否递归查找，false：模拟文件夹结构查找
+     * @return 二进制流
+     */
+    public Iterable<io.minio.Result<Item>> getFilesByPrefix(String bucketName, String prefix, boolean recursive) {
+        return minioClient.listObjects(ListObjectsArgs.builder().bucket(bucketName).prefix(prefix).recursive(recursive).build());
     }
 
     @Override
@@ -220,7 +240,6 @@ public class MinioOssServiceImpl implements OssService {
         }
     }
 
-
     /**
      * 验证桶名称是否存在
      *
@@ -233,12 +252,25 @@ public class MinioOssServiceImpl implements OssService {
     }
 
     /**
-     * 生成随机文件名，防止重复
+     * 如果一个桶不存在，则创建该桶
      *
-     * @param originalFilename 原始文件名
-     * @return
+     * @param bucketName 桶名称
+     * @throws Exception 异常
      */
-    public String generateOssUuidFileName(String originalFilename) {
-        return StrUtil.SLASH + DateUtil.format(new Date(), "yyyy-MM-dd") + StrUtil.SLASH + UUID.randomUUID() + StrUtil.SLASH + originalFilename;
+    private void createBucket(String bucketName) throws Exception {
+        if (!bucketExist(bucketName)) {
+            minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
+        }
+    }
+
+    /**
+     * 通过流上传文件
+     *
+     * @param bucketName  存储桶
+     * @param fileName    文件名
+     * @param inputStream 文件流
+     */
+    public ObjectWriteResponse uploadFileStream(String bucketName, String fileName, InputStream inputStream) throws Exception {
+        return minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(fileName).stream(inputStream, inputStream.available(), -1).build());
     }
 }

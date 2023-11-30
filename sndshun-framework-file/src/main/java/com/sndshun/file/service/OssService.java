@@ -95,6 +95,7 @@ public interface OssService {
      */
     Result<String> shardUpload(InputStream file, Integer currIndex, Integer totalPieces, String md5);
 
+
     /**
      * 合并分片  并放到指定目录
      *
@@ -104,7 +105,8 @@ public interface OssService {
      * @param md5         文件md5
      * @return minio原生对象，记录了文件上传信息
      */
-    Result<String> shardMerge(String bucketName, String targetName, Integer totalPieces, String md5);
+    Result<String> shardMerge(String bucketName, String targetName, Integer totalPieces, String md5) throws Exception;
+
 
     /**
      * 初始化默认存储桶
