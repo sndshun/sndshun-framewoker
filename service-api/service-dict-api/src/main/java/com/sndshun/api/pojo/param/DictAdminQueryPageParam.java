@@ -1,5 +1,6 @@
 package com.sndshun.api.pojo.param;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ public class DictAdminQueryPageParam {
 
     @Valid
     @NotNull
+    @Schema(name = "User", description = "Represents a user in the system")
     private Integer size;
 
 }

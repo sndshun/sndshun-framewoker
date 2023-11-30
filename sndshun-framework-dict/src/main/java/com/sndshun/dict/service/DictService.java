@@ -1,7 +1,10 @@
 package com.sndshun.dict.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.sndshun.dict.entity.DictBizEntity;
 import com.sndshun.dict.entity.DictEntity;
+
+import java.util.List;
 
 /**
  * 字典表(Dict)表服务接口
@@ -12,11 +15,12 @@ import com.sndshun.dict.entity.DictEntity;
 public interface DictService extends IService<DictEntity> {
 
     /**
-     * @param id 编号
-     * @return {@link DictEntity }
+     * 根据父级id查询
+     * @param parentId 编号
+     * @return {@link List }<{@link DictBizEntity }>
      * @author sndshun
-     * @date 2023/11/24 12:26:56
+     * @date 2023/12/01 03:32:55
      */
-    DictEntity getByIdCache(Integer id);
+    List<DictEntity> getDictByParentIdCache(Long parentId);
 
 }

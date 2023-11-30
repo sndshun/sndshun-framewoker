@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -18,7 +20,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  * @author sndshun
  * @since 2023-11-17 09:34:25
  */
-
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("dict_biz")
@@ -100,14 +102,4 @@ public class DictBizEntity extends Model<DictBizEntity> {
 
     private Date updatedTime;
 
-
-    /**
-     * 获取主键值
-     *
-     * @return 主键值
-     */
-    @Override
-    public Serializable pkVal() {
-        return this.id;
-    }
 }

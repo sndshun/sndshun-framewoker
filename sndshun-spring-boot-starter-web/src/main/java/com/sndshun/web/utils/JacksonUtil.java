@@ -1,4 +1,4 @@
-package com.sndshun.web;
+package com.sndshun.web.utils;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonParser;

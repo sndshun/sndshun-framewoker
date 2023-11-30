@@ -233,10 +233,10 @@
               </option>
               <option name="name" value="Dict" />
               <option name="preName" value="" />
-              <option name="saveModelName" value="sndshun-framework-dict" />
-              <option name="savePackageName" value="com.sndshun.dict" />
-              <option name="savePath" value="./sndshun-framework-dict/src/main/java/com/sndshun/dict" />
-              <option name="templateGroupName" value="MybatisPlusResult" />
+              <option name="saveModelName" value="service-dict-api" />
+              <option name="savePackageName" value="com.sndshun.api.pojo" />
+              <option name="savePath" value="./service-api/service-dict-api/src/main/java/com/sndshun/api/pojo" />
+              <option name="templateGroupName" value="MybatisPlusFramework" />
             </TableInfoDTO>
           </value>
         </entry>
@@ -358,7 +358,7 @@
               <option name="saveModelName" value="sndshun-framework-dict" />
               <option name="savePackageName" value="com.sndshun.dict" />
               <option name="savePath" value="./sndshun-framework-dict/src/main/java/com/sndshun/dict" />
-              <option name="templateGroupName" value="" />
+              <option name="templateGroupName" value="MybatisPlusFramework" />
             </TableInfoDTO>
           </value>
         </entry>

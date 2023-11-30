@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  framework-interface:
+    image: framework-blog-test:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - framework_network
+
+networks:
+  framework_network:
+    driver: bridge

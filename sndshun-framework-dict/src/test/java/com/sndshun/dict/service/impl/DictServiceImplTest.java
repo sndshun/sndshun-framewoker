@@ -16,8 +16,7 @@ class DictServiceImplTest {
 
     @Test
     void getByIdCache() {
-        DictEntity byIdCache = dictService.getByIdCache(1100);
-        System.out.println(byIdCache.toString());
+
 
     }
 }
