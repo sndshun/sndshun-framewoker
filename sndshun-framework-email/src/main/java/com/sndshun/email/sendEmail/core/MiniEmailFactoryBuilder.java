@@ -1,9 +1,9 @@
 package com.sndshun.email.sendEmail.core;
 
+import cn.hutool.core.util.StrUtil;
 import com.sndshun.email.sendEmail.config.MailConfig;
 import com.sndshun.email.sendEmail.constant.SmtpHostEnum;
 import com.sndshun.email.sendEmail.exception.ParameterException;
-import com.sndshun.email.sendEmail.util.StringUtils;
 
 /**
  * 建造 {@link MiniEmail} 实例。
@@ -49,7 +49,7 @@ public class MiniEmailFactoryBuilder {
 	 * @param config 配置参数。
 	 */
 	private void checkParameter(MailConfig config) {
-		if (StringUtils.isEmpty(config.getUsername()) || StringUtils.isEmpty(config.getPassword())) {
+		if (StrUtil.isEmpty(config.getUsername()) || StrUtil.isEmpty(config.getPassword())) {
 			throw new ParameterException("请填写完整的收件人信息");
 		}
 		if (null == config.getMailSmtpHost()) {

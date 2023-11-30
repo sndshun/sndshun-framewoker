@@ -1,7 +1,7 @@
 package com.sndshun.email.sendEmail.core;
 
+import cn.hutool.core.util.StrUtil;
 import com.sndshun.email.sendEmail.constant.EmailContentTypeEnum;
-import com.sndshun.email.sendEmail.util.StringUtils;
 import jakarta.activation.DataHandler;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -61,7 +61,7 @@ public abstract class BaseMiniEmail implements MiniEmail {
         for (int i = 0; i < tos.length; i++) {
             String to = tos[i];
             String sendSuccessTo = this.send(to, subject, contentType, content);
-            if (StringUtils.isNotEmpty(sendSuccessTo)) {
+            if (StrUtil.isNotEmpty(sendSuccessTo)) {
                 sendSuccessToList.add(sendSuccessTo);
             }
             if (i == 0) {
@@ -106,7 +106,7 @@ public abstract class BaseMiniEmail implements MiniEmail {
     public void setDataHandler(DataHandler dataHandler, String fileName) throws MessagingException, UnsupportedEncodingException {
         MimeBodyPart attachmentPart = new MimeBodyPart();
         attachmentPart.setDataHandler(dataHandler);
-        attachmentPart.setFileName(StringUtils.isEmpty(fileName) ? MimeUtility.encodeText(dataHandler.getName()) : fileName);
+        attachmentPart.setFileName(StrUtil.isEmpty(fileName) ? MimeUtility.encodeText(dataHandler.getName()) : fileName);
         cover.addBodyPart(attachmentPart);
     }
 

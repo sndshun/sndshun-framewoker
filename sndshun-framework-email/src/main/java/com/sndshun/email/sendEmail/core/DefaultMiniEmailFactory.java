@@ -1,8 +1,8 @@
 package com.sndshun.email.sendEmail.core;
 
+import cn.hutool.core.util.StrUtil;
 import com.sndshun.email.sendEmail.builder.EmailSessionBuilder;
 import com.sndshun.email.sendEmail.config.MailConfig;
-import com.sndshun.email.sendEmail.util.StringUtils;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeUtility;
 
@@ -35,7 +35,7 @@ public class DefaultMiniEmailFactory implements MiniEmailFactory {
      * @return String 处理后的发件人昵称
      */
     private String constructFinalSenderName(String senderNickname, String username) {
-        boolean notDealName = StringUtils.isEmpty(senderNickname) || senderNickname.equals(username);
+        boolean notDealName = StrUtil.isEmpty(senderNickname) || senderNickname.equals(username);
         if (notDealName) {
             return username;
         }
@@ -48,7 +48,7 @@ public class DefaultMiniEmailFactory implements MiniEmailFactory {
         }
 
         // 若定制发件人定制昵称为空，则使用 username 作为发件人别名
-        return StringUtils.isEmpty(senderNickname) ? username : senderNickname;
+        return StrUtil.isEmpty(senderNickname) ? username : senderNickname;
     }
 
     private MiniEmail init(Class<? extends BaseMiniEmail> clazz) {
@@ -68,7 +68,7 @@ public class DefaultMiniEmailFactory implements MiniEmailFactory {
 
     @Override
     public MiniEmail init() {
-        if (StringUtils.isEmpty(customMiniEmailPath)) {
+        if (StrUtil.isEmpty(customMiniEmailPath)) {
             return this.init(DefaultMiniEmail.class);
         }
 
