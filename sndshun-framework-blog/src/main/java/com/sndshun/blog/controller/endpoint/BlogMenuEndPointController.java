@@ -36,4 +36,16 @@ public class BlogMenuEndPointController {
         return Result.ok(this.blogMenuService.blogMenuTree());
     }
 
+
+    /**
+     * 查询所有博客导航栏
+     * @return {@link Result }<{@link ? }>
+     * @author sndshun
+     * @date 2023/12/01 10:31:15
+     */
+    @GetMapping
+    public Result<?> menu() {
+        return null;
+    }
+
 }

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sndshun.blog.mapper.BlogPostMapper">
+
+    <resultMap type="com.sndshun.blog.entity.BlogPost" id="BlogPostMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="likes" column="likes" jdbcType="INTEGER"/>
+        <result property="comments" column="comments" jdbcType="INTEGER"/>
+        <result property="coverImageUrl" column="cover_image_url" jdbcType="VARCHAR"/>
+        <result property="summary" column="summary" jdbcType="VARCHAR"/>
+        <result property="viewCount" column="view_count" jdbcType="INTEGER"/>
+        <result property="isPublished" column="is_published" jdbcType="INTEGER"/>
+        <result property="categoryId" column="category_id" jdbcType="INTEGER"/>
+        <result property="tags" column="tags" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="INTEGER"/>
+        <result property="sourceUrl" column="source_url" jdbcType="VARCHAR"/>
+        <result property="allowComments" column="allow_comments" jdbcType="INTEGER"/>
+        <result property="allowLikes" column="allow_likes" jdbcType="INTEGER"/>
+        <result property="isFeatured" column="is_featured" jdbcType="INTEGER"/>
+        <result property="publishedTime" column="published_time" jdbcType="TIMESTAMP"/>
+        <result property="authorName" column="author_name" jdbcType="VARCHAR"/>
+        <result property="authorBio" column="author_bio" jdbcType="VARCHAR"/>
+        <result property="seoTitle" column="seo_title" jdbcType="VARCHAR"/>
+        <result property="seoDescription" column="seo_description" jdbcType="VARCHAR"/>
+        <result property="tenantId" column="tenant_id" jdbcType="INTEGER"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="logicDelete" column="logic_delete" jdbcType="INTEGER"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+        <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="base_column">
+        idtitlecontentlikescommentscover_image_urlsummaryview_countis_publishedcategory_idtagspasswordtypesource_urlallow_commentsallow_likesis_featuredpublished_timeauthor_nameauthor_bioseo_titleseo_descriptiontenant_idupdated_timeversionlogic_deletecreated_timecreated_byupdated_by    </sql>
+
+    <!--用于粘贴复制-->
+    <select id="test" resultMap="BlogPostMap">
+        select
+        idtitlecontentlikescommentscover_image_urlsummaryview_countis_publishedcategory_idtagspasswordtypesource_urlallow_commentsallow_likesis_featuredpublished_timeauthor_nameauthor_bioseo_titleseo_descriptiontenant_idupdated_timeversionlogic_deletecreated_timecreated_byupdated_by
+        from framework.blog_post
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="title != null and title != ''">
+                and title = #{title}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+            <if test="likes != null">
+                and likes = #{likes}
+            </if>
+            <if test="comments != null">
+                and comments = #{comments}
+            </if>
+            <if test="coverImageUrl != null and coverImageUrl != ''">
+                and cover_image_url = #{coverImageUrl}
+            </if>
+            <if test="summary != null and summary != ''">
+                and summary = #{summary}
+            </if>
+            <if test="viewCount != null">
+                and view_count = #{viewCount}
+            </if>
+            <if test="isPublished != null">
+                and is_published = #{isPublished}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+            <if test="tags != null and tags != ''">
+                and tags = #{tags}
+            </if>
+            <if test="password != null and password != ''">
+                and password = #{password}
+            </if>
+            <if test="type != null">
+                and type = #{type}
+            </if>
+            <if test="sourceUrl != null and sourceUrl != ''">
+                and source_url = #{sourceUrl}
+            </if>
+            <if test="allowComments != null">
+                and allow_comments = #{allowComments}
+            </if>
+            <if test="allowLikes != null">
+                and allow_likes = #{allowLikes}
+            </if>
+            <if test="isFeatured != null">
+                and is_featured = #{isFeatured}
+            </if>
+            <if test="publishedTime != null">
+                and published_time = #{publishedTime}
+            </if>
+            <if test="authorName != null and authorName != ''">
+                and author_name = #{authorName}
+            </if>
+            <if test="authorBio != null and authorBio != ''">
+                and author_bio = #{authorBio}
+            </if>
+            <if test="seoTitle != null and seoTitle != ''">
+                and seo_title = #{seoTitle}
+            </if>
+            <if test="seoDescription != null and seoDescription != ''">
+                and seo_description = #{seoDescription}
+            </if>
+            <if test="tenantId != null">
+                and tenant_id = #{tenantId}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="logicDelete != null">
+                and logic_delete = #{logicDelete}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="createdBy != null">
+                and created_by = #{createdBy}
+            </if>
+            <if test="updatedBy != null">
+                and updated_by = #{updatedBy}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

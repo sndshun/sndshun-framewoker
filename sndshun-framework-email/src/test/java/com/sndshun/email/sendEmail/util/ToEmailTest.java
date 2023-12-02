@@ -1,6 +1,7 @@
 package com.sndshun.email.sendEmail.util;
 
 import com.sndshun.commons.tools.FreemarkerUtils;
+import com.sndshun.email.sendEmail.core.MiniEmail;
 import com.sndshun.template.entity.TemplateModelEntity;
 import com.sndshun.template.service.TemplateModelService;
 import freemarker.template.TemplateException;
@@ -24,19 +25,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @SpringBootTest
 class ToEmailTest {
-    @Resource
-    private ToEmail toEmail;
 
     @Resource
     private TemplateModelService templateModelService;
 
-
+    @Resource
+    private MiniEmail miniEmail;
 
     @Test
-    void sendEmail() throws Exception{
-
-        toEmail.sendEmail();
+    void sendTest() {
+        miniEmail.send("3325622872@qq.com", "test");
     }
+
 
     @Test
     void test() throws IOException, TemplateException {
