@@ -15,6 +15,19 @@ public class TreeUtils {
 
 
 
+    /**
+     * 将扁平的数据列表转换为树形结构
+     *
+     * @param flatList        扁平数据列表 集合
+     * @param idExtractor     从节点中提取唯一标识的函数  id
+     * @param parentExtractor 从节点中提取父节点标识的函数 父节点属性
+     * @param childrenExtractor 从节点中提取子节点标识的函数 字节点属性
+     * @param comparator 排序规则
+     * @param <T>             节点类型
+     * @return 树形结构的根节点列表
+     * @author sndshun
+     * @date 2023-11-28 06:53:07
+     */
     public static <T> List<T> treeParent(List<T> flatList, Function<T, ?> idExtractor,
                                         Function<T, ?> parentExtractor,
                                         Function<T, List<T>> childrenExtractor,
@@ -23,6 +36,18 @@ public class TreeUtils {
         return buildTree(flatList, idExtractor, parentExtractor, childrenExtractor, comparator);
     }
 
+    /**
+     * 将扁平的数据列表转换为树形结构
+     *
+     * @param flatList        扁平数据列表 集合
+     * @param idExtractor     从节点中提取唯一标识的函数  id
+     * @param parentExtractor 从节点中提取父节点标识的函数 父节点属性
+     * @param childrenExtractor 从节点中提取子节点标识的函数 字节点属性
+     * @param <T>             节点类型
+     * @return 树形结构的根节点列表
+     * @author sndshun
+     * @date 2023-11-28 06:53:07
+     */
     public static <T> List<T> treeParent(List<T> flatList, Function<T, ?> idExtractor,
                                          Function<T, ?> parentExtractor,
                                          Function<T, List<T>> childrenExtractor) {

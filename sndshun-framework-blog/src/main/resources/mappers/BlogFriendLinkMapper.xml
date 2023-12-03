@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sndshun.blog.mapper.BlogFriendLinkMapper">
+
+    <resultMap type="com.sndshun.blog.entity.BlogFriendLink" id="BlogFriendLinkMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="logoUrl" column="logo_url" jdbcType="VARCHAR"/>
+        <result property="isActive" column="is_active" jdbcType="INTEGER"/>
+        <result property="isPendingApproval" column="is_pending_approval" jdbcType="INTEGER"/>
+        <result property="tenantId" column="tenant_id" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="logicDelete" column="logic_delete" jdbcType="INTEGER"/>
+        <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+        idnameurldescriptionlogo_urlis_activeis_pending_approvaltenant_idversionlogic_deletecreated_bycreated_timeupdated_byupdated_time    </sql>
+
+    <!--用于粘贴复制-->
+    <select id="test" resultMap="BlogFriendLinkMap">
+        select
+        idnameurldescriptionlogo_urlis_activeis_pending_approvaltenant_idversionlogic_deletecreated_bycreated_timeupdated_byupdated_time
+        from framework.blog_friend_link
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="url != null and url != ''">
+                and url = #{url}
+            </if>
+            <if test="description != null and description != ''">
+                and description = #{description}
+            </if>
+            <if test="logoUrl != null and logoUrl != ''">
+                and logo_url = #{logoUrl}
+            </if>
+            <if test="isActive != null">
+                and is_active = #{isActive}
+            </if>
+            <if test="isPendingApproval != null">
+                and is_pending_approval = #{isPendingApproval}
+            </if>
+            <if test="tenantId != null">
+                and tenant_id = #{tenantId}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="logicDelete != null">
+                and logic_delete = #{logicDelete}
+            </if>
+            <if test="createdBy != null">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedBy != null">
+                and updated_by = #{updatedBy}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

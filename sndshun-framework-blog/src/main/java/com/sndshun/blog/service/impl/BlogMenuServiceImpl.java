@@ -72,5 +72,20 @@ public class BlogMenuServiceImpl extends ServiceImpl<BlogMenuMapper, BlogMenuEnt
                 comparator);
     }
 
+    //@Cacheable(cacheNames = "blog:menu",key = "#root.methodName")
+    @Override
+    public List<BlogMenuEntity> blogMenuByParentId(Long id) {
+        LambdaQueryWrapper<BlogMenuEntity> select=Wrappers.<BlogMenuEntity>lambdaQuery()
+                .select(BlogMenuEntity::getId,
+                        BlogMenuEntity::getName,
+                        BlogMenuEntity::getPath,
+                        BlogMenuEntity::getComponent,
+                        BlogMenuEntity::getIcon,
+                        BlogMenuEntity::getSort)
+                .eq(BlogMenuEntity::getParentId,id)
+                .orderBy(true,true,BlogMenuEntity::getSort);
+        return super.list(select);
+    }
+
 
 }

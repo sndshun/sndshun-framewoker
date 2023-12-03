@@ -14,7 +14,6 @@
     <modules>
         <module>service-api-starter</module>
         <module>service-dict-api</module>
-        <module>service-blog-api</module>
     </modules>
 
     <properties>

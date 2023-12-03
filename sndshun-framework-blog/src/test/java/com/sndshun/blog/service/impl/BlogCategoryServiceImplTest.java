@@ -1,0 +1,28 @@
+package com.sndshun.blog.service.impl;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.sndshun.blog.service.BlogCategoryService;
+import com.sndshun.blog.vo.BlogCategoryTreeVo;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import javax.annotation.Resource;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+@SpringBootTest
+class BlogCategoryServiceImplTest {
+    @Resource
+    private BlogCategoryService blogCategoryService;
+
+    @Test
+    void getCategoryTree() throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
+        List<BlogCategoryTreeVo> categoryTree = blogCategoryService.getCategoryTree();
+        System.out.println(objectMapper.writeValueAsString(categoryTree));
+    }
+}

@@ -18,6 +18,8 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("blog/endpoint/menu")
 public class BlogMenuEndPointController {
+
+    private static final long HOME_MENU=1;
     /**
      * 服务对象
      */
@@ -43,9 +45,9 @@ public class BlogMenuEndPointController {
      * @author sndshun
      * @date 2023/12/01 10:31:15
      */
-    @GetMapping
+    @GetMapping("nav")
     public Result<?> menu() {
-        return null;
+        return Result.ok(blogMenuService.blogMenuByParentId(HOME_MENU));
     }
 
 }

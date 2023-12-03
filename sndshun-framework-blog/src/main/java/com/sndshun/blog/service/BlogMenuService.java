@@ -30,4 +30,14 @@ public interface BlogMenuService extends IService<BlogMenuEntity> {
      */
     List<BlogMenuTreeVo> blogMenuTreeAll();
 
+
+    /**
+     * 查询父级节点下所有节点
+     * @param id 编号
+     * @return {@link List }<{@link BlogMenuEntity }>
+     * @author sndshun
+     * @date 2023/12/03 01:11:19
+     */
+    List<BlogMenuEntity> blogMenuByParentId(Long id);
+
 }

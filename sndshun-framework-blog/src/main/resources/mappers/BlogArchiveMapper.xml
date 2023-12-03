@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sndshun.blog.mapper.BlogArchiveMapper">
+
+    <resultMap type="com.sndshun.blog.entity.BlogArchive" id="BlogArchiveMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="archiveDate" column="archive_date" jdbcType="TIMESTAMP"/>
+        <result property="articleCount" column="article_count" jdbcType="INTEGER"/>
+        <result property="tenantId" column="tenant_id" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+        <result property="logicDelete" column="logic_delete" jdbcType="INTEGER"/>
+        <result property="createdBy" column="created_by" jdbcType="INTEGER"/>
+        <result property="createdTime" column="created_time" jdbcType="TIMESTAMP"/>
+        <result property="updatedBy" column="updated_by" jdbcType="INTEGER"/>
+        <result property="updatedTime" column="updated_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+        idarchive_datearticle_counttenant_idversionlogic_deletecreated_bycreated_timeupdated_byupdated_time    </sql>
+
+    <!--用于粘贴复制-->
+    <select id="test" resultMap="BlogArchiveMap">
+        select
+        idarchive_datearticle_counttenant_idversionlogic_deletecreated_bycreated_timeupdated_byupdated_time
+        from framework.blog_archive
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="archiveDate != null">
+                and archive_date = #{archiveDate}
+            </if>
+            <if test="articleCount != null">
+                and article_count = #{articleCount}
+            </if>
+            <if test="tenantId != null">
+                and tenant_id = #{tenantId}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+            <if test="logicDelete != null">
+                and logic_delete = #{logicDelete}
+            </if>
+            <if test="createdBy != null">
+                and created_by = #{createdBy}
+            </if>
+            <if test="createdTime != null">
+                and created_time = #{createdTime}
+            </if>
+            <if test="updatedBy != null">
+                and updated_by = #{updatedBy}
+            </if>
+            <if test="updatedTime != null">
+                and updated_time = #{updatedTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+
