@@ -1,6 +1,5 @@
 package com.sndshun.file.service.strategy;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.qcloud.cos.utils.Jackson;
 import com.sndshun.commons.config.ResultCode;
@@ -182,48 +181,6 @@ public class MinioOssServiceImpl implements OssService {
     }
 
     @Override
-    public InputStream breakpointDownload(String bucketName, String fileName, long offset, long length) {
-        try {
-            return minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(fileName).offset(offset).length(length).build());
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-            return null;
-        }
-    }
-
-    @Override
-    public Result<String> shardUpload(InputStream file, Integer currIndex, Integer totalPieces, String md5) {
-        return null;
-    }
-
-    @Override
-    public Result<String> shardMerge(String bucketName, String targetName, Integer totalPieces, String md5) {
-        try {
-            // 把当前分片上传至临时桶
-            Iterable<io.minio.Result<Item>> results = this.getFilesByPrefix(ossProperties.getDefaultBucketName(), md5.concat("/"), false);
-            if (!bucketExist(ossProperties.getDefaultBucketName())) {
-                this.createBucket(ossProperties.getDefaultBucketName());
-            }
-            return null;
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-            return null;
-        }
-    }
-
-    /**
-     * 获取路径下文件列表
-     *
-     * @param bucketName 存储桶
-     * @param prefix     文件名称
-     * @param recursive  是否递归查找，false：模拟文件夹结构查找
-     * @return 二进制流
-     */
-    public Iterable<io.minio.Result<Item>> getFilesByPrefix(String bucketName, String prefix, boolean recursive) {
-        return minioClient.listObjects(ListObjectsArgs.builder().bucket(bucketName).prefix(prefix).recursive(recursive).build());
-    }
-
-    @Override
     @PostConstruct
     public void initDefaultBucket() {
         try {
@@ -270,7 +227,7 @@ public class MinioOssServiceImpl implements OssService {
      * @param fileName    文件名
      * @param inputStream 文件流
      */
-    public ObjectWriteResponse uploadFileStream(String bucketName, String fileName, InputStream inputStream) throws Exception {
-        return minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(fileName).stream(inputStream, inputStream.available(), -1).build());
+    public void uploadFileStream(String bucketName, String fileName, InputStream inputStream) throws Exception {
+        minioClient.putObject(PutObjectArgs.builder().bucket(bucketName).object(fileName).stream(inputStream, inputStream.available(), -1).build());
     }
 }

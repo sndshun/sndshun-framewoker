@@ -74,41 +74,6 @@ public interface OssService {
     Result<String> getBucketObjectMsg(String bucketName, boolean recursive);
 
     /**
-     * 断点下载
-     *
-     * @param bucketName 桶名称
-     * @param fileName   文件名称
-     * @param offset     起始字节的位置
-     * @param length     要读取的长度
-     * @return 二进制流
-     */
-    InputStream breakpointDownload(String bucketName, String fileName, long offset, long length);
-
-    /**
-     * 分片上传
-     *
-     * @param file        分片文件
-     * @param currIndex   当前文件的分片索引
-     * @param totalPieces 切片总数（对于同一个文件，请确保切片总数始终不变）
-     * @param md5         md5 整体文件MD5
-     * @return 剩余未上传的文件索引集合
-     */
-    Result<String> shardUpload(InputStream file, Integer currIndex, Integer totalPieces, String md5);
-
-
-    /**
-     * 合并分片  并放到指定目录
-     *
-     * @param bucketName  目标文件桶名
-     * @param targetName  目标文件名（含完整路径）
-     * @param totalPieces 切片总数（对于同一个文件，请确保切片总数始终不变）
-     * @param md5         文件md5
-     * @return minio原生对象，记录了文件上传信息
-     */
-    Result<String> shardMerge(String bucketName, String targetName, Integer totalPieces, String md5) throws Exception;
-
-
-    /**
      * 初始化默认存储桶
      */
     void initDefaultBucket();

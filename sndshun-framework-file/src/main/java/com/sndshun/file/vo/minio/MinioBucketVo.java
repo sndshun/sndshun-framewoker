@@ -1,9 +1,9 @@
 package com.sndshun.file.vo.minio;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
-import java.time.ZonedDateTime;
+
 import java.util.Map;
 
 /**
