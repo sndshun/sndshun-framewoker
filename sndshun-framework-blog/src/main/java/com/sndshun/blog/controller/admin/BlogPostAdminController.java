@@ -6,9 +6,9 @@ import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.service.BlogPostService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,8 +24,12 @@ public class BlogPostAdminController {
     /**
      * 服务对象
      */
-    @Resource
-    private BlogPostService blogPostService;
+    private final BlogPostService blogPostService;
+
+    @Autowired
+    public BlogPostAdminController(BlogPostService blogPostService) {
+        this.blogPostService = blogPostService;
+    }
 
     /**
      * 分页查询所有数据
@@ -82,6 +86,7 @@ public class BlogPostAdminController {
     public Result<?> delete(@PathVariable Long id) {
         return Result.ok(this.blogPostService.removeById(id));
     }
+
     /**
      * 删除数据
      *

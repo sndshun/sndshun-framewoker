@@ -3,11 +3,10 @@ package com.sndshun.blog.controller.endpoint;
 
 import com.sndshun.blog.service.BlogMenuService;
 import com.sndshun.commons.tools.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /**
  * 博客菜单(BlogMenu)表控制层
@@ -23,9 +22,11 @@ public class BlogMenuEndPointController {
     /**
      * 服务对象
      */
-    @Resource
-    private BlogMenuService blogMenuService;
-
+    private final BlogMenuService blogMenuService;
+    @Autowired
+    public BlogMenuEndPointController(BlogMenuService blogMenuService) {
+        this.blogMenuService = blogMenuService;
+    }
 
     /**
      * 查询所有菜单树形结构展示
