@@ -24,7 +24,7 @@ import java.util.List;
 @Service("blogCategoryService")
 public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, BlogCategoryEntity> implements BlogCategoryService {
 
-    //@Cacheable(cacheNames = "blog:category",key = "#root.methodName")
+    @Cacheable(cacheNames = "blog:category",key = "#root.methodName")
     @Override
     public List<BlogCategoryTreeVo> getCategoryTree() {
         LambdaQueryWrapper<BlogCategoryEntity> select = Wrappers.<BlogCategoryEntity>lambdaQuery().select(BlogCategoryEntity::getId,

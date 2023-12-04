@@ -21,7 +21,7 @@ import java.util.List;
 @Service("blogTagService")
 public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagEntity> implements BlogTagService {
 
-    //@Cacheable(cacheNames = "blog:tag",key = "#root.methodName")
+    @Cacheable(cacheNames = "blog:tag",key = "#root.methodName")
     @Override
     public List<BlogTagEntity> getAll() {
         LambdaQueryWrapper<BlogTagEntity> select = Wrappers.<BlogTagEntity>lambdaQuery().select(BlogTagEntity::getId,

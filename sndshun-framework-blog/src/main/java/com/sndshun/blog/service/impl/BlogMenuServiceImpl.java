@@ -72,7 +72,7 @@ public class BlogMenuServiceImpl extends ServiceImpl<BlogMenuMapper, BlogMenuEnt
                 comparator);
     }
 
-    //@Cacheable(cacheNames = "blog:menu",key = "#root.methodName")
+    @Cacheable(cacheNames = "blog:menu",key = "#root.methodName")
     @Override
     public List<BlogMenuEntity> blogMenuByParentId(Long id) {
         LambdaQueryWrapper<BlogMenuEntity> select=Wrappers.<BlogMenuEntity>lambdaQuery()

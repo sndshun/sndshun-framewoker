@@ -22,7 +22,7 @@ import java.util.List;
 @Service("blogFriendLinkService")
 public class BlogFriendLinkServiceImpl extends ServiceImpl<BlogFriendLinkMapper, BlogFriendLinkEntity> implements BlogFriendLinkService {
 
-    //@Cacheable(cacheNames = "blog:link",key = "#root.methodName")
+    @Cacheable(cacheNames = "blog:link",key = "#root.methodName")
     @Override
     public List<BlogFriendLinkEntity> getAll() {
         LambdaQueryWrapper<BlogFriendLinkEntity> select = Wrappers.<BlogFriendLinkEntity>lambdaQuery().select(BlogFriendLinkEntity::getId,
