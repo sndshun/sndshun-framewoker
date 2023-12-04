@@ -6,46 +6,30 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sndshun.api.DictAdminApi;
 import com.sndshun.api.pojo.dto.DictDto;
 import com.sndshun.commons.tools.Result;
+import com.sndshun.dict.convert.DELogicConvert;
 import com.sndshun.dict.entity.DictEntity;
 import com.sndshun.dict.service.DictService;
 import com.sndshun.web.pojo.QueryPage;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
 @RestController
 public class DictAdminController implements DictAdminApi {
-    @Resource
-    private DictService dictService;
 
-    public static DictEntity convertToDictEntity(DictDto item) {
-        if (item == null) {
-            return null;
-        }
-        DictEntity result = new DictEntity();
-        result.setId(item.getId());
-        result.setParentId(item.getParentId());
-        result.setCode(item.getCode());
-        result.setDictKey(item.getDictKey());
-        result.setDictValue(item.getDictValue());
-        result.setSort(item.getSort());
-        result.setRemark(item.getRemark());
-        result.setIsSealed(item.getIsSealed());
-        result.setVersion(item.getVersion());
-        result.setCreatedBy(item.getCreatedBy());
-        result.setLogicDelete(item.getLogicDelete());
-        result.setUpdatedBy(item.getUpdatedBy());
-        result.setCreatedTime(item.getCreatedTime());
-        result.setUpdatedTime(item.getUpdatedTime());
-        return result;
+    private final DictService dictService;
+
+    @Autowired
+    public DictAdminController(DictService dictService) {
+        this.dictService = dictService;
     }
 
     @Override
     public Result<?> selectAll(QueryPage page, DictDto dict) {
-        return Result.ok(dictService.page(new Page<DictEntity>().setSize(page.getSize()).setCurrent(page.getSize())
-                ,new QueryWrapper<>(null)));
+        return Result.ok(dictService.page(new Page<DictEntity>().setSize(page.getSize()).setCurrent(page.getSize()), new QueryWrapper<>(null)));
     }
 
     @Override
@@ -55,12 +39,14 @@ public class DictAdminController implements DictAdminApi {
 
     @Override
     public Result<?> insert(DictDto dict) {
-        return Result.ok(dictService.save(convertToDictEntity(dict)));
+        DictEntity dictEntity = DELogicConvert.dDConvertToDE13(dict);
+        return Result.ok(dictService.save(dictEntity));
     }
 
     @Override
     public Result<?> update(DictDto dict) {
-        return Result.ok(dictService.updateById(convertToDictEntity(dict)));
+        DictEntity dictEntity = DELogicConvert.dDConvertToDE13(dict);
+        return Result.ok(dictService.updateById(dictEntity));
     }
 
     @Override
