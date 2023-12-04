@@ -6,9 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.email.entity.EmailModelEntity;
 import com.sndshun.email.service.EmailModelService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -21,11 +21,13 @@ import java.util.List;
 @RestController
 @RequestMapping("email")
 public class EmailModelController {
-    /**
-     * 服务对象
-     */
-    @Resource
-    private EmailModelService emailModelService;
+
+    private final EmailModelService emailModelService;
+
+    @Autowired
+    public EmailModelController(EmailModelService emailModelService) {
+        this.emailModelService = emailModelService;
+    }
 
     /**
      * 分页查询所有数据
