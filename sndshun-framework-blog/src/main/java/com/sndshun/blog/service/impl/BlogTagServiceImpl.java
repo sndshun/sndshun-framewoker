@@ -7,6 +7,7 @@ import com.sndshun.blog.mapper.BlogTagMapper;
 import com.sndshun.blog.entity.BlogTagEntity;
 import com.sndshun.blog.service.BlogTagService;
 import com.sndshun.commons.constant.Status;
+import com.sndshun.commons.tools.Result;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -33,4 +34,6 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagEntity
                 .eq(BlogTagEntity::getIsActive, Status.YES.getValue());
         return super.list(select);
     }
+
+
 }

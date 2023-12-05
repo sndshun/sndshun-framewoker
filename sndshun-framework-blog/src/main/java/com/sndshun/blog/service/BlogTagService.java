@@ -2,6 +2,7 @@ package com.sndshun.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sndshun.blog.entity.BlogTagEntity;
+import com.sndshun.commons.tools.Result;
 
 import java.util.List;
 
@@ -15,10 +16,13 @@ public interface BlogTagService extends IService<BlogTagEntity> {
 
     /**
      * 所有标签
+     *
      * @return {@link List }<{@link BlogTagEntity }>
      * @author sndshun
      * @date 2023/12/03 07:13:39
      */
     List<BlogTagEntity> getAll();
+
+
 
 }

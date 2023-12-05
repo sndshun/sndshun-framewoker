@@ -4,9 +4,7 @@ import com.sndshun.blog.entity.BlogTagEntity;
 import com.sndshun.blog.service.BlogTagService;
 import com.sndshun.commons.tools.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -36,5 +34,15 @@ public class BlogTagEndpointController {
         return Result.ok(collect);
     }
 
+    @PostMapping
+    public Result<?> saveTag(@RequestBody BlogTagEntity tagEntity) {
+        boolean result = this.blogTagService.save(tagEntity);
+        return Result.ok(result);
+    }
 
+    @PutMapping
+    public Result<?> updTag(@RequestBody BlogTagEntity tagEntity) {
+        boolean result = this.blogTagService.updateById(tagEntity);
+        return Result.ok(result);
+    }
 }
