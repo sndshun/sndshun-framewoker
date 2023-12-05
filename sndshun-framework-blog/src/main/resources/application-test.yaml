@@ -27,6 +27,8 @@ spring:
     connect-timeout: 3000
   freemarker:
     check-template-location: false
+  #cache:
+    #type: none #关闭缓存
 
 mybatis-plus:
   global-config:
@@ -36,6 +38,8 @@ mybatis-plus:
       logic-delete-value: 1
       #逻辑未删除值
       logic-not-delete-value: 0
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 server:
   compression:

@@ -46,7 +46,7 @@ server:
     mime-types: application/json
 
 system:
-  cache: no
+  cache: no  #dev 关闭缓存
   doubleCache:
     allowNull: false  #是否可缓存 Null
     #caffeine 初始缓存数量

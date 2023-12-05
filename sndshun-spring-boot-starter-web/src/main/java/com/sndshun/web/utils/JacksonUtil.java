@@ -154,7 +154,41 @@ public class JacksonUtil {
         }
     }
 
+    /**
+     * @return {@link ArrayNode }
+     * @author sndshun
+     * @date 2023/12/06 03:28:21
+     */
+    public static ArrayNode createArrayNode() {
+        return objectMapper.createArrayNode();
+    }
 
+    /**
+     * @return {@link ObjectNode }
+     * @author sndshun
+     * @date 2023/12/06 03:28:24
+     */
+    public static ObjectNode createObjectNode() {
+        return objectMapper.createObjectNode();
+    }
 
+    /**
+     * @param o o
+     * @return {@link JsonNode }
+     * @author sndshun
+     * @date 2023/12/06 03:30:47
+     */
+    public static JsonNode objToJsonNode(Object o) {
+        if (null==o){
+            return  null;
+        }else {
+            try {
+                return objectMapper.valueToTree(o);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            return null;
+        }
+    }
 
 }

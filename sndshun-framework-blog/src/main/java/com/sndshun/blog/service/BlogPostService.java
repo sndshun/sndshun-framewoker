@@ -7,6 +7,7 @@ import com.sndshun.commons.tools.Result;
 import com.sndshun.web.pojo.QueryPage;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 文章表(BlogPost)表服务接口
@@ -24,5 +25,13 @@ public interface BlogPostService extends IService<BlogPostEntity> {
      * @date 2023/12/02 10:13:40
      */
     Page<BlogPostEntity> getPostPage(Page<BlogPostEntity> page);
+
+    /**
+     * 查询文章归档页
+     * @return {@link List }<{@link BlogPostEntity }>
+     * @author sndshun
+     * @date 2023/12/05 09:28:13
+     */
+    Map<Integer, List<BlogPostEntity>> getPostArchive();
 
 }

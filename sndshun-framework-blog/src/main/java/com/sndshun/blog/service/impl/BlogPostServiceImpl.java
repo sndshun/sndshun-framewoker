@@ -10,9 +10,14 @@ import com.sndshun.blog.mapper.BlogPostMapper;
 import com.sndshun.blog.service.BlogPostService;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.web.pojo.QueryPage;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 文章表(BlogPost)表服务实现类
@@ -23,6 +28,7 @@ import java.util.List;
 @Service("blogPostService")
 public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEntity> implements BlogPostService {
 
+    @Cacheable(cacheNames = "blog:post",key = "#page.current+':'+#page.size")
     @Override
     public Page<BlogPostEntity> getPostPage(Page<BlogPostEntity> page) {
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
@@ -35,5 +41,26 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
                         BlogPostEntity::getComments)
                 .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode());
         return super.page(page,select);
+    }
+
+    @Override
+    public Map<Integer, List<BlogPostEntity>> getPostArchive() {
+        LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
+                .select(BlogPostEntity::getId,
+                        BlogPostEntity::getTitle,
+                        BlogPostEntity::getSummary,
+                        BlogPostEntity::getPublishedTime,
+                        BlogPostEntity::getCoverImageUrl,
+                        BlogPostEntity::getLikes)
+                .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode())
+                .orderByDesc(BlogPostEntity::getPublishedTime);
+        List<BlogPostEntity> list = super.list(select);
+
+        Map<Integer, List<BlogPostEntity>> collect = list.stream()
+                .sorted(Comparator.comparing(BlogPostEntity::getPublishedTime).reversed())
+                .collect(Collectors.groupingBy(post->post.getPublishedTime().getYear()+1900,
+                        LinkedHashMap::new,
+                        Collectors.toList()));
+        return collect;
     }
 }
