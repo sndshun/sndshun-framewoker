@@ -1,6 +1,6 @@
 #发现的问题
 todo doubleCache 在分布式环境下需要通知进程内缓存数据变更 可使用mq通知或redis6.0+的消息队列
-todo doubleCache 1.是否可以存储null值选项功能不完善 2.值为false时redis中可以存入空值 3.为true时caffeine不能存null需做适配处理
+todo doubleCache 1.是否可以存储null值选项功能不完善 2.值为false时redis中可以存入空值 3.为true时caffeine不能存null需做适配处理 解决 内缓存空间比较珍贵还是不要存null为好，这块应该交给redis布隆过滤器
 双重缓存 redis 连接失败影响数据库查询？？？？ 已解决  作为缓存的redis让兜底的数据库数据反不出去属实不应该
 openapi     文档集成           ok
 minio       文件上传功能模块    ok(无续传、无断点下载)
