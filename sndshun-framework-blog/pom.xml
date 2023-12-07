@@ -73,6 +73,9 @@
                                 <copy todir="${copy.jar.directory}/blog/resources" overwrite="true">
                                     <fileset dir="${project.build.directory}/resources"/>
                                 </copy>
+                                <!-- Rename copied JAR file to app.jar -->
+                                <move file="${copy.jar.directory}/blog/${project.artifactId}-${project.version}.jar"
+                                      tofile="${copy.jar.directory}/blog/app.jar"/>
                             </target>
                         </configuration>
                         <goals>
