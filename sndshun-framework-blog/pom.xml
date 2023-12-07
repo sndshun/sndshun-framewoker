@@ -33,18 +33,18 @@
     </dependencies>
     <build>
         <plugins>
-            <plugin>
+            <!--<plugin>  &lt;!&ndash; 正常打成一体式jar包 &ndash;&gt;
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <executions>
                     <execution>
                         <id>repackage</id>
                         <goals>
-                            <goal>repackage</goal><!--可以把依赖的公共模块都打包到生成的Jar包中-->
+                            <goal>repackage</goal>&lt;!&ndash;可以把依赖的公共模块都打包到生成的Jar包中&ndash;&gt;
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <!-- 把jar包拷贝到指定目录位置 -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -63,11 +63,17 @@
 <!--                                </copy>-->
 <!--                            </tasks>-->
                             <!--3.0.0版本以上用这个-->
-                                                        <target>
-                                                            <copy todir="${copy.jar.directory}" overwrite="true"
-                                                                  file="${project.build.directory}/${project.artifactId}-${project.version}.jar">
-                                                            </copy>
-                                                        </target>
+                            <target>
+                                <copy todir="${copy.jar.directory}/blog" overwrite="true"
+                                      file="${project.build.directory}/${project.artifactId}-${project.version}.jar">
+                                </copy>
+                                <copy todir="${copy.jar.directory}/blog/lib" overwrite="true">
+                                    <fileset dir="${project.build.directory}/lib"/>
+                                </copy>
+                                <copy todir="${copy.jar.directory}/blog/resources" overwrite="true">
+                                    <fileset dir="${project.build.directory}/resources"/>
+                                </copy>
+                            </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
@@ -75,6 +81,82 @@
                     </execution>
                 </executions>
             </plugin>
+            <!-- 资源分离式打包 -->
+            <plugin> <!-- 分离lib -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <excludeTransitive>false</excludeTransitive>
+                            <stripVersion>false</stripVersion>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <includeScope>compile</includeScope>
+                </configuration>
+            </plugin>
+            <plugin>  <!-- 分离配置文件 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/resources</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources/</directory>
+                                    <filtering>true</filtering>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin> <!-- 构建jar包 -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <mainClass>com.sndshun.blog.BlogApplication</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <Class-Path>resources/</Class-Path>
+                        </manifestEntries>
+                    </archive>
+                    <excludes>
+                        <exclude>**/*.yaml</exclude>
+                        <exclude>**/*.yml</exclude>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.xml</exclude>
+                        <exclude>**/*.ttf</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
         </plugins>
     </build>
 </project>

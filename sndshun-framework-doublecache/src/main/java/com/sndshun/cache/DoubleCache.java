@@ -99,8 +99,8 @@ public class DoubleCache extends AbstractValueAdaptingCache {
     public void put(Object key, Object value) {
 
         if(!isAllowNullValues() && Objects.isNull(value)){
-            log.error("已设置为无法缓存 Null");
-            return;
+            //log.error("已设置为无法缓存 Null");
+            throw new RuntimeException("已设置为无法缓存 Null");
         }
 
         // null对象只存在redis中一份就够了
