@@ -1,5 +1,7 @@
 package com.sndshun.blog.aspect;
 
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.entity.BlogVisitLogEntity;
 import com.sndshun.blog.service.BlogVisitLogService;
@@ -128,10 +130,14 @@ public class VisitLogAspect {
         String method = request.getMethod();
         String ip = IpUtils.getIpAddress(request);
         String userAgent = request.getHeader("User-Agent");
-        String browser = request.getHeader("Sec-Ch-Ua");
-        String os = request.getHeader("Sec-Ch-Ua-Platform");
+        UserAgent parse = UserAgentUtil.parse(userAgent);
+        //初始化访问日志对象
         BlogVisitLogEntity blogVisitLog = new BlogVisitLogEntity();
-        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setIpSource(null).setOs(os).setBrowser(browser).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
+        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null)
+                .setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent())
+                .setRemark(null).setIp(ip).setIpSource(null).setOs(parse.getOs().toString())
+                .setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date())
+                .setUserAgent(userAgent);
         return blogVisitLog;
     }
 }

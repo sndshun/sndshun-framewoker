@@ -25,6 +25,7 @@ public class BlogVisitLogServiceImpl extends ServiceImpl<BlogVisitLogMapper, Blo
         this.restTemplate = restTemplate;
     }
 
+    @Cacheable(cacheNames = "blog:visit", key = "#ip")
     @Override
     public String addVisitIpAndMark(String ip, String value) {
         try {
@@ -35,7 +36,6 @@ public class BlogVisitLogServiceImpl extends ServiceImpl<BlogVisitLogMapper, Blo
         }
     }
 
-    @Cacheable(cacheNames = "blog:visit", key = "#ip")
     @Override
     public String getValueByKey(String ip) {
         String result = (String) restTemplate.opsForValue().get(ip);
