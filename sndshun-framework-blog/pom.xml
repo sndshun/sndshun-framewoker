@@ -48,25 +48,26 @@
             <!-- 把jar包拷贝到指定目录位置 -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
+                <version>3.1.0</version>
                 <executions>
                     <execution>
                         <id>copy</id>
                         <phase>package</phase>
                         <configuration>
                             <!--3.0.0版本以下用这个-->
-                            <tasks>
-                                <copy todir="${copy.jar.directory}" overwrite="true">
-                                    <fileset dir="${project.build.directory}">
-                                        <include name="${project.artifactId}-${project.version}.jar"/>
-                                    </fileset>
-                                </copy>
-                            </tasks>
+<!--                            <tasks>-->
+<!--                                <copy todir="${copy.jar.directory}" overwrite="true">-->
+<!--                                    <fileset dir="${project.build.directory}">-->
+<!--                                        <include name="${project.artifactId}-${project.version}.jar"/>-->
+<!--                                    </fileset>-->
+<!--                                </copy>-->
+<!--                            </tasks>-->
                             <!--3.0.0版本以上用这个-->
-                            <!--                            <target>-->
-                            <!--                                <copy todir="${copy.jar.directory}" overwrite="true"-->
-                            <!--                                      file="${project.build.directory}/${project.artifactId}-${project.version}.jar">-->
-                            <!--                                </copy>-->
-                            <!--                            </target>-->
+                                                        <target>
+                                                            <copy todir="${copy.jar.directory}" overwrite="true"
+                                                                  file="${project.build.directory}/${project.artifactId}-${project.version}.jar">
+                                                            </copy>
+                                                        </target>
                         </configuration>
                         <goals>
                             <goal>run</goal>
