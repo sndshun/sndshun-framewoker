@@ -1,6 +1,8 @@
 package com.sndshun.blog.controller.endpoint;
 
+import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.entity.BlogTagEntity;
+import com.sndshun.blog.enums.VisitEnum;
 import com.sndshun.blog.service.BlogTagService;
 import com.sndshun.commons.tools.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * @author sndshun
+ */
 @RestController
 @RequestMapping("/blog/endpoint/tag")
 public class BlogTagEndpointController {
@@ -27,6 +32,7 @@ public class BlogTagEndpointController {
      * @author sndshun
      * @date 2023/12/03 07:47:42
      */
+    @VisitLog(VisitEnum.TAG)
     @GetMapping("/group")
     public Result<Map<String, List<BlogTagEntity>>> allGroupCategory() {
         List<BlogTagEntity> all = blogTagService.getAll();

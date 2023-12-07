@@ -1,6 +1,8 @@
 package com.sndshun.blog.controller.endpoint;
 
+import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.entity.BlogFriendLinkEntity;
+import com.sndshun.blog.enums.VisitEnum;
 import com.sndshun.blog.service.BlogFriendLinkService;
 import com.sndshun.commons.tools.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * @author sndshun
+ */
 @RestController
 @RequestMapping("/blog/endpoint/friendLink")
 public class BlogFriendLinkEndpointController {
@@ -29,6 +34,7 @@ public class BlogFriendLinkEndpointController {
      * @author sndshun
      * @date 2023/12/03 07:51:34
      */
+    @VisitLog(VisitEnum.FRIEND)
     @GetMapping("all")
     public Result<List<BlogFriendLinkEntity>> getAll() {
         return Result.ok(blogFriendLinkService.getAll());

@@ -3,7 +3,9 @@ package com.sndshun.blog.controller.endpoint;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.entity.BlogPostEntity;
+import com.sndshun.blog.enums.VisitEnum;
 import com.sndshun.blog.service.BlogPostService;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.web.pojo.QueryPage;
@@ -12,12 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
+
+
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+
+/**
+ * @author sndshun
+ */
 @RestController
 @RequestMapping("/blog/endpoint/post")
 public class BlogPostEndpointController {
@@ -35,6 +40,7 @@ public class BlogPostEndpointController {
      * @author sndshun
      * @date 2023/12/05 09:36:29
      */
+    @VisitLog(VisitEnum.INDEX)
     @GetMapping("page")
     public Result<?> getPostPage(QueryPage page) {
         Page<BlogPostEntity> query = new Page<BlogPostEntity>().setCurrent(page.getCurrent()).setSize(page.getSize());
@@ -47,6 +53,7 @@ public class BlogPostEndpointController {
      * @author sndshun
      * @date 2023/12/05 09:36:41
      */
+    @VisitLog(VisitEnum.ARCHIVE)
     @Cacheable(cacheNames = "blog:post",key = "#root.methodName")
     @GetMapping("archive")
     public Result<?> getPostArchive() {
