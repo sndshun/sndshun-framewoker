@@ -1,6 +1,7 @@
 package com.sndshun.cache;
 
 import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.support.AbstractValueAdaptingCache;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class DoubleCache extends AbstractValueAdaptingCache {
     private String cacheName;
     private RedisTemplate<Object, Object> redisTemplate;
-    private Cache<Object, Object> caffeineCache;
+    private static Cache<Object, Object> caffeineCache;
     private DoubleCacheConfig doubleCacheConfig;
  
     protected DoubleCache(boolean allowNullValues) {
@@ -45,6 +46,8 @@ public class DoubleCache extends AbstractValueAdaptingCache {
         // 先从caffeine中查找
         Object obj = caffeineCache.getIfPresent(key);
         if (Objects.nonNull(obj)){
+            System.out.println(caffeineCache);
+            System.out.println(caffeineCache.asMap());
             log.info("进程内缓存中获取 caffeine:"+obj.toString());
             return obj;
         }
@@ -136,6 +139,9 @@ public class DoubleCache extends AbstractValueAdaptingCache {
         for (Object key : keys) {
             redisTemplate.delete(String.valueOf(key));
         }
+        System.out.println(caffeineCache);
+        System.out.println(caffeineCache.asMap());
         caffeineCache.invalidateAll();
     }
+
 }

@@ -58,7 +58,7 @@ public class DoubleCacheManager implements CacheManager {
         dcConfigOpt.map(DoubleCacheConfig::getMax)
                 .ifPresent(max->caffeineBuilder.maximumSize(max));
         dcConfigOpt.map(DoubleCacheConfig::getCaffeineExpire)
-                .ifPresent(eaw->caffeineBuilder.expireAfterWrite(eaw, TimeUnit.SECONDS));
+                .ifPresent(eaw->caffeineBuilder.expireAfterAccess(eaw, TimeUnit.SECONDS));
         return caffeineBuilder.build();
     }
 }
