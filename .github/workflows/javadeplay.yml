@@ -26,5 +26,5 @@ jobs:
       - name: 上传 JAR 文件到服务器
         run: |
           ls 
-          sshpass -p ${{ secrets.DEPLOY_PASSWORD }} scp -o StrictHostKeyChecking=no -r jar/blog/app.jar root@124.70.45.144:/framework/blog
+          sshpass -p ${{ secrets.DEPLOY_PASSWORD }} scp -o StrictHostKeyChecking=no -r target/sndshun-framework-blog-1.0-SNAPSHOT.jar root@124.70.45.144:/framework/blog
           sshpass -p ${{ secrets.DEPLOY_PASSWORD }} ssh root@124.70.45.144 "Restart framework-inerface "
