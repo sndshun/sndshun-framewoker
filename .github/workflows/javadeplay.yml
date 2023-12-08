@@ -1,0 +1,30 @@
+name: Java 构建与部署
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+
+      - name: 配置 Java 环境
+        uses: actions/setup-java@v3
+        with:
+          java-version: '8' # 选择适当的 Java 版本
+          distribution: 'adopt' # 指定所需的发行版，例如 'adopt'、'adopt-hotspot' 等
+          #token: ${{ secrets.G_TOKEN }}
+
+      - name: 使用 Maven 构建
+        run: mvn package -DskipTests -P test -pl sndshun-framework-blog -am  # 使用 Maven 编译和打包
+
+      - name: 上传 JAR 文件到服务器
+        run: |
+          ls 
+          sshpass -p ${{ secrets.DEPLOY_PASSWORD }} scp -o StrictHostKeyChecking=no -r jar/blog/app.jar root@124.70.45.144:/framework/blog
+          sshpass -p ${{ secrets.DEPLOY_PASSWORD }} ssh root@124.70.45.144 "Restart framework-inerface "
