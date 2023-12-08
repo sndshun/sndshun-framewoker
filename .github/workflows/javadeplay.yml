@@ -27,4 +27,4 @@ jobs:
         run: |
           ls 
           sshpass -p ${{ secrets.DEPLOY_PASSWORD }} scp -o StrictHostKeyChecking=no -r sndshun-framework-blog/target/sndshun-framework-blog-1.0-SNAPSHOT.jar root@124.70.45.144:/framework/blog
-          sshpass -p ${{ secrets.DEPLOY_PASSWORD }} ssh root@124.70.45.144 "mv -f /framework/blog/sndshun-framework-blog-1.0-SNAPSHOT.jar /framework/blog/app.jar && systemctl restart framework-inerface"
+          sshpass -p ${{ secrets.DEPLOY_PASSWORD }} ssh root@124.70.45.144 "mv -f /framework/blog/sndshun-framework-blog-1.0-SNAPSHOT.jar /framework/blog/app.jar && docker restart framework-inerface"
