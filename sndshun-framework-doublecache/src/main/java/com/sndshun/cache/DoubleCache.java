@@ -46,8 +46,6 @@ public class DoubleCache extends AbstractValueAdaptingCache {
         // 先从caffeine中查找
         Object obj = caffeineCache.getIfPresent(key);
         if (Objects.nonNull(obj)){
-            System.out.println(caffeineCache);
-            System.out.println(caffeineCache.asMap());
             log.info("进程内缓存中获取 caffeine:"+obj.toString());
             return obj;
         }
@@ -139,8 +137,6 @@ public class DoubleCache extends AbstractValueAdaptingCache {
         for (Object key : keys) {
             redisTemplate.delete(String.valueOf(key));
         }
-        System.out.println(caffeineCache);
-        System.out.println(caffeineCache.asMap());
         caffeineCache.invalidateAll();
     }
 
