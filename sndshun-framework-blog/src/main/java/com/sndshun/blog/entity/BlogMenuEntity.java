@@ -65,6 +65,10 @@ public class BlogMenuEntity extends Model<BlogMenuEntity> {
 
     private Integer isHidden;
     /**
+     * 类型 0 博客菜单 1 博客后台菜单
+     */
+    private Integer type;
+    /**
      * 租户号
      */
 

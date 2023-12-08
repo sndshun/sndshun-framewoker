@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * 博客菜单(BlogMenu)表控制层
+ * 博客菜单(BlogMenu)端点控制层
  *
  * @author sndshun
  * @since 2023-11-25 05:46:24

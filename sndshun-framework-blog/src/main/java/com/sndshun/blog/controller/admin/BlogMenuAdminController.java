@@ -13,7 +13,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 博客菜单(BlogMenu)表控制层
+ * 博客菜单(BlogMenu)管理控制层
  *
  * @author sndshun
  * @since 2023-11-27 17:05:42
@@ -49,11 +49,20 @@ public class BlogMenuAdminController {
      * @author sndshun
      * @date 2023/11/28 11:42:53
      */
-    @GetMapping("tree")
-    public Result<?> selectTree() {
+    @GetMapping("tree/all")
+    public Result<?> selectTreeAll() {
         return Result.ok(this.blogMenuService.blogMenuTreeAll());
     }
 
+    /**查询博客管理端菜单
+     * @return {@link Result }<{@link ? }>
+     * @author sndshun
+     * @date 2023/12/08 10:47:43
+     */
+    @GetMapping("tree")
+    public Result<?> selectTree() {
+        return Result.ok(this.blogMenuService.blogMenuTree());
+    }
     /**
      * 通过主键查询单条数据
      *
