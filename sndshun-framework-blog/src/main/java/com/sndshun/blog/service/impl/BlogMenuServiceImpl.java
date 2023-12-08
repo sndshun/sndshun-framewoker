@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sndshun.blog.constant.MenuType;
 import com.sndshun.blog.mapper.BlogMenuMapper;
 import com.sndshun.blog.entity.BlogMenuEntity;
 import com.sndshun.blog.service.BlogMenuService;
@@ -41,7 +42,8 @@ public class BlogMenuServiceImpl extends ServiceImpl<BlogMenuMapper, BlogMenuEnt
                         BlogMenuEntity::getIcon,
                         BlogMenuEntity::getPath,
                         BlogMenuEntity::getComponent)
-                .eq(BlogMenuEntity::getIsHidden, Status.NO);
+                .eq(BlogMenuEntity::getIsHidden, Status.NO)
+                .eq(BlogMenuEntity::getType, MenuType.BLOGADMINMENU.getCode());
 
         List<BlogMenuEntity> list = super.list(select);
 
