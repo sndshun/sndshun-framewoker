@@ -13,6 +13,7 @@ import com.sndshun.blog.service.BlogMenuService;
 import com.sndshun.blog.vo.BlogMenuTreeVo;
 import com.sndshun.commons.constant.Status;
 import com.sndshun.commons.tools.TreeUtils;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -88,6 +89,5 @@ public class BlogMenuServiceImpl extends ServiceImpl<BlogMenuMapper, BlogMenuEnt
                 .orderBy(true,true,BlogMenuEntity::getSort);
         return super.list(select);
     }
-
 
 }
