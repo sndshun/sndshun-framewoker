@@ -1,12 +1,14 @@
 package com.sndshun.blog.controller.admin;
 
 
+import com.sndshun.commons.constant.Status;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.service.BlogPostService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
@@ -60,6 +62,7 @@ public class BlogPostAdminController {
      * @param blogPost 实体对象
      * @return 新增结果
      */
+    @CacheEvict(cacheNames = "blog:post",allEntries = true,condition = "#blogPost.isPublished==1")
     @PostMapping
     public Result<?> insert(@RequestBody BlogPostEntity blogPost) {
         return Result.ok(this.blogPostService.save(blogPost));
@@ -71,6 +74,7 @@ public class BlogPostAdminController {
      * @param blogPost 实体对象
      * @return 修改结果
      */
+    @CacheEvict(cacheNames = "blog:post",allEntries = true)
     @PutMapping
     public Result<?> update(@RequestBody BlogPostEntity blogPost) {
         return Result.ok(this.blogPostService.updateById(blogPost));
@@ -82,6 +86,7 @@ public class BlogPostAdminController {
      * @param id 主键
      * @return 删除结果
      */
+    @CacheEvict(cacheNames = "blog:post",allEntries = true)
     @DeleteMapping("/{id}")
     public Result<?> delete(@PathVariable Long id) {
         return Result.ok(this.blogPostService.removeById(id));
@@ -93,6 +98,7 @@ public class BlogPostAdminController {
      * @param idList 主键结合
      * @return 删除结果
      */
+    @CacheEvict(cacheNames = "blog:post",allEntries = true)
     @DeleteMapping("batch")
     public Result<?> deleteBatch(@RequestBody List<Long> idList) {
         return Result.ok(this.blogPostService.removeByIds(idList));

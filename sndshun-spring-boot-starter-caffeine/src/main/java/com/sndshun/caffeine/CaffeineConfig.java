@@ -44,7 +44,7 @@ public class CaffeineConfig {
 
 
     @Bean("caffeineCache")
-    public Cache<String, Object> caffeineCache() {
+    public Cache<Object, Object> caffeineCache() {
         return Caffeine.newBuilder()
                 // 设置最后一次访问后经过固定时间过期.
                 .expireAfterAccess(7, TimeUnit.DAYS)

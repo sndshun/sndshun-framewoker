@@ -3,9 +3,12 @@ package com.sndshun.cache;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.support.AbstractValueAdaptingCache;
 import org.springframework.data.redis.core.RedisTemplate;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -22,9 +25,9 @@ import java.util.concurrent.locks.ReentrantLock;
 public class DoubleCache extends AbstractValueAdaptingCache {
     private String cacheName;
     private RedisTemplate<Object, Object> redisTemplate;
-    private static Cache<Object, Object> caffeineCache;
+    private Cache<Object, Object> caffeineCache;
     private DoubleCacheConfig doubleCacheConfig;
- 
+
     protected DoubleCache(boolean allowNullValues) {
         super(allowNullValues);
     }
@@ -107,7 +110,7 @@ public class DoubleCache extends AbstractValueAdaptingCache {
         // null对象只存在redis中一份就够了
         if (Objects.isNull(value)){
             //使用 toStoreValue(value) 包装，解决caffeine不能存null的问题
-            //caffeineCache.put(key,toStoreValue(value));
+            caffeineCache.put(key,toStoreValue(value));
             redisTemplate.opsForValue().set(this.cacheName+":"+key,value);
             return;
         }
@@ -133,11 +136,18 @@ public class DoubleCache extends AbstractValueAdaptingCache {
 
     @Override
     public void clear() {
+        caffeineCache.invalidateAll();
         Set<Object> keys = redisTemplate.keys(this.cacheName.concat(":*"));
         for (Object key : keys) {
             redisTemplate.delete(String.valueOf(key));
         }
-        caffeineCache.invalidateAll();
+    }
+
+    @Override
+    public boolean invalidate() {
+        boolean notEmpty = !this.caffeineCache.asMap().isEmpty();
+        this.caffeineCache.invalidateAll();
+        return notEmpty;
     }
 
 }
