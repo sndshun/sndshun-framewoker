@@ -43,6 +43,23 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
         return super.page(page,select);
     }
 
+    @Cacheable(cacheNames = "blog:post:id",key = "#id")
+    @Override
+    public BlogPostEntity getPostById(Long id) {
+        LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
+                .select(BlogPostEntity::getId,
+                        BlogPostEntity::getTitle,
+                        BlogPostEntity::getSummary,
+                        BlogPostEntity::getPublishedTime,
+                        BlogPostEntity::getCoverImageUrl,
+                        BlogPostEntity::getLikes,
+                        BlogPostEntity::getComments,
+                        BlogPostEntity::getContent)
+                .eq(BlogPostEntity::getId,id)
+                .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode());
+        return super.getOne(select);
+    }
+
     @Override
     public Map<Integer, List<BlogPostEntity>> getPostArchive() {
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
