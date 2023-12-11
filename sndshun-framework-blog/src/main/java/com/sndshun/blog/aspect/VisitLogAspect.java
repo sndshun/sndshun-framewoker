@@ -35,7 +35,7 @@ public class VisitLogAspect {
 
     private final BlogVisitLogService blogVisitLogService;
     private final BlogVisitUserService blogVisitUserService;
-    private ThreadLocal<Long> currentTime = new ThreadLocal<>();
+    private final ThreadLocal<Long> currentTime = new ThreadLocal<>();
 
     @Autowired
     public VisitLogAspect(BlogVisitLogService blogVisitLogService, BlogVisitUserService blogVisitUserService) {
@@ -80,7 +80,7 @@ public class VisitLogAspect {
      *
      * @param ip      IP
      * @param request 请求
-     * @return
+     * @return uuid
      */
     private String checkIdentification(String ip, HttpServletRequest request) {
         String uuid = blogVisitLogService.getValueByKey(ip);
@@ -112,10 +112,10 @@ public class VisitLogAspect {
         String assembleUuId = timestamp + ip + userAgent;
         String uuid = UUID.nameUUIDFromBytes(assembleUuId.getBytes()).toString();
         //添加访客标识码UUID至响应头
+        assert response != null;
         response.addHeader("identification", uuid);
         //暴露自定义header供页面资源使用
         response.addHeader("Access-Control-Expose-Headers", "identification");
-        blogVisitLogService.addVisitIpAndMark(ip, uuid);
         return uuid;
     }
 
@@ -134,12 +134,7 @@ public class VisitLogAspect {
         UserAgent parse = UserAgentUtil.parse(userAgent);
         //初始化访问日志对象
         BlogVisitLogEntity blogVisitLog = new BlogVisitLogEntity();
-        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null)
-                .setBehavior(visitLog.value().getType())
-                .setContent(visitLog.value().getContent())
-                .setRemark(null).setIp(ip).setOs(parse.getOs().toString())
-                .setBrowser(parse.getBrowser().toString()).setTimes(times)
-                .setCreateTime(new Date()).setUserAgent(userAgent);
+        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setOs(parse.getOs().toString()).setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
         saveVisitLogAsync(blogVisitLog);
     }
 
@@ -158,8 +153,9 @@ public class VisitLogAspect {
     private void getInformationViaIp(String uuid, String ip) {
         HashMap<String, Object> ipMsg = IpUtils.getInformationViaIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
-        if (itExist==false) {
+        if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
+            assert ipMsg != null;
             String country = ipMsg.get("country").toString();
             String prov = ipMsg.get("prov").toString();
             String city = ipMsg.get("city").toString();
@@ -173,5 +169,6 @@ public class VisitLogAspect {
     @Async
     void saveVisitUserAsync(BlogVisitUserEntity blogVisitUser) {
         blogVisitUserService.save(blogVisitUser);
+        blogVisitLogService.addVisitIpAndMark(blogVisitUser.getIp(), blogVisitUser.getUuid());
     }
 }
