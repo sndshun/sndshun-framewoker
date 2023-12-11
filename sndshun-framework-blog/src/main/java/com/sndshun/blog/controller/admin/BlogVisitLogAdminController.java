@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/blog/admin/visit")
-public class BlogVisitLogController {
+public class BlogVisitLogAdminController {
 
     private final BlogVisitLogService blogVisitLogService;
 
     @Autowired
-    public BlogVisitLogController(BlogVisitLogService blogVisitLogService) {
+    public BlogVisitLogAdminController(BlogVisitLogService blogVisitLogService) {
         this.blogVisitLogService = blogVisitLogService;
     }
 
