@@ -11,4 +11,13 @@ import com.sndshun.blog.entity.BlogVisitUserEntity;
  */
 public interface BlogVisitUserService extends IService<BlogVisitUserEntity> {
 
+
+    /**
+     * 验证是否存在
+     *
+     * @param uuid 访客识别码
+     * @param ip   IP
+     * @return 真假
+     */
+    boolean doesItExist(String uuid, String ip);
 }

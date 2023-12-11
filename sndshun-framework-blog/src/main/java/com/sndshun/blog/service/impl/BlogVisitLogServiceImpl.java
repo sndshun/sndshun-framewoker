@@ -37,7 +37,6 @@ public class BlogVisitLogServiceImpl extends ServiceImpl<BlogVisitLogMapper, Blo
 
     @Override
     public String getValueByKey(String ip) {
-        String result = (String) restTemplate.opsForValue().get("ip:"+ip);
-        return result;
+        return (String) restTemplate.opsForValue().get("ip:"+ip);
     }
 }
