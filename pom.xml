@@ -91,8 +91,6 @@
                 <artifactId>sndshun-framework-doublecache</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
-
-
             <dependency>
                 <groupId>com.sndshun</groupId>
                 <artifactId>service-api</artifactId>
@@ -108,9 +106,6 @@
                 <artifactId>sndshun-framework-mybatis-plus-starter</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
-
-
-
             <dependency>
                 <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-framework-commons</artifactId>
@@ -121,7 +116,6 @@
                 <artifactId>sndshun-framework-template</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
-
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -142,8 +136,6 @@
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.openapi.version}</version>
             </dependency>
-
-
             <dependency>
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
@@ -170,10 +162,6 @@
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
                 <logstash.address>127.0.0.1:4560</logstash.address>
             </properties>
-            <activation>
-                <!-- 默认环境 -->
-                <activeByDefault>true</activeByDefault>
-            </activation>
         </profile>
         <profile>
             <id>test</id>
@@ -186,6 +174,10 @@
                 <nacos.config.group>DEFAULT_GROUP</nacos.config.group>
                 <logstash.address>127.0.0.1:4560</logstash.address>
             </properties>
+            <activation>
+                <!-- 默认环境 -->
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
         <profile>
             <id>prod</id>

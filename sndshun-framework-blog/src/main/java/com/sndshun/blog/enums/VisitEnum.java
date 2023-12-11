@@ -20,6 +20,7 @@ public enum VisitEnum {
     FRIEND("访问页面", "友链"),
 
     ABOUT("访问页面", "关于我"),
+    VISIT_LOG_PAGE("访客日志","分页查询"),
     ;
 
     /**
