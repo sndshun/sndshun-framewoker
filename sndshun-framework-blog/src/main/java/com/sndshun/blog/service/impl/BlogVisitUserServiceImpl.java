@@ -29,8 +29,9 @@ public class BlogVisitUserServiceImpl extends ServiceImpl<BlogVisitUserMapper, B
         String result = (String) restTemplate.opsForValue().get("ip:" + ip);
         if (result == null) {
             return doesItExistDb(uuid, ip);
+        }else {
+            return true;
         }
-        return true;
     }
 
     private boolean doesItExistDb(String uuid, String ip) {

@@ -158,7 +158,7 @@ public class VisitLogAspect {
     private void getInformationViaIp(String uuid, String ip) {
         HashMap<String, Object> ipMsg = IpUtils.getInformationViaIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
-        if (!itExist) {
+        if (itExist==false) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
             String country = ipMsg.get("country").toString();
             String prov = ipMsg.get("prov").toString();
