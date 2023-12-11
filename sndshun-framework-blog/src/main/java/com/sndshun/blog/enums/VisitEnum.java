@@ -20,7 +20,11 @@ public enum VisitEnum {
     FRIEND("访问页面", "友链"),
 
     ABOUT("访问页面", "关于我"),
-    VISIT_LOG_PAGE("访客日志","分页查询"),
+    VISIT_LOG_PAGE("访客日志", "分页查询"),
+
+    CACHE_CLEAR("菜单缓存", "清除缓存"),
+
+    POST_SELECT_PAGE("文章","分页查询"),
     ;
 
     /**
