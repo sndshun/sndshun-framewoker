@@ -1,6 +1,8 @@
 package com.sndshun.blog.controller.admin;
 
 
+import com.sndshun.blog.annotation.VisitLog;
+import com.sndshun.blog.enums.VisitEnum;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.service.BlogPostService;
@@ -61,6 +63,7 @@ public class BlogPostAdminController {
      * @param blogPost 实体对象
      * @return 新增结果
      */
+    @VisitLog(VisitEnum.ARCHIVE)
     @CacheEvict(cacheNames = "blog:post",allEntries = true,condition = "#blogPost.isPublished==1")
     @PostMapping
     public Result<?> insert(@RequestBody BlogPostEntity blogPost) {
