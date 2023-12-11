@@ -13,7 +13,6 @@ import javax.annotation.Resource;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @MapperScan("com.sndshun.blog.mapper")
 class BlogMenuServiceImplTest {
@@ -23,7 +22,7 @@ class BlogMenuServiceImplTest {
     @Test
     void blogMenuTreeAll() throws JsonProcessingException {
 
-        List<BlogMenuTreeVo> blogMenuTreeVoList = blogMenuService.blogMenuTreeAll();
+        List<BlogMenuTreeVo> blogMenuTreeVoList = blogMenuService.blogMenuTreeAllCaChe();
 
         ObjectMapper om=new ObjectMapper();
         om.enable(SerializationFeature.INDENT_OUTPUT); //格式化输出
@@ -34,7 +33,7 @@ class BlogMenuServiceImplTest {
 
     @Test
     void blogMenuTree() throws JsonProcessingException {
-        List<BlogMenuTreeVo> blogMenuTreeVoList = blogMenuService.blogMenuTree();
+        List<BlogMenuTreeVo> blogMenuTreeVoList = blogMenuService.blogMenuTreeCaChe();
 
         ObjectMapper om=new ObjectMapper();
         om.enable(SerializationFeature.INDENT_OUTPUT); //格式化输出

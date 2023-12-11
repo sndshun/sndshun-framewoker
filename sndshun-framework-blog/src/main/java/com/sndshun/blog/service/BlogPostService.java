@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.commons.tools.Result;
-import com.sndshun.web.pojo.QueryPage;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,7 @@ public interface BlogPostService extends IService<BlogPostEntity> {
      * @author sndshun
      * @date 2023/12/02 10:13:40
      */
-    Page<BlogPostEntity> getPostPage(Page<BlogPostEntity> page);
+    Page<BlogPostEntity> getPostPageCache(Page<BlogPostEntity> page);
 
     /**根据id查询文章详情
      * @param id 编号
@@ -32,7 +31,7 @@ public interface BlogPostService extends IService<BlogPostEntity> {
      * @author sndshun
      * @date 2023/12/11 12:14:13
      */
-    BlogPostEntity getPostById(Long id);
+    BlogPostEntity getPostByIdCache(Long id);
 
     /**
      * 查询文章归档页

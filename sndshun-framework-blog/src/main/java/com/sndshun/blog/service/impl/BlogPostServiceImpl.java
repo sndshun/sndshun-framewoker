@@ -30,7 +30,7 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
 
     @Cacheable(cacheNames = "blog:post",key = "#page.current+':'+#page.size")
     @Override
-    public Page<BlogPostEntity> getPostPage(Page<BlogPostEntity> page) {
+    public Page<BlogPostEntity> getPostPageCache(Page<BlogPostEntity> page) {
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
                 .select(BlogPostEntity::getId,
                         BlogPostEntity::getTitle,
@@ -45,7 +45,7 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
 
     @Cacheable(cacheNames = "blog:post:id",key = "#id")
     @Override
-    public BlogPostEntity getPostById(Long id) {
+    public BlogPostEntity getPostByIdCache(Long id) {
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
                 .select(BlogPostEntity::getId,
                         BlogPostEntity::getTitle,

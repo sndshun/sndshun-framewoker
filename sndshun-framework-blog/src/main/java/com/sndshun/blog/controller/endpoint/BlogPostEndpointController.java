@@ -21,8 +21,11 @@ import java.util.Map;
 
 
 /**
+ * 分类表(BlogCategory)端点控制层
  * @author sndshun
+ * @date 2023/12/12 01:48:52
  */
+
 @RestController
 @RequestMapping("/blog/endpoint/post")
 public class BlogPostEndpointController {
@@ -44,7 +47,7 @@ public class BlogPostEndpointController {
     @GetMapping("page")
     public Result<?> getPostPage(QueryPage page) {
         Page<BlogPostEntity> query = new Page<BlogPostEntity>().setCurrent(page.getCurrent()).setSize(page.getSize());
-        return Result.ok(blogPostService.getPostPage(query));
+        return Result.ok(blogPostService.getPostPageCache(query));
     }
 
     /**
@@ -55,8 +58,8 @@ public class BlogPostEndpointController {
      * @date 2023/12/11 12:16:31
      */
     @GetMapping("/{id}")
-    public Result<?> getPostById(@PathVariable Long id) {
-        return Result.ok(blogPostService.getPostById(id));
+    public Result<BlogPostEntity> getPostById(@PathVariable Long id) {
+        return Result.ok(blogPostService.getPostByIdCache(id));
     }
 
     /**
@@ -68,7 +71,7 @@ public class BlogPostEndpointController {
     @VisitLog(VisitEnum.ARCHIVE)
     @Cacheable(cacheNames = "blog:post",key = "#root.methodName")
     @GetMapping("archive")
-    public Result<?> getPostArchive() {
+    public Result<ArrayNode> getPostArchive() {
         ArrayNode arrayNode = JacksonUtil.createArrayNode();
         Map<Integer, List<BlogPostEntity>> postArchive = blogPostService.getPostArchive();
         postArchive.forEach((key,value)->{

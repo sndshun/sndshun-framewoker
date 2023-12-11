@@ -3,11 +3,15 @@ package com.sndshun.blog.controller.endpoint;
 import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.enums.VisitEnum;
 import com.sndshun.blog.service.BlogCategoryService;
+import com.sndshun.blog.vo.BlogCategoryTreeVo;
+import com.sndshun.blog.vo.BlogMenuTreeVo;
 import com.sndshun.commons.tools.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author sendshun
@@ -25,8 +29,8 @@ public class BlogCategoryEndpointController {
 
     @VisitLog(VisitEnum.MOMENT)
     @GetMapping("tree")
-    public Result<?> tree() {
-        return Result.ok(blogCategoryService.getCategoryTree());
+    public Result<List<BlogCategoryTreeVo>> tree() {
+        return Result.ok(blogCategoryService.getCategoryTreeCache());
     }
 
 

@@ -29,7 +29,7 @@ public class BlogController {
      */
     @GetMapping("cache/clear")
     @CacheEvict(cacheNames = "blog:menu",allEntries = true)
-    public Result<?> clearBlogMenuCache() {
+    public Result<Boolean> clearBlogMenuCache() {
         log.info("博客缓存=====================>全部清楚成功");
         return Result.ok(true);
     }

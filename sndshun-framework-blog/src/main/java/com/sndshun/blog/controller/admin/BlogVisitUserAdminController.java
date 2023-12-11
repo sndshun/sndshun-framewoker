@@ -35,7 +35,7 @@ public class BlogVisitUserAdminController {
      * @return 所有数据
      */
     @GetMapping
-    public Result<?> selectPage(Page<BlogVisitUserEntity> page, BlogVisitUserEntity blogVisitUser) {
+    public Result<Page<BlogVisitUserEntity>> selectPage(Page<BlogVisitUserEntity> page, BlogVisitUserEntity blogVisitUser) {
         return Result.ok(this.blogVisitUserService.page(page, new QueryWrapper<>(blogVisitUser)));
     }
 
@@ -46,7 +46,7 @@ public class BlogVisitUserAdminController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public Result<?> selectOne(@PathVariable Serializable id) {
+    public Result<BlogVisitUserEntity> selectOne(@PathVariable Serializable id) {
         return Result.ok(this.blogVisitUserService.getById(id));
     }
 
@@ -57,7 +57,7 @@ public class BlogVisitUserAdminController {
      * @return 新增结果
      */
     @PostMapping
-    public Result<?> insert(@RequestBody BlogVisitUserEntity blogVisitUser) {
+    public Result<Boolean> insert(@RequestBody BlogVisitUserEntity blogVisitUser) {
         return Result.ok(this.blogVisitUserService.save(blogVisitUser));
     }
 
@@ -68,7 +68,7 @@ public class BlogVisitUserAdminController {
      * @return 修改结果
      */
     @PutMapping
-    public Result<?> update(@RequestBody BlogVisitUserEntity blogVisitUser) {
+    public Result<Boolean> update(@RequestBody BlogVisitUserEntity blogVisitUser) {
         return Result.ok(this.blogVisitUserService.updateById(blogVisitUser));
     }
 
@@ -79,7 +79,7 @@ public class BlogVisitUserAdminController {
      * @return 删除结果
      */
     @DeleteMapping("/{id}")
-    public Result<?> delete(@PathVariable Long id) {
+    public Result<Boolean> delete(@PathVariable Long id) {
         return Result.ok(this.blogVisitUserService.removeById(id));
     }
 
@@ -90,7 +90,7 @@ public class BlogVisitUserAdminController {
      * @return 删除结果
      */
     @DeleteMapping("batch")
-    public Result<?> deleteBatch(@RequestBody List<Long> idList) {
+    public Result<Boolean> deleteBatch(@RequestBody List<Long> idList) {
         return Result.ok(this.blogVisitUserService.removeByIds(idList));
     }
 }

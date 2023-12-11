@@ -24,7 +24,7 @@ public class BlogFriendLinkServiceImpl extends ServiceImpl<BlogFriendLinkMapper,
 
     @Cacheable(cacheNames = "blog:link",key = "#root.methodName")
     @Override
-    public List<BlogFriendLinkEntity> getAll() {
+    public List<BlogFriendLinkEntity> getAllCache() {
         LambdaQueryWrapper<BlogFriendLinkEntity> select = Wrappers.<BlogFriendLinkEntity>lambdaQuery().select(BlogFriendLinkEntity::getId,
                         BlogFriendLinkEntity::getName,
                         BlogFriendLinkEntity::getDescription,

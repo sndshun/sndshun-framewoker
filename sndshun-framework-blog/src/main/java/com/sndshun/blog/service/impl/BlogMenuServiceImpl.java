@@ -36,7 +36,7 @@ public class BlogMenuServiceImpl extends ServiceImpl<BlogMenuMapper, BlogMenuEnt
 
     @Cacheable(cacheNames = "blog:menu",key = "#root.methodName")
     @Override
-    public List<BlogMenuTreeVo> blogMenuTree() {
+    public List<BlogMenuTreeVo> blogMenuTreeCaChe() {
         LambdaQueryWrapper<BlogMenuEntity> select = Wrappers. <BlogMenuEntity>lambdaQuery().select(BlogMenuEntity::getId,
                         BlogMenuEntity::getName,
                         BlogMenuEntity::getParentId,
@@ -61,7 +61,7 @@ public class BlogMenuServiceImpl extends ServiceImpl<BlogMenuMapper, BlogMenuEnt
 
     @Cacheable(cacheNames = "blog:menu",key = "#root.methodName")
     @Override
-    public List<BlogMenuTreeVo> blogMenuTreeAll() {
+    public List<BlogMenuTreeVo> blogMenuTreeAllCaChe() {
         List<BlogMenuEntity> blogMenuEntities = super.list();
 
         List<BlogMenuTreeVo> blogMenuTreeVoList = BlogMenuTreeVo.convertToBlogMenuTreeListVo(blogMenuEntities);
@@ -77,7 +77,7 @@ public class BlogMenuServiceImpl extends ServiceImpl<BlogMenuMapper, BlogMenuEnt
 
     @Cacheable(cacheNames = "blog:menu",key = "#root.methodName")
     @Override
-    public List<BlogMenuEntity> blogMenuByParentId(Long id) {
+    public List<BlogMenuEntity> blogMenuByParentIdCache(Long id) {
         LambdaQueryWrapper<BlogMenuEntity> select=Wrappers.<BlogMenuEntity>lambdaQuery()
                 .select(BlogMenuEntity::getId,
                         BlogMenuEntity::getName,

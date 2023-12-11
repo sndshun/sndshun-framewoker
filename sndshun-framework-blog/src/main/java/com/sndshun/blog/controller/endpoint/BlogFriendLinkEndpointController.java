@@ -37,7 +37,7 @@ public class BlogFriendLinkEndpointController {
     @VisitLog(VisitEnum.FRIEND)
     @GetMapping("all")
     public Result<List<BlogFriendLinkEntity>> getAll() {
-        return Result.ok(blogFriendLinkService.getAll());
+        return Result.ok(blogFriendLinkService.getAllCache());
     }
 
 

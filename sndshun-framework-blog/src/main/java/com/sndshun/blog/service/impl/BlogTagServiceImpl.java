@@ -24,7 +24,7 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTagEntity
 
     @Cacheable(cacheNames = "blog:tag",key = "#root.methodName")
     @Override
-    public List<BlogTagEntity> getAll() {
+    public List<BlogTagEntity> getAllCaChe() {
         LambdaQueryWrapper<BlogTagEntity> select = Wrappers.<BlogTagEntity>lambdaQuery().select(BlogTagEntity::getId,
                 BlogTagEntity::getName,
                 BlogTagEntity::getDescription,

@@ -38,7 +38,7 @@ public class BlogVisitLogAdminController {
      */
     @VisitLog(VisitEnum.VISIT_LOG_PAGE)
     @GetMapping
-    public Result<?> getAllVisitLog(Page<BlogVisitLogEntity> page, BlogVisitLogEntity blogVisitLog) {
+    public Result<Page<BlogVisitLogEntity>> getAllVisitLog(Page<BlogVisitLogEntity> page, BlogVisitLogEntity blogVisitLog) {
         LambdaQueryWrapper<BlogVisitLogEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.orderByDesc(BlogVisitLogEntity::getCreateTime);
         Page<BlogVisitLogEntity> result = this.blogVisitLogService.page(page, lambdaQueryWrapper);
