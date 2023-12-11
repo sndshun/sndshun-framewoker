@@ -26,6 +26,14 @@ public interface BlogPostService extends IService<BlogPostEntity> {
      */
     Page<BlogPostEntity> getPostPage(Page<BlogPostEntity> page);
 
+    /**根据id查询文章详情
+     * @param id 编号
+     * @return {@link BlogPostEntity }
+     * @author sndshun
+     * @date 2023/12/11 12:14:13
+     */
+    BlogPostEntity getPostById(Long id);
+
     /**
      * 查询文章归档页
      * @return {@link List }<{@link BlogPostEntity }>
