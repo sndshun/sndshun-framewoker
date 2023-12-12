@@ -39,6 +39,4 @@ public class BlogFriendLinkEndpointController {
     public Result<List<BlogFriendLinkEntity>> getAll() {
         return Result.ok(blogFriendLinkService.getAllCache());
     }
-
-
 }

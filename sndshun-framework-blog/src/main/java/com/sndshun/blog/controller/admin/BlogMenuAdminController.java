@@ -26,6 +26,7 @@ public class BlogMenuAdminController {
      * 服务对象
      */
     private final BlogMenuService blogMenuService;
+
     @Autowired
     public BlogMenuAdminController(BlogMenuService blogMenuService) {
         this.blogMenuService = blogMenuService;
@@ -55,7 +56,9 @@ public class BlogMenuAdminController {
         return Result.ok(this.blogMenuService.blogMenuTreeAllCaChe());
     }
 
-    /**查询博客管理端菜单
+    /**
+     * 查询博客管理端菜单
+     *
      * @return {@link Result }<{@link ? }>
      * @author sndshun
      * @date 2023/12/08 10:47:43
@@ -64,6 +67,7 @@ public class BlogMenuAdminController {
     public Result<List<BlogMenuTreeVo>> selectTree() {
         return Result.ok(this.blogMenuService.blogMenuTreeCaChe());
     }
+
     /**
      * 通过主键查询单条数据
      *
