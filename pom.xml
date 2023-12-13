@@ -49,6 +49,7 @@
         <sndshun.framework.version>1.0-SNAPSHOT</sndshun.framework.version>
 
         <mybatis.plus.version>3.5.4</mybatis.plus.version>
+        <mybatis.plus.join.version>1.4.7.2</mybatis.plus.join.version>
         <mysql.connector.version>8.0.33</mysql.connector.version>
         <jsoup.version>1.16.1</jsoup.version>
         <springdoc.openapi.version>1.7.0</springdoc.openapi.version>
@@ -137,6 +138,11 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.yulichang</groupId>
+                <artifactId>mybatis-plus-join-boot-starter</artifactId>
+                <version>${mybatis.plus.join.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jsoup</groupId>
