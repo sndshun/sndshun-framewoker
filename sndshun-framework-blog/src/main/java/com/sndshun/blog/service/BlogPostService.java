@@ -44,20 +44,4 @@ public interface BlogPostService extends IService<BlogPostEntity> {
      * @date 2023/12/05 09:28:13
      */
     Map<Integer, List<BlogPostEntity>> getPostArchive();
-
-    /**
-     * 根据postId更新浏览量
-     *
-     * @param postId 文章ID
-     */
-    void updateViewsToRedis(Long postId);
-
-    /**
-     * 通过哈希键获取值
-     *
-     * @param hash 哈希
-     * @param key  唯一键
-     * @return 结果
-     */
-    Object getValueByHashKey(String hash, Object key);
 }

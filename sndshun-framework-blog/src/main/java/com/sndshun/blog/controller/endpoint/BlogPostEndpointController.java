@@ -12,6 +12,8 @@ import com.sndshun.web.pojo.QueryPage;
 import com.sndshun.web.utils.JacksonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -30,12 +32,15 @@ import java.util.Map;
 @RequestMapping("/blog/endpoint/post")
 public class BlogPostEndpointController {
 
+
     private final BlogPostService blogPostService;
+
 
     @Autowired
     public BlogPostEndpointController(BlogPostService blogPostService) {
         this.blogPostService = blogPostService;
     }
+
 
     /**
      * 分页查询文章
@@ -62,7 +67,6 @@ public class BlogPostEndpointController {
      */
     @GetMapping("/{id}")
     public Result<BlogPostEntity> getPostById(@PathVariable Long id) {
-        blogPostService.updateViewsToRedis(id);
         return Result.ok(blogPostService.getPostByIdCache(id));
     }
 
@@ -86,6 +90,7 @@ public class BlogPostEndpointController {
         });
         return Result.ok(arrayNode);
     }
+
 
 
 }

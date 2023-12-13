@@ -8,7 +8,6 @@ import com.sndshun.blog.constant.PublishStatus;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.mapper.BlogPostMapper;
 import com.sndshun.blog.service.BlogPostService;
-import com.sndshun.commons.constant.RedisKeyConstants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -29,12 +28,6 @@ import java.util.stream.Collectors;
 @Service("blogPostService")
 public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEntity> implements BlogPostService {
 
-    private final RedisTemplate redisTemplate;
-
-    @Autowired
-    public BlogPostServiceImpl(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
-    }
 
     @Cacheable(cacheNames = "blog:post", key = "#page.current+':'+#page.size")
     @Override
@@ -51,7 +44,7 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
         return super.page(page, select);
     }
 
-//    @Cacheable(cacheNames = "blog:post:id", key = "#id")
+    @Cacheable(cacheNames = "blog:post:id", key = "#id")
     @Override
     public BlogPostEntity getPostByIdCache(Long id) {
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
@@ -65,10 +58,7 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
                         BlogPostEntity::getContent)
                 .eq(BlogPostEntity::getId, id)
                 .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode());
-        BlogPostEntity one = super.getOne(select);
-        Integer views = (Integer) getValueByHashKey(RedisKeyConstants.POST_VIEWS_MAP, one.getId());
-        one.setViewCount(views);
-        return one;
+        return super.getOne(select);
     }
 
     @Override
@@ -92,13 +82,4 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
         return collect;
     }
 
-    @Override
-    public void updateViewsToRedis(Long postId) {
-        redisTemplate.opsForHash().increment(RedisKeyConstants.POST_VIEWS_MAP, postId, 1);
-    }
-
-    @Override
-    public Object getValueByHashKey(String hash, Object key) {
-        return redisTemplate.opsForHash().get(hash, key);
-    }
 }
