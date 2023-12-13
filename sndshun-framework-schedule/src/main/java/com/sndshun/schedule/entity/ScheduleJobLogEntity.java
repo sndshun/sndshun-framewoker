@@ -3,6 +3,7 @@ package com.sndshun.schedule.entity;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -25,7 +26,7 @@ public class ScheduleJobLogEntity extends Model<ScheduleJobLogEntity> {
     /**
      * 任务日志id
      */
-
+    @TableId
     private Long logId;
     /**
      * 任务id

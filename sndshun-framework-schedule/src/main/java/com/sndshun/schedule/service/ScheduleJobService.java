@@ -27,7 +27,7 @@ public interface ScheduleJobService extends IService<ScheduleJobEntity> {
      * @param scheduleJob 对象
      * @return 结果
      */
-    Result<?> saveJob(ScheduleJobEntity scheduleJob);
+    Boolean saveJob(ScheduleJobEntity scheduleJob);
 
     /**
      * 修改定时任务
@@ -35,7 +35,7 @@ public interface ScheduleJobService extends IService<ScheduleJobEntity> {
      * @param scheduleJob 对象
      * @return 结果
      */
-    Result<?> updateJob(ScheduleJobEntity scheduleJob);
+    Boolean updateJob(ScheduleJobEntity scheduleJob);
 
     /**
      * 删除定时任务
@@ -43,23 +43,31 @@ public interface ScheduleJobService extends IService<ScheduleJobEntity> {
      * @param jobId 定时任务ID
      * @return 结果
      */
-    Result<?> deleteJobById(Long jobId);
+    Boolean deleteJobById(Long jobId);
 
     /**
-     * 运行定时任务
+     * 立即执行
      *
      * @param jobId 定时任务ID
      * @return 结果
      */
-    Result<?> runJobById(Long jobId);
+    Boolean runJobById(Long jobId);
 
     /**
-     * 根据任务ID修改状态
-     *
-     * @param jobId  Id
-     * @param status 状态
-     * @return 结果
+     * 暂停任务
+     * @param id 编号
+     * @return {@link Boolean }
+     * @author sndshun
+     * @date 2023/12/13 10:53:26
      */
-    Result<?> updateJobStatusById(Long jobId, Integer status);
+    Boolean pauseJobById(Long id);
+
+    /** 恢复任务
+     * @param id 编号
+     * @return {@link Boolean }
+     * @author sndshun
+     * @date 2023/12/13 10:54:07
+     */
+    Boolean resumeJobById(Long id);
 
 }

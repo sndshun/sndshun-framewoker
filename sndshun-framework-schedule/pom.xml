@@ -34,4 +34,5 @@
             <artifactId>sndshun-spring-boot-starter-redis</artifactId>
         </dependency>
     </dependencies>
+
 </project>

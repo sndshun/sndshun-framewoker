@@ -106,14 +106,24 @@ public class ScheduleJobController {
     }
 
     /**
-     * 根据任务ID修改状态
+     * 暂停任务
      *
      * @param jobId  Id
-     * @param status 状态
      * @return 结果
      */
-    @PostMapping("/status")
-    public Result<?> updateJobStatusById(@RequestParam("jobId") Long jobId, @RequestParam("status") Integer status) {
-        return Result.ok(this.scheduleJobService.updateJobStatusById(jobId, status));
+    @PostMapping("/pause")
+    public Result<?> pauseJob(@RequestParam("jobId") Long jobId) {
+        return Result.ok(this.scheduleJobService.pauseJobById(jobId));
+    }
+
+    /**
+     * 恢复任务
+     *
+     * @param jobId  Id
+     * @return 结果
+     */
+    @PostMapping("/resume")
+    public Result<?> resumeJob(@RequestParam("jobId") Long jobId) {
+        return Result.ok(this.scheduleJobService.resumeJobById(jobId));
     }
 }

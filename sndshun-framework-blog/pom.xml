@@ -30,6 +30,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sndshun</groupId>
+            <artifactId>sndshun-framework-schedule</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

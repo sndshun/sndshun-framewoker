@@ -5,18 +5,16 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sndshun.commons.config.ResultCode;
-import com.sndshun.commons.tools.Result;
 import com.sndshun.commons.tools.StringUtils;
+import com.sndshun.schedule.core.QuartzManager;
+import com.sndshun.schedule.core.constant.Status;
 import com.sndshun.schedule.entity.ScheduleJobEntity;
-import com.sndshun.schedule.service.ScheduleJobService;
 import com.sndshun.schedule.mapper.ScheduleJobMapper;
-import com.sndshun.schedule.utils.ScheduleUtils;
+import com.sndshun.schedule.service.ScheduleJobService;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 
 
 /**
@@ -29,13 +27,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, ScheduleJobEntity> implements ScheduleJobService {
 
-    private final Scheduler scheduler;
+    private final QuartzManager quartzManager;
 
     @Autowired
-    public ScheduleJobServiceImpl(Scheduler scheduler) {
-        this.scheduler = scheduler;
+    public ScheduleJobServiceImpl(QuartzManager quartzManager) {
+        this.quartzManager = quartzManager;
     }
-
 
 
     @Override
@@ -45,77 +42,60 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<?> saveJob(ScheduleJobEntity scheduleJob) {
+    public Boolean saveJob(ScheduleJobEntity scheduleJob) {
         int insert = this.baseMapper.insert(scheduleJob);
         StringUtils.isIntLessThanOne(insert, ResultCode.FAIL);
         //添加定时任务
-        ScheduleUtils.createScheduleJob(scheduler, scheduleJob);
-        return Result.ok(ResultCode.SUCCESS);
+        quartzManager.addJob(scheduleJob);
+        return insert > 0;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<?> updateJob(ScheduleJobEntity scheduleJob) {
+    public Boolean updateJob(ScheduleJobEntity scheduleJob) {
         int update = this.baseMapper.updateById(scheduleJob);
         StringUtils.isIntLessThanOne(update, ResultCode.FAIL);
         //修改定时任务
-        ScheduleUtils.updateScheduleJob(scheduler, scheduleJob);
-        return Result.ok(ResultCode.SUCCESS);
+        quartzManager.updateJobCron(scheduleJob);
+        return update > 0;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public Result<?> deleteJobById(Long jobId) {
+    public Boolean deleteJobById(Long jobId) {
         int delete = this.baseMapper.deleteById(jobId);
         StringUtils.isIntLessThanOne(delete, ResultCode.FAIL);
         //删除定时任务
-        ScheduleUtils.deleteScheduleJob(scheduler, jobId);
-        return Result.ok(ResultCode.SUCCESS);
+        quartzManager.deleteJob(jobId);
+        return delete > 0;
     }
 
     @Override
-    public Result<?> runJobById(Long jobId) {
+    public Boolean runJobById(Long jobId) {
         try {
-            ScheduleJobEntity jobEntity = this.baseMapper.selectById(jobId);
-            StringUtils.isEmpty(jobEntity, ResultCode.SCHEDULE_RUN_SEARCH_ERROR);
-            ScheduleUtils.run(scheduler, jobEntity);
-            return Result.ok(ResultCode.SUCCESS);
+            quartzManager.runJobNow(jobId);
+            return true;
         } catch (Exception e) {
-            return Result.error(ResultCode.SCHEDULE_RUN_ERROR);
+            return false;
         }
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Result<?> updateJobStatusById(Long jobId, Integer status) {
-        try {
-            LambdaUpdateWrapper<ScheduleJobEntity> wrapper = new LambdaUpdateWrapper<>();
-            wrapper.set(ScheduleJobEntity::getStatus, status);
-            wrapper.eq(ScheduleJobEntity::getJobId, jobId);
-            int update = this.baseMapper.update(wrapper);
-
-            StringUtils.isIntLessThanOne(update, ResultCode.FAIL);
-
-            selectRequiredAccordingToStatus(status, jobId);
-
-            return Result.ok(ResultCode.SUCCESS);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Result.error(ResultCode.FAIL);
-        }
+    public Boolean pauseJobById(Long id) {
+        LambdaUpdateWrapper<ScheduleJobEntity> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(ScheduleJobEntity::getStatus, Status.PAUSE.getValue());
+        boolean update = super.update(wrapper);
+        quartzManager.pauseJob(id);
+        return update;
     }
 
-    /**
-     * 根据状态选择所需的
-     *
-     * @param status 状态
-     */
-    private void selectRequiredAccordingToStatus(Integer status, Long jobId) {
-        if (status == 1) {
-            ScheduleUtils.resumeJob(scheduler, jobId);
-        } else {
-            ScheduleUtils.pauseJob(scheduler, jobId);
-        }
+    @Override
+    public Boolean resumeJobById(Long id) {
+        LambdaUpdateWrapper<ScheduleJobEntity> wrapper = new LambdaUpdateWrapper<>();
+        wrapper.set(ScheduleJobEntity::getStatus, Status.WAIT.getValue());
+        boolean update = super.update(wrapper);
+        quartzManager.resumeJob(id);
+        return update;
     }
 }
 
