@@ -22,5 +22,13 @@ public interface DictService extends IService<DictEntity> {
      * @date 2023/12/01 03:32:55
      */
     List<DictEntity> getDictByParentIdCache(Long parentId);
+    /**
+     * 根据父级code查询
+     * @param code code
+     * @return {@link List }<{@link DictBizEntity }>
+     * @author sndshun
+     * @date 2023/12/01 03:32:55
+     */
+    List<DictEntity> getDictByCodeCache(String code);
 
 }

@@ -23,7 +23,7 @@ import java.util.List;
 @Slf4j
 public class DictServiceImpl extends ServiceImpl<DictMapper, DictEntity> implements DictService {
 
-    @Cacheable(cacheNames = "dict",key = "#parentId")
+    @Cacheable(cacheNames = "dict", key = "#parentId")
     @Override
     public List<DictEntity> getDictByParentIdCache(Long parentId) {
         LambdaQueryWrapper<DictEntity> select = Wrappers.<DictEntity>lambdaQuery().select(DictEntity::getId,
@@ -32,7 +32,22 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, DictEntity> impleme
                 DictEntity::getDictKey,
                 DictEntity::getDictValue,
                 DictEntity::getRemark,
-                DictEntity::getSort).eq(DictEntity::getParentId,parentId);
+                DictEntity::getSort).eq(DictEntity::getParentId, parentId);
+        return super.list(select);
+    }
+
+    @Cacheable(cacheNames = "dict", key = "#code")
+    @Override
+    public List<DictEntity> getDictByCodeCache(String code) {
+        LambdaQueryWrapper<DictEntity> select = Wrappers.<DictEntity>lambdaQuery().select(DictEntity::getId,
+                        DictEntity::getParentId,
+                        DictEntity::getCode,
+                        DictEntity::getDictKey,
+                        DictEntity::getDictValue,
+                        DictEntity::getRemark,
+                        DictEntity::getSort)
+                .ne(DictEntity::getDictKey, -1)
+                .eq(DictEntity::getCode, code);
         return super.list(select);
     }
 }

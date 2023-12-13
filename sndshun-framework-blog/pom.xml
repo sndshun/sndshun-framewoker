@@ -32,6 +32,10 @@
         </dependency>
         <dependency>
             <groupId>com.sndshun</groupId>
+            <artifactId>sndshun-framework-dict</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sndshun</groupId>
             <artifactId>sndshun-framework-schedule</artifactId>
         </dependency>
     </dependencies>
