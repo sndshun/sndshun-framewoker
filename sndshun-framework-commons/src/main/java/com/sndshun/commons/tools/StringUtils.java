@@ -1,5 +1,7 @@
 package com.sndshun.commons.tools;
 
+import com.sndshun.commons.config.ResultCode;
+
 import java.util.regex.Pattern;
 
 /**
@@ -29,7 +31,7 @@ public class StringUtils {
      */
     public static void isBooleanFalse(Boolean str) {
         if (!str) {
-            throw new RuntimeException();
+            throw new RuntimeException("结果为假");
         }
     }
 
@@ -44,7 +46,7 @@ public class StringUtils {
      */
     public static void isBooleanTrue(Boolean str) {
         if (str) {
-            throw new RuntimeException();
+            throw new RuntimeException("结果不为真");
         }
     }
 }

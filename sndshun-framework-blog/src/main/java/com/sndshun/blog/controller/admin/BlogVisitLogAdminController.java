@@ -32,13 +32,12 @@ public class BlogVisitLogAdminController {
     /**
      * 分页查询访客日志
      *
-     * @param page         分页
-     * @param blogVisitLog 实体类
+     * @param page 分页
      * @return 结果
      */
     @VisitLog(VisitEnum.VISIT_LOG_PAGE)
     @GetMapping
-    public Result<Page<BlogVisitLogEntity>> getAllVisitLog(Page<BlogVisitLogEntity> page, BlogVisitLogEntity blogVisitLog) {
+    public Result<Page<BlogVisitLogEntity>> getAllVisitLog(Page<BlogVisitLogEntity> page) {
         LambdaQueryWrapper<BlogVisitLogEntity> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper.orderByDesc(BlogVisitLogEntity::getCreateTime);
         Page<BlogVisitLogEntity> result = this.blogVisitLogService.page(page, lambdaQueryWrapper);

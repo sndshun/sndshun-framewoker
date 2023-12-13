@@ -9,6 +9,7 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/sendshun-framework-schedule/pom.xml" />
         <option value="$PROJECT_DIR$/service-api/service-blog-api/pom.xml" />
         <option value="$PROJECT_DIR$/sndshun-framework-dependencies/pom.xml" />
       </set>
