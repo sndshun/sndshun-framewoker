@@ -12,6 +12,13 @@
     <groupId>com.sndshun.rbac0</groupId>
     <artifactId>sndshun-framework-rbac0</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.sndshun</groupId>
+            <artifactId>sndshun-spring-boot-starter-web</artifactId>
+        </dependency>
+    </dependencies>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

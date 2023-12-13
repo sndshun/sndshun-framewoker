@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sndshun.rbac0.mapper.Rbac0RolePermissionMapper">
+
+    <resultMap type="com.sndshun.rbac0.entity.Rbac0RolePermissionEntity" id="Rbac0RolePermissionMap">
+        <result property="roleId" column="role_id" jdbcType="INTEGER"/>
+        <result property="permsId" column="perms_id" jdbcType="INTEGER"/>
+        <result property="updateBy" column="update_by" jdbcType="INTEGER"/>
+        <result property="createBy" column="create_by" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+        role_idperms_idupdate_bycreate_byupdate_timecreate_time    </sql>
+
+    <!--用于粘贴复制-->
+    <select id="test" resultMap="Rbac0RolePermissionMap">
+        select
+        role_idperms_idupdate_bycreate_byupdate_timecreate_time
+        from framework.rbac0_role_permission
+        <where>
+            <if test="roleId != null">
+                and role_id = #{roleId}
+            </if>
+            <if test="permsId != null">
+                and perms_id = #{permsId}
+            </if>
+            <if test="updateBy != null">
+                and update_by = #{updateBy}
+            </if>
+            <if test="createBy != null">
+                and create_by = #{createBy}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+
