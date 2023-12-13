@@ -29,7 +29,7 @@ public class ScheduleJob extends QuartzJobBean {
      * TimeUnit:时间单位为秒
      * ArrayBlockingQueue:阻塞队列
      */
-    private static final ExecutorService SERVICE = new ThreadPoolExecutor(1, 1, 60L, TimeUnit.SECONDS, new ArrayBlockingQueue<>(1));
+    private static final ExecutorService SERVICE = new ThreadPoolExecutor(1, 8, 60L, TimeUnit.SECONDS, new ArrayBlockingQueue<>(8));
 
     @Override
     protected void executeInternal(JobExecutionContext context) {

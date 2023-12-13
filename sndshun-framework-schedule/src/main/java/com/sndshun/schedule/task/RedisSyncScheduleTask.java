@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 
 /**
- *
  * @author maple
  */
 @Component("RedisSyncScheduleTask")
@@ -19,7 +18,10 @@ public class RedisSyncScheduleTask {
         this.redisTemplate = redisTemplate;
     }
 
-    public void test() {
-        System.out.println("测试定时任务");
+    /**
+     * 定时更新文章浏览量
+     */
+    void updateArticleViewsRegularly() {
+
     }
 }
