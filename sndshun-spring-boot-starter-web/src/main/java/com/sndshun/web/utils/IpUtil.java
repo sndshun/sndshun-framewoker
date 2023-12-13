@@ -15,7 +15,7 @@ import java.util.HashMap;
  *
  * @author maple
  */
-public class IpUtils {
+public class IpUtil {
 
 
     /**

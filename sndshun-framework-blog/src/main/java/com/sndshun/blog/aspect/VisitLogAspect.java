@@ -7,7 +7,7 @@ import com.sndshun.blog.entity.BlogVisitLogEntity;
 import com.sndshun.blog.entity.BlogVisitUserEntity;
 import com.sndshun.blog.service.BlogVisitLogService;
 import com.sndshun.blog.service.BlogVisitUserService;
-import com.sndshun.web.utils.IpUtils;
+import com.sndshun.web.utils.IpUtil;
 import com.sndshun.commons.tools.Result;
 
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -65,7 +65,7 @@ public class VisitLogAspect {
         //获取请求对象
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         //获取到IP
-        String ip = IpUtils.getIpAddress(request);
+        String ip = IpUtil.getIpAddress(request);
         //校验访客标识码
         String identification = checkIdentification(ip, request);
         //添加日志
@@ -106,7 +106,7 @@ public class VisitLogAspect {
         calendar.set(Calendar.SECOND, 0);
         String timestamp = Long.toString(calendar.getTimeInMillis() / 1000);
         //获取访问者基本信息
-        String ip = IpUtils.getIpAddress(request);
+        String ip = IpUtil.getIpAddress(request);
         String userAgent = request.getHeader("User-Agent");
         //根据时间戳、ip、userAgent生成UUID
         String assembleUuId = timestamp + ip + userAgent;
@@ -151,7 +151,7 @@ public class VisitLogAspect {
      * @param ip   Ip
      */
     private void getInformationViaIp(String uuid, String ip) {
-        HashMap<String, Object> ipMsg = IpUtils.getInformationViaIp(ip);
+        HashMap<String, Object> ipMsg = IpUtil.getInformationViaIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
