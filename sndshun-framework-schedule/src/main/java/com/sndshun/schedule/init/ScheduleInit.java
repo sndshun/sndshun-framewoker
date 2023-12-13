@@ -35,7 +35,6 @@ public class ScheduleInit {
      */
     @PostConstruct
     public void init() {
-        System.out.println("初始化定时器 开始");
         log.info("初始化定时器 开始");
         List<ScheduleJobEntity> scheduleJobList = this.scheduleJobService.list();
         for (ScheduleJobEntity scheduleJob : scheduleJobList) {

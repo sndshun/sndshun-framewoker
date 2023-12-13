@@ -4,9 +4,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.schedule.entity.ScheduleJobEntity;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sndshun.schedule.entity.ScheduleJobLogEntity;
-
-import java.util.List;
 
 /**
  * @author maple
