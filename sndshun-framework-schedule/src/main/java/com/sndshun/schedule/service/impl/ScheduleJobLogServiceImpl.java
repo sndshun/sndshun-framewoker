@@ -1,9 +1,9 @@
-package com.sndshun.blog.service.impl;
+package com.sndshun.schedule.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.sndshun.blog.mapper.ScheduleJobLogMapper;
-import com.sndshun.blog.entity.ScheduleJobLogEntity;
-import com.sndshun.blog.service.ScheduleJobLogService;
+import com.sndshun.schedule.entity.ScheduleJobLogEntity;
+import com.sndshun.schedule.mapper.ScheduleJobLogMapper;
+import com.sndshun.schedule.service.ScheduleJobLogService;
 import org.springframework.stereotype.Service;
 
 /**

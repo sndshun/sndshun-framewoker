@@ -1,12 +1,10 @@
-package com.sndshun.blog.entity;
+package com.sndshun.schedule.entity;
 
 
 import java.util.Date;
 
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableName;
-
-import java.io.Serializable;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

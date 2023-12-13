@@ -13,7 +13,7 @@
       </option>
     </inspection_tool>
     <inspection_tool class="JavadocDeclaration" enabled="true" level="WARNING" enabled_by_default="true">
-      <option name="ADDITIONAL_TAGS" value="Date,date,Author,Version,Description:" />
+      <option name="ADDITIONAL_TAGS" value="Date,date,Author,Version,Description:,description,createDate,Entity" />
     </inspection_tool>
   </profile>
 </component>

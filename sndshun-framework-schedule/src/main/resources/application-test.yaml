@@ -1,13 +1,13 @@
 spring:
   application:
-    name: sndshun-framework-blog
+    name: sndshun-framework-schedule
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://124.70.45.144:3306/framework?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF8
     username: root
     password: 12d8870390857f96
     hikari:
-      pool-name: framework-blog
+      pool-name: framework-schedule
       minimum-idle: 5
       maximum-pool-size: 15
       idle-timeout: 60000
@@ -27,7 +27,7 @@ spring:
     connect-timeout: 3000
   freemarker:
     check-template-location: false
-  #cache:
+    #cache:
     #type: none #关闭缓存
 
 mybatis-plus:

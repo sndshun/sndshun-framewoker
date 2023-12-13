@@ -1,7 +1,8 @@
-package com.sndshun.blog.service;
+package com.sndshun.schedule.service;
+
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.sndshun.blog.entity.ScheduleJobLogEntity;
+import com.sndshun.schedule.entity.ScheduleJobLogEntity;
 
 /**
  * 日志(ScheduleJobLog)表服务接口

@@ -1,14 +1,14 @@
-package com.sndshun.blog.controller;
+package com.sndshun.schedule.controller;
 
 
-import com.sndshun.commons.tools.Result;
-import com.sndshun.blog.entity.ScheduleJobLogEntity;
-import com.sndshun.blog.service.ScheduleJobLogService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sndshun.commons.tools.Result;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.sndshun.schedule.entity.ScheduleJobLogEntity;
+import com.sndshun.schedule.service.ScheduleJobLogService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -24,8 +24,13 @@ public class ScheduleJobLogController {
     /**
      * 服务对象
      */
-    @Resource
-    private ScheduleJobLogService scheduleJobLogService;
+
+    private final ScheduleJobLogService scheduleJobLogService;
+
+    @Autowired
+    public ScheduleJobLogController(ScheduleJobLogService scheduleJobLogService) {
+        this.scheduleJobLogService = scheduleJobLogService;
+    }
 
     /**
      * 分页查询所有数据
@@ -36,7 +41,8 @@ public class ScheduleJobLogController {
      */
     @GetMapping
     public Result<Page<ScheduleJobLogEntity>> selectPage(Page<ScheduleJobLogEntity> page, ScheduleJobLogEntity scheduleJobLog) {
-        return Result.ok(this.scheduleJobLogService.page(page, new QueryWrapper<>(scheduleJobLog)));
+        Page<ScheduleJobLogEntity> page1 = this.scheduleJobLogService.page(page, new QueryWrapper<>(scheduleJobLog));
+        return Result.ok(page1);
     }
 
     /**
