@@ -8,7 +8,7 @@ import com.sndshun.blog.entity.BlogVisitLogEntity;
 import com.sndshun.blog.entity.BlogVisitUserEntity;
 import com.sndshun.blog.service.BlogVisitLogService;
 import com.sndshun.blog.service.BlogVisitUserService;
-import com.sndshun.web.utils.IpUtil;
+import com.sndshun.commons.tools.IpUtil;
 import com.sndshun.commons.tools.Result;
 
 import lombok.extern.slf4j.Slf4j;
