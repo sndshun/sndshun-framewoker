@@ -35,6 +35,10 @@
             <groupId>com.sndshun</groupId>
             <artifactId>sndshun-spring-boot-starter-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+        </dependency>
     </dependencies>
 
 

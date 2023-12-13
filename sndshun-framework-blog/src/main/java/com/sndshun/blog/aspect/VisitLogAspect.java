@@ -7,7 +7,7 @@ import com.sndshun.blog.entity.BlogVisitLogEntity;
 import com.sndshun.blog.entity.BlogVisitUserEntity;
 import com.sndshun.blog.service.BlogVisitLogService;
 import com.sndshun.blog.service.BlogVisitUserService;
-import com.sndshun.commons.tools.IpUtils;
+import com.sndshun.web.utils.IpUtils;
 import com.sndshun.commons.tools.Result;
 
 import org.aspectj.lang.ProceedingJoinPoint;

@@ -1,7 +1,6 @@
 package com.sndshun.commons.tools;
 
 import com.sndshun.commons.config.ResultCode;
-import com.sndshun.commons.exception.BusinessException;
 
 import java.util.regex.Pattern;
 
@@ -48,7 +47,7 @@ public class StringUtils {
      */
     public static void isEmpty(Object str, ResultCode resultCode) {
         if (str == null || "".equals(str)) {
-            throw new BusinessException(resultCode);
+            throw new RuntimeException(resultCode.toString());
         }
     }
 
@@ -71,7 +70,7 @@ public class StringUtils {
      */
     public static void isIntLessThanOne(int num, ResultCode resultCode) {
         if (num == 0) {
-            throw new BusinessException(resultCode);
+            throw new RuntimeException(resultCode.toString());
         }
     }
 }
