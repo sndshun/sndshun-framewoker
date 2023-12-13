@@ -1,4 +1,4 @@
-package com.sndshun.blog.exception;
+package com.sndshun.commons.exception;
 
 
 import com.sndshun.commons.config.ResultCode;

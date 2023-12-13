@@ -18,6 +18,7 @@ public interface BlogPostService extends IService<BlogPostEntity> {
 
     /**
      * 分页查询博客文章
+     *
      * @param page 页
      * @return {@link Result }<{@link List }<{@link BlogPostEntity }>>
      * @author sndshun
@@ -25,7 +26,9 @@ public interface BlogPostService extends IService<BlogPostEntity> {
      */
     Page<BlogPostEntity> getPostPageCache(Page<BlogPostEntity> page);
 
-    /**根据id查询文章详情
+    /**
+     * 根据id查询文章详情
+     *
      * @param id 编号
      * @return {@link BlogPostEntity }
      * @author sndshun
@@ -35,10 +38,26 @@ public interface BlogPostService extends IService<BlogPostEntity> {
 
     /**
      * 查询文章归档页
+     *
      * @return {@link List }<{@link BlogPostEntity }>
      * @author sndshun
      * @date 2023/12/05 09:28:13
      */
     Map<Integer, List<BlogPostEntity>> getPostArchive();
 
+    /**
+     * 根据postId更新浏览量
+     *
+     * @param postId 文章ID
+     */
+    void updateViewsToRedis(Long postId);
+
+    /**
+     * 通过哈希键获取值
+     *
+     * @param hash 哈希
+     * @param key  唯一键
+     * @return 结果
+     */
+    Object getValueByHashKey(String hash, Object key);
 }

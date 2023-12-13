@@ -30,6 +30,9 @@ public enum ResultCode {
 
     /* 业务错误：30001-39999 */
     SPECIFIED_QUESTIONED_USER_NOT_EXIST(30001, "某业务出现问题"),
+    SCHEDULE_RUN_SEARCH_ERROR(30002, "当前任务不存在"),
+    SCHEDULE_RUN_ERROR(30003, "运行失败，请重试"),
+
 
     /* 系统错误：40001-49999 */
     SYSTEM_INNER_ERROR(40001, "系统繁忙，请稍后重试"),
@@ -58,6 +61,8 @@ public enum ResultCode {
     OSS_UPLOAD_OK(80005, "上传成功"),
     OSS_UPLOAD_ERROR(80006, "上传失败"),
     OSS_SEARCH_BUCKET_ERROR(80007, "暂无数据"),
+
+
     ;
 
 
