@@ -1,5 +1,6 @@
 package com.sndshun.blog.aspect;
 
+import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
 import com.sndshun.blog.annotation.VisitLog;
@@ -67,7 +68,7 @@ public class VisitLogAspect {
         //获取请求对象
         HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
         //获取到IP
-        String ip = IpUtil.getIpAddress(request);
+        String ip = ServletUtil.getClientIP(request);
         //校验访客标识码
         String identification = checkIdentification(ip, request);
         //添加日志
@@ -108,7 +109,7 @@ public class VisitLogAspect {
         calendar.set(Calendar.SECOND, 0);
         String timestamp = Long.toString(calendar.getTimeInMillis() / 1000);
         //获取访问者基本信息
-        String ip = IpUtil.getIpAddress(request);
+        String ip = ServletUtil.getClientIP(request);
         String userAgent = request.getHeader("User-Agent");
         //根据时间戳、ip、userAgent生成UUID
         String assembleUuId = timestamp + ip + userAgent;
