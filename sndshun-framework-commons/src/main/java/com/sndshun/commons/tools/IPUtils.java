@@ -5,16 +5,14 @@ import cn.hutool.http.HttpResponse;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
-
 import java.util.HashMap;
 
 /**
- * Ip工具
+ * Ip 工具类
  *
  * @author maple
  */
-public class IpUtil {
-
+public class IPUtils {
 
     /**
      * 通过ip获取信息
@@ -22,7 +20,7 @@ public class IpUtil {
      * @param ip ip
      * @return ip的信息
      */
-    public static HashMap<String, Object> getInformationViaIp(String ip) {
+    public static HashMap<String, Object> getInfoIp(String ip) {
         HashMap<String, Object> map = new HashMap<>(17);
         long startTime = System.currentTimeMillis();
         String url = "https://qifu-api.baidubce.com/ip/geo/v1/district?ip=" + ip;
@@ -53,5 +51,4 @@ public class IpUtil {
         System.out.println("耗时：" + (endTime - startTime));
         return null;
     }
-
 }

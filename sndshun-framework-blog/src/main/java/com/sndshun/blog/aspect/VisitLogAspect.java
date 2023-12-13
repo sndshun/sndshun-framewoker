@@ -8,7 +8,7 @@ import com.sndshun.blog.entity.BlogVisitLogEntity;
 import com.sndshun.blog.entity.BlogVisitUserEntity;
 import com.sndshun.blog.service.BlogVisitLogService;
 import com.sndshun.blog.service.BlogVisitUserService;
-import com.sndshun.commons.tools.IpUtil;
+import com.sndshun.commons.tools.IPUtils;
 import com.sndshun.commons.tools.Result;
 
 import lombok.extern.slf4j.Slf4j;
@@ -154,7 +154,7 @@ public class VisitLogAspect {
      * @param ip   Ip
      */
     private void getInformationViaIp(String uuid, String ip) {
-        HashMap<String, Object> ipMsg = IpUtil.getInformationViaIp(ip);
+        HashMap<String, Object> ipMsg = IPUtils.getInfoIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
