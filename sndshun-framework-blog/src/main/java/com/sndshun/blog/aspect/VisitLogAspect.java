@@ -10,6 +10,7 @@ import com.sndshun.blog.service.BlogVisitUserService;
 import com.sndshun.web.utils.IpUtil;
 import com.sndshun.commons.tools.Result;
 
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -31,6 +32,7 @@ import java.util.*;
  */
 @Component
 @Aspect
+@Slf4j
 public class VisitLogAspect {
 
     private final BlogVisitLogService blogVisitLogService;
@@ -162,6 +164,7 @@ public class VisitLogAspect {
             String lat = ipMsg.get("lat").toString();
             String lng = ipMsg.get("lng").toString();
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
+            log.info("Ip对象为：{}",blogVisitUser.toString());
             saveVisitUserAsync(blogVisitUser);
         }
     }
