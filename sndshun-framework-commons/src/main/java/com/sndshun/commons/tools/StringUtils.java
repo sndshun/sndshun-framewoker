@@ -1,5 +1,7 @@
 package com.sndshun.commons.tools;
 
+import com.sndshun.commons.config.ResultCode;
+
 import java.util.regex.Pattern;
 
 /**
@@ -29,12 +31,24 @@ public class StringUtils {
      */
     public static void isBooleanFalse(Boolean str) {
         if (!str) {
-            throw new RuntimeException();
+            throw new RuntimeException("结果为假");
         }
     }
 
     public static boolean isEmpty(Object str) {
         return (str == null || "".equals(str));
+    }
+
+    /**
+     * 验证是否为空（无返回结果）
+     *
+     * @param str        未知数
+     * @param resultCode 结果值
+     */
+    public static void isEmpty(Object str, ResultCode resultCode) {
+        if (str == null || "".equals(str)) {
+            throw new RuntimeException(resultCode.toString());
+        }
     }
 
     /**
@@ -44,7 +58,21 @@ public class StringUtils {
      */
     public static void isBooleanTrue(Boolean str) {
         if (str) {
-            throw new RuntimeException();
+            throw new RuntimeException("结果不为真");
         }
     }
+
+    /**
+     * 数字小于1
+     *
+     * @param num        数字
+     * @param resultCode 信息
+     */
+    public static void isIntLessThanOne(int num, ResultCode resultCode) {
+        if (num == 0) {
+            throw new RuntimeException(resultCode.toString());
+        }
+    }
+
+
 }

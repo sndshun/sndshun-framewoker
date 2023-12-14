@@ -53,10 +53,6 @@ public class BlogVisitLogEntity extends Model<BlogVisitLogEntity> {
      */
     private String ip;
     /**
-     * ip来源
-     */
-    private String ipSource;
-    /**
      * 操作系统
      */
     private String os;
@@ -77,7 +73,7 @@ public class BlogVisitLogEntity extends Model<BlogVisitLogEntity> {
      */
     private String userAgent;
 
-    public BlogVisitLogEntity(String uuid, String uri, String method, String param, String behavior, String content, String remark, String ip, String ipSource, String os, String browser, Integer times, Date createTime, String userAgent) {
+    public BlogVisitLogEntity(String uuid, String uri, String method, String param, String behavior, String content, String remark, String ip,  String os, String browser, Integer times, Date createTime, String userAgent) {
         this.uuid = uuid;
         this.uri = uri;
         this.method = method;
@@ -86,7 +82,6 @@ public class BlogVisitLogEntity extends Model<BlogVisitLogEntity> {
         this.content = content;
         this.remark = remark;
         this.ip = ip;
-        this.ipSource = ipSource;
         this.os = os;
         this.browser = browser;
         this.times = times;
@@ -172,15 +167,6 @@ public class BlogVisitLogEntity extends Model<BlogVisitLogEntity> {
 
     public BlogVisitLogEntity setIp(String ip) {
         this.ip = ip;
-        return this;
-    }
-
-    public String getIpSource() {
-        return ipSource;
-    }
-
-    public BlogVisitLogEntity setIpSource(String ipSource) {
-        this.ipSource = ipSource;
         return this;
     }
 

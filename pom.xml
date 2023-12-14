@@ -34,6 +34,9 @@
         <module>sndshun-framework-doublecache</module>
         <module>sndshun-framework-file</module>
         <module>service-api</module>
+        <module>sndshun-framework-schedule</module>
+        <module>sndshun-framework-comment</module>
+        <module>sndshun-framewrok-user</module>
     </modules>
 
     <properties>
@@ -47,6 +50,7 @@
         <sndshun.framework.version>1.0-SNAPSHOT</sndshun.framework.version>
 
         <mybatis.plus.version>3.5.4</mybatis.plus.version>
+        <mybatis.plus.join.version>1.4.8</mybatis.plus.join.version>
         <mysql.connector.version>8.0.33</mysql.connector.version>
         <jsoup.version>1.16.1</jsoup.version>
         <springdoc.openapi.version>1.7.0</springdoc.openapi.version>
@@ -113,7 +117,17 @@
             </dependency>
             <dependency>
                 <groupId>com.sndshun</groupId>
+                <artifactId>sndshun-framework-dict</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-framework-template</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.sndshun</groupId>
+                <artifactId>sndshun-framework-schedule</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
             <dependency>
@@ -125,6 +139,11 @@
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis.plus.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.yulichang</groupId>
+                <artifactId>mybatis-plus-join-boot-starter</artifactId>
+                <version>${mybatis.plus.join.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.jsoup</groupId>

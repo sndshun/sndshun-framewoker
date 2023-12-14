@@ -1,12 +1,16 @@
 package com.sndshun.blog.controller.endpoint;
 
 
+import com.sndshun.blog.entity.BlogMenuEntity;
 import com.sndshun.blog.service.BlogMenuService;
+import com.sndshun.blog.vo.BlogMenuTreeVo;
 import com.sndshun.commons.tools.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * 博客菜单(BlogMenu)端点控制层
@@ -35,8 +39,8 @@ public class BlogMenuEndPointController {
      * @date 2023/11/28 11:43:39
      */
     @GetMapping("tree")
-    public Result<?> selectTree() {
-        return Result.ok(this.blogMenuService.blogMenuTree());
+    public Result<List<BlogMenuTreeVo>> selectTree() {
+        return Result.ok(this.blogMenuService.blogMenuTreeCaChe());
     }
 
 
@@ -47,8 +51,8 @@ public class BlogMenuEndPointController {
      * @date 2023/12/01 10:31:15
      */
     @GetMapping("nav")
-    public Result<?> menu() {
-        return Result.ok(blogMenuService.blogMenuByParentId(HOME_MENU));
+    public Result<List<BlogMenuEntity>> menu() {
+        return Result.ok(blogMenuService.blogMenuByParentIdCache(HOME_MENU));
     }
 
 }

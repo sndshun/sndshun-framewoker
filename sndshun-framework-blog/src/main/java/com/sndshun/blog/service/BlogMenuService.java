@@ -20,7 +20,7 @@ public interface BlogMenuService extends IService<BlogMenuEntity> {
      * @author sndshun
      * @date 2023/11/28 05:38:15
      */
-    List<BlogMenuTreeVo> blogMenuTree();
+    List<BlogMenuTreeVo> blogMenuTreeCaChe();
 
     /**
      * 获取博客菜单所有数据
@@ -28,7 +28,7 @@ public interface BlogMenuService extends IService<BlogMenuEntity> {
      * @author sndshun
      * @date 2023/11/28 05:38:17
      */
-    List<BlogMenuTreeVo> blogMenuTreeAll();
+    List<BlogMenuTreeVo> blogMenuTreeAllCaChe();
 
 
     /**
@@ -38,6 +38,6 @@ public interface BlogMenuService extends IService<BlogMenuEntity> {
      * @author sndshun
      * @date 2023/12/03 01:11:19
      */
-    List<BlogMenuEntity> blogMenuByParentId(Long id);
+    List<BlogMenuEntity> blogMenuByParentIdCache(Long id);
 
 }

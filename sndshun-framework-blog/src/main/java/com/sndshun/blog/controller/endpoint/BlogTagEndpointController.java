@@ -35,19 +35,19 @@ public class BlogTagEndpointController {
     @VisitLog(VisitEnum.TAG)
     @GetMapping("/group")
     public Result<Map<String, List<BlogTagEntity>>> allGroupCategory() {
-        List<BlogTagEntity> all = blogTagService.getAll();
+        List<BlogTagEntity> all = blogTagService.getAllCaChe();
         Map<String, List<BlogTagEntity>> collect = all.stream().collect(Collectors.groupingBy(BlogTagEntity::getCategoryName, Collectors.toList()));
         return Result.ok(collect);
     }
 
     @PostMapping
-    public Result<?> saveTag(@RequestBody BlogTagEntity tagEntity) {
+    public Result<Boolean> saveTag(@RequestBody BlogTagEntity tagEntity) {
         boolean result = this.blogTagService.save(tagEntity);
         return Result.ok(result);
     }
 
     @PutMapping
-    public Result<?> updTag(@RequestBody BlogTagEntity tagEntity) {
+    public Result<Boolean> updTag(@RequestBody BlogTagEntity tagEntity) {
         boolean result = this.blogTagService.updateById(tagEntity);
         return Result.ok(result);
     }

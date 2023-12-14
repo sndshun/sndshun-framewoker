@@ -8,9 +8,9 @@ import com.sndshun.blog.constant.PublishStatus;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.mapper.BlogPostMapper;
 import com.sndshun.blog.service.BlogPostService;
-import com.sndshun.commons.tools.Result;
-import com.sndshun.web.pojo.QueryPage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -28,9 +28,10 @@ import java.util.stream.Collectors;
 @Service("blogPostService")
 public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEntity> implements BlogPostService {
 
-    @Cacheable(cacheNames = "blog:post",key = "#page.current+':'+#page.size")
+
+    @Cacheable(cacheNames = "blog:post", key = "#page.current+':'+#page.size")
     @Override
-    public Page<BlogPostEntity> getPostPage(Page<BlogPostEntity> page) {
+    public Page<BlogPostEntity> getPostPageCache(Page<BlogPostEntity> page) {
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
                 .select(BlogPostEntity::getId,
                         BlogPostEntity::getTitle,
@@ -40,12 +41,12 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
                         BlogPostEntity::getLikes,
                         BlogPostEntity::getComments)
                 .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode());
-        return super.page(page,select);
+        return super.page(page, select);
     }
 
-    @Cacheable(cacheNames = "blog:post:id",key = "#id")
+    @Cacheable(cacheNames = "blog:post:id", key = "#id")
     @Override
-    public BlogPostEntity getPostById(Long id) {
+    public BlogPostEntity getPostByIdCache(Long id) {
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
                 .select(BlogPostEntity::getId,
                         BlogPostEntity::getTitle,
@@ -55,7 +56,7 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
                         BlogPostEntity::getLikes,
                         BlogPostEntity::getComments,
                         BlogPostEntity::getContent)
-                .eq(BlogPostEntity::getId,id)
+                .eq(BlogPostEntity::getId, id)
                 .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode());
         return super.getOne(select);
     }
@@ -75,9 +76,10 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
 
         Map<Integer, List<BlogPostEntity>> collect = list.stream()
                 .sorted(Comparator.comparing(BlogPostEntity::getPublishedTime).reversed())
-                .collect(Collectors.groupingBy(post->post.getPublishedTime().getYear()+1900,
+                .collect(Collectors.groupingBy(post -> post.getPublishedTime().getYear() + 1900,
                         LinkedHashMap::new,
                         Collectors.toList()));
         return collect;
     }
+
 }

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sndshun.blog.mapper.BlogVisitUserMapper">
+
+    <resultMap type="com.sndshun.blog.entity.BlogVisitUserEntity" id="BlogVisitUserMap">
+        <result property="vid" column="vid" jdbcType="INTEGER"/>
+        <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
+        <result property="ip" column="ip" jdbcType="VARCHAR"/>
+        <result property="country" column="country" jdbcType="VARCHAR"/>
+        <result property="prov" column="prov" jdbcType="VARCHAR"/>
+        <result property="city" column="city" jdbcType="VARCHAR"/>
+        <result property="lat" column="lat" jdbcType="VARCHAR"/>
+        <result property="lng" column="lng" jdbcType="VARCHAR"/>
+        <result property="radius" column="radius" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+        viduuidipcountryprovcitylatlngcreate_time    </sql>
+
+    <!--用于粘贴复制-->
+    <select id="test" resultMap="BlogVisitUserMap">
+        select
+        viduuidipcountryprovcitylatlngcreate_time
+        from framework.blog_visit_user
+        <where>
+            <if test="vid != null">
+                and vid = #{vid}
+            </if>
+            <if test="uuid != null and uuid != ''">
+                and uuid = #{uuid}
+            </if>
+            <if test="ip != null and ip != ''">
+                and ip = #{ip}
+            </if>
+            <if test="country != null and country != ''">
+                and country = #{country}
+            </if>
+            <if test="prov != null and prov != ''">
+                and prov = #{prov}
+            </if>
+            <if test="city != null and city != ''">
+                and city = #{city}
+            </if>
+            <if test="lat != null and lat != ''">
+                and lat = #{lat}
+            </if>
+            <if test="lng != null and lng != ''">
+                and lng = #{lng}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

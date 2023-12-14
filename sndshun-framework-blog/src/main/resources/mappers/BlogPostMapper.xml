@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sndshun.blog.mapper.BlogPostMapper">
 
-    <resultMap type="com.sndshun.blog.entity.BlogPost" id="BlogPostMap">
+    <resultMap type="com.sndshun.blog.entity.BlogPostEntity" id="BlogPostMap">
         <result property="id" column="id" jdbcType="INTEGER"/>
         <result property="title" column="title" jdbcType="VARCHAR"/>
         <result property="content" column="content" jdbcType="VARCHAR"/>

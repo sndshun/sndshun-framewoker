@@ -15,11 +15,18 @@ import java.util.List;
 public interface BlogCategoryService extends IService<BlogCategoryEntity> {
 
     /**
+     * 获取简略分类树
+     * @return {@link List }<{@link BlogCategoryTreeVo }>
+     * @author sndshun
+     * @date 2023/12/03 06:54:43
+     */
+    List<BlogCategoryTreeVo> getCategoryTreeCache();
+    /**
      * 获取所有分类树
      * @return {@link List }<{@link BlogCategoryTreeVo }>
      * @author sndshun
      * @date 2023/12/03 06:54:43
      */
-    List<BlogCategoryTreeVo> getCategoryTree();
+    List<BlogCategoryTreeVo> getCategoryAllTree();
 
 }

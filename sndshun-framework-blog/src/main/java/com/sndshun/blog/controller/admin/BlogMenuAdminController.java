@@ -1,6 +1,7 @@
 package com.sndshun.blog.controller.admin;
 
 
+import com.sndshun.blog.vo.BlogMenuTreeVo;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.blog.entity.BlogMenuEntity;
 import com.sndshun.blog.service.BlogMenuService;
@@ -25,6 +26,7 @@ public class BlogMenuAdminController {
      * 服务对象
      */
     private final BlogMenuService blogMenuService;
+
     @Autowired
     public BlogMenuAdminController(BlogMenuService blogMenuService) {
         this.blogMenuService = blogMenuService;
@@ -38,7 +40,7 @@ public class BlogMenuAdminController {
      * @return 所有数据
      */
     @GetMapping
-    public Result<?> selectAll(Page<BlogMenuEntity> page, BlogMenuEntity blogMenu) {
+    public Result<Page<BlogMenuEntity>> selectAll(Page<BlogMenuEntity> page, BlogMenuEntity blogMenu) {
         return Result.ok(this.blogMenuService.page(page, new QueryWrapper<>(blogMenu)));
     }
 
@@ -50,19 +52,22 @@ public class BlogMenuAdminController {
      * @date 2023/11/28 11:42:53
      */
     @GetMapping("tree/all")
-    public Result<?> selectTreeAll() {
-        return Result.ok(this.blogMenuService.blogMenuTreeAll());
+    public Result<List<BlogMenuTreeVo>> selectTreeAll() {
+        return Result.ok(this.blogMenuService.blogMenuTreeAllCaChe());
     }
 
-    /**查询博客管理端菜单
+    /**
+     * 查询博客管理端菜单
+     *
      * @return {@link Result }<{@link ? }>
      * @author sndshun
      * @date 2023/12/08 10:47:43
      */
     @GetMapping("tree")
-    public Result<?> selectTree() {
-        return Result.ok(this.blogMenuService.blogMenuTree());
+    public Result<List<BlogMenuTreeVo>> selectTree() {
+        return Result.ok(this.blogMenuService.blogMenuTreeCaChe());
     }
+
     /**
      * 通过主键查询单条数据
      *
@@ -70,7 +75,7 @@ public class BlogMenuAdminController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public Result<?> selectOne(@PathVariable Serializable id) {
+    public Result<BlogMenuEntity> selectOne(@PathVariable Serializable id) {
         return Result.ok(this.blogMenuService.getById(id));
     }
 
@@ -81,7 +86,7 @@ public class BlogMenuAdminController {
      * @return 新增结果
      */
     @PostMapping
-    public Result<?> insert(@RequestBody BlogMenuEntity blogMenu) {
+    public Result<Boolean> insert(@RequestBody BlogMenuEntity blogMenu) {
         return Result.ok(this.blogMenuService.save(blogMenu));
     }
 
@@ -92,7 +97,7 @@ public class BlogMenuAdminController {
      * @return 修改结果
      */
     @PutMapping
-    public Result<?> update(@RequestBody BlogMenuEntity blogMenu) {
+    public Result<Boolean> update(@RequestBody BlogMenuEntity blogMenu) {
         return Result.ok(this.blogMenuService.updateById(blogMenu));
     }
 
@@ -103,7 +108,7 @@ public class BlogMenuAdminController {
      * @return 删除结果
      */
     @DeleteMapping
-    public Result<?> delete(@RequestBody List<Long> idList) {
+    public Result<Boolean> delete(@RequestBody List<Long> idList) {
         return Result.ok(this.blogMenuService.removeByIds(idList));
     }
 }

@@ -12,7 +12,6 @@ import javax.annotation.Resource;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class BlogCategoryServiceImplTest {
     @Resource
@@ -22,7 +21,7 @@ class BlogCategoryServiceImplTest {
     void getCategoryTree() throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-        List<BlogCategoryTreeVo> categoryTree = blogCategoryService.getCategoryTree();
+        List<BlogCategoryTreeVo> categoryTree = blogCategoryService.getCategoryTreeCache();
         System.out.println(objectMapper.writeValueAsString(categoryTree));
     }
 }

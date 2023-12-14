@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sndshun.rbac0.mapper.Rbac0PermissionMapper">
+
+    <resultMap type="com.sndshun.rbac0.entity.Rbac0PermissionEntity" id="Rbac0PermissionMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="menuCode" column="menu_code" jdbcType="VARCHAR"/>
+        <result property="menuName" column="menu_name" jdbcType="VARCHAR"/>
+        <result property="permissionCode" column="permission_code" jdbcType="VARCHAR"/>
+        <result property="permissionName" column="permission_name" jdbcType="VARCHAR"/>
+        <result property="requiredPermission" column="required_permission" jdbcType="INTEGER"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="base_column">
+        idmenu_codemenu_namepermission_codepermission_namerequired_permissionupdate_timecreate_time    </sql>
+
+    <!--用于粘贴复制-->
+    <select id="test" resultMap="Rbac0PermissionMap">
+        select
+        idmenu_codemenu_namepermission_codepermission_namerequired_permissionupdate_timecreate_time
+        from framework.rbac0_permission
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="menuCode != null and menuCode != ''">
+                and menu_code = #{menuCode}
+            </if>
+            <if test="menuName != null and menuName != ''">
+                and menu_name = #{menuName}
+            </if>
+            <if test="permissionCode != null and permissionCode != ''">
+                and permission_code = #{permissionCode}
+            </if>
+            <if test="permissionName != null and permissionName != ''">
+                and permission_name = #{permissionName}
+            </if>
+            <if test="requiredPermission != null">
+                and required_permission = #{requiredPermission}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+        </where>
+    </select>
+
+
+</mapper>
+

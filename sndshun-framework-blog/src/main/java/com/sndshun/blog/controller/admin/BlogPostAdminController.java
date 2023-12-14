@@ -1,16 +1,20 @@
 package com.sndshun.blog.controller.admin;
 
 
+import com.sndshun.blog.annotation.VisitLog;
+import com.sndshun.blog.enums.VisitEnum;
 import com.sndshun.commons.tools.Result;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.service.BlogPostService;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,8 +44,20 @@ public class BlogPostAdminController {
      * @return 所有数据
      */
     @GetMapping
-    public Result<?> selectPage(Page<BlogPostEntity> page, BlogPostEntity blogPost) {
-        return Result.ok(this.blogPostService.page(page, new QueryWrapper<>(blogPost)));
+    public Result<Page<BlogPostEntity>> selectPage(Page<BlogPostEntity> page, BlogPostEntity blogPost) {
+        LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
+                .select(BlogPostEntity::getId,
+                        BlogPostEntity::getLikes,
+                        BlogPostEntity::getTitle,
+                        BlogPostEntity::getLikes,
+                        BlogPostEntity::getTags,
+                        BlogPostEntity::getPublishedTime,
+                        BlogPostEntity::getCategoryId,
+                        BlogPostEntity::getComments,
+                        BlogPostEntity::getCoverImageUrl)
+                .eq(null!=blogPost.getIsPublished(),BlogPostEntity::getIsPublished,blogPost.getIsPublished())
+                .eq(null!=blogPost.getLogicDelete(),BlogPostEntity::getLogicDelete,blogPost.getLogicDelete());
+        return Result.ok(this.blogPostService.page(page, select));
     }
 
     /**
@@ -51,7 +67,7 @@ public class BlogPostAdminController {
      * @return 单条数据
      */
     @GetMapping("{id}")
-    public Result<?> selectOne(@PathVariable Serializable id) {
+    public Result<BlogPostEntity> selectOne(@PathVariable Serializable id) {
         return Result.ok(this.blogPostService.getById(id));
     }
 
@@ -61,9 +77,13 @@ public class BlogPostAdminController {
      * @param blogPost 实体对象
      * @return 新增结果
      */
+    @VisitLog(VisitEnum.ARCHIVE)
     @CacheEvict(cacheNames = "blog:post",allEntries = true,condition = "#blogPost.isPublished==1")
     @PostMapping
-    public Result<?> insert(@RequestBody BlogPostEntity blogPost) {
+    public Result<Boolean> insert(@RequestBody BlogPostEntity blogPost) {
+        if (null == blogPost.getPublishedTime()) {
+            blogPost.setPublishedTime(new Date());
+        }
         return Result.ok(this.blogPostService.save(blogPost));
     }
 
@@ -75,7 +95,10 @@ public class BlogPostAdminController {
      */
     @CacheEvict(cacheNames = "blog:post",allEntries = true)
     @PutMapping
-    public Result<?> update(@RequestBody BlogPostEntity blogPost) {
+    public Result<Boolean> update(@RequestBody BlogPostEntity blogPost) {
+        if (null == blogPost.getPublishedTime()) {
+            blogPost.setPublishedTime(new Date());
+        }
         return Result.ok(this.blogPostService.updateById(blogPost));
     }
 
@@ -87,7 +110,7 @@ public class BlogPostAdminController {
      */
     @CacheEvict(cacheNames = "blog:post",allEntries = true)
     @DeleteMapping("/{id}")
-    public Result<?> delete(@PathVariable Long id) {
+    public Result<Boolean> delete(@PathVariable Long id) {
         return Result.ok(this.blogPostService.removeById(id));
     }
 
@@ -99,7 +122,7 @@ public class BlogPostAdminController {
      */
     @CacheEvict(cacheNames = "blog:post",allEntries = true)
     @DeleteMapping("batch")
-    public Result<?> deleteBatch(@RequestBody List<Long> idList) {
+    public Result<Boolean> deleteBatch(@RequestBody List<Long> idList) {
         return Result.ok(this.blogPostService.removeByIds(idList));
     }
 }

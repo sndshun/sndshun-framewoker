@@ -19,6 +19,6 @@ public interface BlogFriendLinkService extends IService<BlogFriendLinkEntity> {
      * @author sndshun
      * @date 2023/12/03 07:42:12
      */
-    List<BlogFriendLinkEntity> getAll();
+    List<BlogFriendLinkEntity> getAllCache();
 
 }

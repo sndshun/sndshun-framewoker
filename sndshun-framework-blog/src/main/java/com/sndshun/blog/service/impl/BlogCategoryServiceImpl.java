@@ -26,7 +26,7 @@ public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, Blo
 
     @Cacheable(cacheNames = "blog:category",key = "#root.methodName")
     @Override
-    public List<BlogCategoryTreeVo> getCategoryTree() {
+    public List<BlogCategoryTreeVo> getCategoryTreeCache() {
         LambdaQueryWrapper<BlogCategoryEntity> select = Wrappers.<BlogCategoryEntity>lambdaQuery().select(BlogCategoryEntity::getId,
                 BlogCategoryEntity::getParentId,
                 BlogCategoryEntity::getName,
@@ -40,6 +40,17 @@ public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, Blo
         List<BlogCategoryEntity> list = super.list(select);
         List<BlogCategoryTreeVo> blogCategoryTreeVos = BlogCategoryTreeVo.convertToBlogCategoryTreeVo(list);
 
+        //定义排序规则 sort 为空给设置为0 负数可以作为置顶功能
+        Comparator<BlogCategoryTreeVo> comparator = Comparator.comparing(vo->null==vo.getSort()?0:vo.getSort());
+        List<BlogCategoryTreeVo> treeParents = TreeUtils.treeParent(blogCategoryTreeVos, BlogCategoryTreeVo::getId, BlogCategoryTreeVo::getParentId, BlogCategoryTreeVo::getChildren, comparator);
+
+        return treeParents;
+    }
+
+    @Override
+    public List<BlogCategoryTreeVo> getCategoryAllTree() {
+        List<BlogCategoryEntity> list = super.list();
+        List<BlogCategoryTreeVo> blogCategoryTreeVos = BlogCategoryTreeVo.convertToBlogCategoryTreeVo(list);
         //定义排序规则 sort 为空给设置为0 负数可以作为置顶功能
         Comparator<BlogCategoryTreeVo> comparator = Comparator.comparing(vo->null==vo.getSort()?0:vo.getSort());
         List<BlogCategoryTreeVo> treeParents = TreeUtils.treeParent(blogCategoryTreeVos, BlogCategoryTreeVo::getId, BlogCategoryTreeVo::getParentId, BlogCategoryTreeVo::getChildren, comparator);
