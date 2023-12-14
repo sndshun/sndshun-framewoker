@@ -167,6 +167,7 @@ public class VisitLogAspect {
      */
     private void getInformationViaIp(String uuid, String ip) {
         String ipMsg = IPUtils.getInfoIp(ip);
+        log.info("IP内容：{}",ipMsg);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
