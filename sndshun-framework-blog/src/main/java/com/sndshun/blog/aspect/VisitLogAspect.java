@@ -121,7 +121,7 @@ public class VisitLogAspect {
         String userAgent = request.getHeader("User-Agent");
         //根据时间戳、ip、userAgent生成UUID
         String assembleUuId = timestamp + ip + userAgent;
-        String uuid = UUID.nameUUIDFromBytes(assembleUuId.getBytes()).toString().substring(18);
+        String uuid = UUID.nameUUIDFromBytes(assembleUuId.getBytes()).toString().substring(17);
         //添加访客标识码UUID至响应头
         assert response != null;
         response.addHeader("identification", uuid);
@@ -145,7 +145,7 @@ public class VisitLogAspect {
         //获取请求参数
         Map<String, Object> reqParams = getReqParams(joinPoint);
         //解析成字符串
-        String params = Utils.substring(writeValueAsString(reqParams), 0, 500);
+        String params = Utils.substring(writeValueAsString(reqParams), 0, 2000);
         //初始化访问日志对象
         BlogVisitLogEntity blogVisitLog = new BlogVisitLogEntity();
         blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(params).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setOs(parse.getOs().toString()).setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
