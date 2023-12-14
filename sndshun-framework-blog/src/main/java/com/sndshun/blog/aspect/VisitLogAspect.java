@@ -3,6 +3,10 @@ package com.sndshun.blog.aspect;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.entity.BlogVisitLogEntity;
 import com.sndshun.blog.entity.BlogVisitUserEntity;
@@ -11,16 +15,21 @@ import com.sndshun.blog.service.BlogVisitUserService;
 import com.sndshun.commons.tools.IPUtils;
 import com.sndshun.commons.tools.Result;
 
+import com.sndshun.commons.tools.StringUtils;
+import com.sndshun.commons.tools.Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -130,14 +139,19 @@ public class VisitLogAspect {
      * @param result    结果
      * @param times     时间
      */
-    private void handleLog(ProceedingJoinPoint joinPoint, VisitLog visitLog, HttpServletRequest request, Result<?> result, int times, String uuid, String ip) {
+    private void handleLog(ProceedingJoinPoint joinPoint, VisitLog visitLog, HttpServletRequest request, Result result, int times, String uuid, String ip) {
         String uri = request.getRequestURI();
         String method = request.getMethod();
         String userAgent = request.getHeader("User-Agent");
         UserAgent parse = UserAgentUtil.parse(userAgent);
+        //获取请求参数
+        Map<String, Object> reqParams = getReqParams(joinPoint);
+        //解析成字符串
+        String params = Utils.substring(writeValueAsString(reqParams), 0, 500);
         //初始化访问日志对象
         BlogVisitLogEntity blogVisitLog = new BlogVisitLogEntity();
-        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setOs(parse.getOs().toString()).setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
+        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(params).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setOs(parse.getOs().toString()).setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
+        //添加
         saveVisitLogAsync(blogVisitLog);
     }
 
@@ -154,18 +168,20 @@ public class VisitLogAspect {
      * @param ip   Ip
      */
     private void getInformationViaIp(String uuid, String ip) {
-        HashMap<String, Object> ipMsg = IPUtils.getInfoIp(ip);
+        //TODO 不知为何 本地畅流无比，容器里就嗝屁
+        //2023-12-14T01:55:15.105926256Z java.lang.NoSuchMethodError: com.sndshun.commons.tools.IPUtils.getInfoIp(Ljava/lang/String;)Ljava/lang/String;
+        String ipMsg = IPUtils.getInfoIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
-            assert ipMsg != null;
-            String country = ipMsg.get("country").toString();
-            String prov = ipMsg.get("prov").toString();
-            String city = ipMsg.get("city").toString();
-            String lat = ipMsg.get("lat").toString();
-            String lng = ipMsg.get("lng").toString();
-            blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
-            log.info("Ip对象为：{}",blogVisitUser.toString());
+            JSONObject result = JSONUtil.parseObj(ipMsg);
+            String country = result.getStr("country");
+            String prov = result.getStr("prov");
+            String city = result.getStr("city");
+            String lat = result.getStr("lat");
+            String lng = result.getStr("lng");
+            String radius = result.getStr("radius");
+            blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng).setRadius(radius);
             saveVisitUserAsync(blogVisitUser);
         }
     }
@@ -174,5 +190,49 @@ public class VisitLogAspect {
     void saveVisitUserAsync(BlogVisitUserEntity blogVisitUser) {
         blogVisitUserService.save(blogVisitUser);
         blogVisitLogService.addVisitIpAndMark(blogVisitUser.getIp(), blogVisitUser.getUuid());
+    }
+
+    /**
+     * 获取请求参数
+     *
+     * @param joinPoint 运行时连接点
+     * @return 结果
+     */
+    private Map<String, Object> getReqParams(JoinPoint joinPoint) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        String[] parameterNames = ((MethodSignature) joinPoint.getSignature()).getParameterNames();
+        Object[] args = joinPoint.getArgs();
+        for (int i = 0; i < args.length; i++) {
+            if (!isFilterObject(args[i])) {
+                map.put(parameterNames[i], args[i]);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 考虑数据是文件、httpRequest 还是响应
+     *
+     * @param o 数据
+     * @return 如果匹配返回 true，否则返回 false
+     */
+    private static boolean isFilterObject(final Object o) {
+        return o instanceof HttpServletRequest || o instanceof HttpServletResponse || o instanceof MultipartFile;
+    }
+
+    /**
+     * 将值写入字符串
+     *
+     * @param value 值
+     * @return 结果
+     */
+    private String writeValueAsString(Object value) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

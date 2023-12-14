@@ -4,7 +4,6 @@ import com.sndshun.schedule.entity.ScheduleJobEntity;
 import com.sndshun.schedule.mapper.ScheduleJobMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +11,9 @@ import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author maple
+ */
 @Slf4j
 @Component
 public class QuartzManager {
@@ -45,14 +47,14 @@ public class QuartzManager {
         try {
             // 创建jobDetail实例，绑定Job实现类
             // 指明job的名称，所在组的名称，以及绑定job类
-            Class<? extends Job> jobClass = (Class<? extends Job>) (Class.forName(task.getBeanName()).newInstance()
-                    .getClass());
-            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(task.getJobId().toString())// 任务名称和组构成任务key
-                    .withDescription(task.getRemark())
-                    .build();
+            Class<? extends Job> jobClass = (Class<? extends Job>) (Class.forName(task.getBeanName()).newInstance().getClass());
+            // 任务名称和组构成任务key
+            JobDetail jobDetail = JobBuilder.newJob(jobClass).withIdentity(task.getJobId().toString())
+                    .withDescription(task.getRemark()).build();
             // 定义调度触发规则
             // 使用cornTrigger规则
-            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(task.getJobId().toString())// 触发器key
+            // 触发器key
+            Trigger trigger = TriggerBuilder.newTrigger().withIdentity(task.getJobId().toString())
                     .startAt(DateBuilder.futureDate(1, DateBuilder.IntervalUnit.SECOND))
                     .withSchedule(CronScheduleBuilder.cronSchedule(task.getCron())).startNow().build();
             // 把作业和触发器注册到任务调度中

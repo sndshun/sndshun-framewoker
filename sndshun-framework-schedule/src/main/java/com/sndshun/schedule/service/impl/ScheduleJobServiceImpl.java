@@ -84,6 +84,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
     public Boolean pauseJobById(Long id) {
         LambdaUpdateWrapper<ScheduleJobEntity> wrapper = new LambdaUpdateWrapper<>();
         wrapper.set(ScheduleJobEntity::getStatus, Status.PAUSE.getValue());
+        wrapper.eq(ScheduleJobEntity::getJobId, id);
         boolean update = super.update(wrapper);
         quartzManager.pauseJob(id);
         return update;
@@ -93,6 +94,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
     public Boolean resumeJobById(Long id) {
         LambdaUpdateWrapper<ScheduleJobEntity> wrapper = new LambdaUpdateWrapper<>();
         wrapper.set(ScheduleJobEntity::getStatus, Status.WAIT.getValue());
+        wrapper.eq(ScheduleJobEntity::getJobId, id);
         boolean update = super.update(wrapper);
         quartzManager.resumeJob(id);
         return update;

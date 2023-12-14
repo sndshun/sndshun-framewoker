@@ -1,6 +1,5 @@
 package com.sndshun.schedule.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.schedule.entity.ScheduleJobEntity;
@@ -89,7 +88,7 @@ public class ScheduleJobController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping("?")
+    @DeleteMapping("batch")
     public Result<Boolean> deleteBatch(@RequestBody List<Long> idList) {
         return Result.ok(this.scheduleJobService.removeByIds(idList));
     }

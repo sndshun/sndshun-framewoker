@@ -64,6 +64,12 @@ public class BlogVisitUserEntity extends Model<BlogVisitUserEntity> {
      */
 
     private String lng;
+
+    /**
+     * 半径
+     */
+    private String radius;
+
     /**
      * 创建时间
      */
@@ -130,6 +136,15 @@ public class BlogVisitUserEntity extends Model<BlogVisitUserEntity> {
 
     public BlogVisitUserEntity setLng(String lng) {
         this.lng = lng;
+        return this;
+    }
+
+    public String getRadius() {
+        return radius;
+    }
+
+    public BlogVisitUserEntity setRadius(String radius) {
+        this.radius = radius;
         return this;
     }
 
