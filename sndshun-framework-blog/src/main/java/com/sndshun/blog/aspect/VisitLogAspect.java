@@ -145,12 +145,12 @@ public class VisitLogAspect {
         String userAgent = request.getHeader("User-Agent");
         UserAgent parse = UserAgentUtil.parse(userAgent);
         //获取请求参数
-//        Map<String, Object> reqParams = getReqParams(joinPoint);
+        Map<String, Object> reqParams = getReqParams(joinPoint);
         //解析成字符串
-//        String params = Utils.substring(writeValueAsString(reqParams), 0, 500);
+        String params = Utils.substring(writeValueAsString(reqParams), 0, 500);
         //初始化访问日志对象
         BlogVisitLogEntity blogVisitLog = new BlogVisitLogEntity();
-        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setOs(parse.getOs().toString()).setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
+        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(params).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setOs(parse.getOs().toString()).setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
         //添加
         saveVisitLogAsync(blogVisitLog);
     }
@@ -170,19 +170,19 @@ public class VisitLogAspect {
     private void getInformationViaIp(String uuid, String ip) {
         //TODO 不知为何 本地畅流无比，容器里就嗝屁
 //2023-12-14T01:55:15.105926256Z java.lang.NoSuchMethodError: com.sndshun.commons.tools.IPUtils.getInfoIp(Ljava/lang/String;)Ljava/lang/String;
-//        String ipMsg = IPUtils.getInfoIp(ip);
+        String ipMsg = IPUtils.getInfoIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
-//            JSONObject result = JSONUtil.parseObj(ipMsg);
-//            System.out.println("原始集合" + result);
-//            String country = result.getStr("country");
-//            String prov = result.getStr("prov");
-//            String city = result.getStr("city");
-//            String lat = result.getStr("lat");
-//            String lng = result.getStr("lng");
-//            blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
-//            saveVisitUserAsync(blogVisitUser);
+            JSONObject result = JSONUtil.parseObj(ipMsg);
+            System.out.println("原始集合" + result);
+            String country = result.getStr("country");
+            String prov = result.getStr("prov");
+            String city = result.getStr("city");
+            String lat = result.getStr("lat");
+            String lng = result.getStr("lng");
+            blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
+            saveVisitUserAsync(blogVisitUser);
         }
     }
 
