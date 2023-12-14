@@ -13,8 +13,8 @@ import com.sndshun.blog.service.BlogVisitUserService;
 import com.sndshun.commons.tools.IPUtils;
 import com.sndshun.commons.tools.Result;
 
-import com.sndshun.commons.tools.StringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -173,13 +173,11 @@ public class VisitLogAspect {
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
-            assert ipMsg != null;
             String country = ipMsg.get("country").toString();
             String prov = ipMsg.get("prov").toString();
             String city = ipMsg.get("city").toString();
             String lat = ipMsg.get("lat").toString();
             String lng = ipMsg.get("lng").toString();
-            System.out.println(ipMsg);
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
             saveVisitUserAsync(blogVisitUser);
         }

@@ -22,7 +22,6 @@ public class IPUtils {
      */
     public static HashMap<String, Object> getInfoIp(String ip) {
         HashMap<String, Object> map = new HashMap<>(17);
-        long startTime = System.currentTimeMillis();
         String url = "https://qifu-api.baidubce.com/ip/geo/v1/district?ip=" + ip;
         HttpResponse execute = HttpRequest.get(url).execute();
         if (execute.isOk()) {
@@ -47,8 +46,6 @@ public class IPUtils {
             map.put("district", result.getStr("district"));
             return map;
         }
-        long endTime = System.currentTimeMillis();
-        System.out.println("耗时：" + (endTime - startTime));
         return null;
     }
 }
