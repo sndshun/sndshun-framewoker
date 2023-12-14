@@ -38,8 +38,8 @@ public class IPUtils {
             map.put("areacode", result.getStr("areacode"));
             map.put("adcode", result.getStr("adcode"));
             map.put("asnumber", result.getStr("asnumber"));
-            map.put("lat", result.getStr("lat"));
-            map.put("lng", result.getStr("lng"));
+            map.put("latitude ", result.getStr("lat"));
+            map.put("longitude ", result.getStr("lng"));
             map.put("radius", result.getStr("radius"));
             map.put("prov", result.getStr("prov"));
             map.put("city", result.getStr("city"));

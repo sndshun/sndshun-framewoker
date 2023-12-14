@@ -173,12 +173,12 @@ public class VisitLogAspect {
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
+            System.out.println("原始集合"+ipMsg);
             String country = ipMsg.get("country").toString();
             String prov = ipMsg.get("prov").toString();
             String city = ipMsg.get("city").toString();
-            String lat = ipMsg.get("lat").toString();
-            String lng = ipMsg.get("lng").toString();
-            System.out.println("内容"+ipMsg.toString());
+            String lat = ipMsg.get("latitude").toString();
+            String lng = ipMsg.get("longitude").toString();
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
             saveVisitUserAsync(blogVisitUser);
         }
