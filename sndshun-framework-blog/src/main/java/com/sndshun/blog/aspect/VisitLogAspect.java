@@ -3,6 +3,8 @@ package com.sndshun.blog.aspect;
 import cn.hutool.extra.servlet.ServletUtil;
 import cn.hutool.http.useragent.UserAgent;
 import cn.hutool.http.useragent.UserAgentUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sndshun.blog.annotation.VisitLog;
@@ -13,8 +15,8 @@ import com.sndshun.blog.service.BlogVisitUserService;
 import com.sndshun.commons.tools.IPUtils;
 import com.sndshun.commons.tools.Result;
 
+import com.sndshun.commons.tools.StringUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -144,14 +146,10 @@ public class VisitLogAspect {
         //获取请求参数
         Map<String, Object> reqParams = getReqParams(joinPoint);
         //解析成字符串
-//        String params = StringUtils.substring(writeValueAsString(reqParams), 0, 2000);
+        String params = StringUtils.substring(writeValueAsString(reqParams), 0, 500);
         //初始化访问日志对象
         BlogVisitLogEntity blogVisitLog = new BlogVisitLogEntity();
-        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null)
-                .setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent())
-                .setRemark(null).setIp(ip).setOs(parse.getOs().toString())
-                .setBrowser(parse.getBrowser().toString()).setTimes(times)
-                .setCreateTime(new Date()).setUserAgent(userAgent);
+        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null).setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent()).setRemark(null).setIp(ip).setOs(parse.getOs().toString()).setBrowser(parse.getBrowser().toString()).setTimes(times).setCreateTime(new Date()).setUserAgent(userAgent);
         //添加
         saveVisitLogAsync(blogVisitLog);
     }
@@ -169,16 +167,17 @@ public class VisitLogAspect {
      * @param ip   Ip
      */
     private void getInformationViaIp(String uuid, String ip) {
-        HashMap<String, Object> ipMsg = IPUtils.getInfoIp(ip);
+        String ipMsg = IPUtils.getInfoIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
-            System.out.println("原始集合"+ipMsg);
-            String country = ipMsg.get("country").toString();
-            String prov = ipMsg.get("prov").toString();
-            String city = ipMsg.get("city").toString();
-            String lat = ipMsg.get("latitude").toString();
-            String lng = ipMsg.get("longitude").toString();
+            JSONObject result = JSONUtil.parseObj(ipMsg);
+            System.out.println("原始集合" + result);
+            String country = result.getStr("country");
+            String prov = result.getStr("prov");
+            String city = result.getStr("city");
+            String lat = result.getStr("lat");
+            String lng = result.getStr("lng");
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
             saveVisitUserAsync(blogVisitUser);
         }
