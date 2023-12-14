@@ -164,8 +164,9 @@ public class VisitLogAspect {
             String city = ipMsg.get("city").toString();
             String lat = ipMsg.get("lat").toString();
             String lng = ipMsg.get("lng").toString();
+            System.out.println(ipMsg);
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
-            log.info("Ip对象为：{}",blogVisitUser.toString());
+            log.info("Ip对象为：{}", blogVisitUser);
             saveVisitUserAsync(blogVisitUser);
         }
     }

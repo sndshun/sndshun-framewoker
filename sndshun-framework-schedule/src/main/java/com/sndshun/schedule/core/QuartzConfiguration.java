@@ -19,7 +19,8 @@ public class QuartzConfiguration {
         SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
         try {
             schedulerFactoryBean.setOverwriteExistingJobs(true);
-            schedulerFactoryBean.setJobFactory(jobFactory); //使用自定义工厂
+            //使用自定义工厂
+            schedulerFactoryBean.setJobFactory(jobFactory);
         } catch (Exception e) {
             e.printStackTrace();
         }
