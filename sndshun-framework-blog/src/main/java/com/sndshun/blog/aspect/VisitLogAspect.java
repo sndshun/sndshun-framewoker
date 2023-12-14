@@ -144,10 +144,10 @@ public class VisitLogAspect {
         //获取请求参数
         Map<String, Object> reqParams = getReqParams(joinPoint);
         //解析成字符串
-        String params = StringUtils.substring(writeValueAsString(reqParams), 0, 2000);
+//        String params = StringUtils.substring(writeValueAsString(reqParams), 0, 2000);
         //初始化访问日志对象
         BlogVisitLogEntity blogVisitLog = new BlogVisitLogEntity();
-        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(params)
+        blogVisitLog.setUuid(uuid).setUri(uri).setMethod(method).setParam(null)
                 .setBehavior(visitLog.value().getType()).setContent(visitLog.value().getContent())
                 .setRemark(null).setIp(ip).setOs(parse.getOs().toString())
                 .setBrowser(parse.getBrowser().toString()).setTimes(times)
@@ -178,6 +178,7 @@ public class VisitLogAspect {
             String city = ipMsg.get("city").toString();
             String lat = ipMsg.get("lat").toString();
             String lng = ipMsg.get("lng").toString();
+            System.out.println("内容"+ipMsg.toString());
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng);
             saveVisitUserAsync(blogVisitUser);
         }
