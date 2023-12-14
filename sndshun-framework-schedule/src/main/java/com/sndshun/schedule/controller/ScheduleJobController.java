@@ -88,7 +88,7 @@ public class ScheduleJobController {
      * @param idList 主键结合
      * @return 删除结果
      */
-    @DeleteMapping("?")
+    @DeleteMapping("batch")
     public Result<Boolean> deleteBatch(@RequestBody List<Long> idList) {
         return Result.ok(this.scheduleJobService.removeByIds(idList));
     }
