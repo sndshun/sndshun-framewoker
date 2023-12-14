@@ -69,6 +69,19 @@ public class BlogPostEndpointController {
     }
 
     /**
+     * 根据id查询文章内容
+     *
+     * @param id 编号
+     * @return {@link Result }<{@link ? }>
+     * @author sndshun
+     * @date 2023/12/11 12:16:31
+     */
+    @GetMapping("/content/{id}")
+    public Result<String> getPostContentById(@PathVariable Long id) {
+        return Result.ok(blogPostService.getPostByIdCache(id).getContent());
+    }
+
+    /**
      * 文章归档查询
      *
      * @return {@link Result }<{@link ? }> 为了前端保证顺序用数组传递

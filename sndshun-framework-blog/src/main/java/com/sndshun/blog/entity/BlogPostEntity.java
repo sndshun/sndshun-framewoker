@@ -106,6 +106,11 @@ public class BlogPostEntity extends Model<BlogPostEntity> {
      */
 
     private Integer isFeatured;
+
+    /**
+     * 排序
+     */
+    private Integer sort;
     /**
      * 发布时间
      */

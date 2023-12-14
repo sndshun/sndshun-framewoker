@@ -40,7 +40,9 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
                         BlogPostEntity::getCoverImageUrl,
                         BlogPostEntity::getLikes,
                         BlogPostEntity::getComments)
-                .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode());
+                .eq(BlogPostEntity::getIsPublished, PublishStatus.PUBLISHED.getCode())
+                .orderByAsc(BlogPostEntity::getSort)
+                .orderByDesc(BlogPostEntity::getPublishedTime);
         return super.page(page, select);
     }
 
