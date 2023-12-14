@@ -121,7 +121,7 @@ public class VisitLogAspect {
         String userAgent = request.getHeader("User-Agent");
         //根据时间戳、ip、userAgent生成UUID
         String assembleUuId = timestamp + ip + userAgent;
-        String uuid = UUID.nameUUIDFromBytes(assembleUuId.getBytes()).toString();
+        String uuid = UUID.nameUUIDFromBytes(assembleUuId.getBytes()).toString().substring(18);
         //添加访客标识码UUID至响应头
         assert response != null;
         response.addHeader("identification", uuid);
