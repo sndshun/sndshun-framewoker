@@ -15,7 +15,6 @@ import com.sndshun.blog.service.BlogVisitUserService;
 import com.sndshun.commons.tools.IPUtils;
 import com.sndshun.commons.tools.Result;
 
-import com.sndshun.commons.tools.StringUtils;
 import com.sndshun.commons.tools.Utils;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -81,7 +80,7 @@ public class VisitLogAspect {
         //校验访客标识码
         String identification = checkIdentification(ip, request);
         //添加日志
-        handleLog(joinPoint, visitLog, request, result, times, identification, ip);
+        handleLog(joinPoint, visitLog, request, times, identification, ip);
         //添加访客
         getInformationViaIp(identification, ip);
         return result;
@@ -136,10 +135,9 @@ public class VisitLogAspect {
      *
      * @param joinPoint 程序连接点
      * @param visitLog  访问日志
-     * @param result    结果
      * @param times     时间
      */
-    private void handleLog(ProceedingJoinPoint joinPoint, VisitLog visitLog, HttpServletRequest request, Result result, int times, String uuid, String ip) {
+    private void handleLog(ProceedingJoinPoint joinPoint, VisitLog visitLog, HttpServletRequest request, int times, String uuid, String ip) {
         String uri = request.getRequestURI();
         String method = request.getMethod();
         String userAgent = request.getHeader("User-Agent");
@@ -168,8 +166,6 @@ public class VisitLogAspect {
      * @param ip   Ip
      */
     private void getInformationViaIp(String uuid, String ip) {
-        //TODO 不知为何 本地畅流无比，容器里就嗝屁
-        //2023-12-14T01:55:15.105926256Z java.lang.NoSuchMethodError: com.sndshun.commons.tools.IPUtils.getInfoIp(Ljava/lang/String;)Ljava/lang/String;
         String ipMsg = IPUtils.getInfoIp(ip);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
@@ -181,15 +177,11 @@ public class VisitLogAspect {
             String lat = result.getStr("lat");
             String lng = result.getStr("lng");
             String radius = result.getStr("radius");
+            log.info("国家：{} 省：{} 城市：{} lat：{} lng：{} 半径：{}", country, prov, city, lat, lng, radius);
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng).setRadius(radius);
-            saveVisitUserAsync(blogVisitUser);
+            blogVisitUserService.save(blogVisitUser);
+            blogVisitLogService.addVisitIpAndMark(blogVisitUser.getIp(), blogVisitUser.getUuid());
         }
-    }
-
-    @Async
-    void saveVisitUserAsync(BlogVisitUserEntity blogVisitUser) {
-        blogVisitUserService.save(blogVisitUser);
-        blogVisitLogService.addVisitIpAndMark(blogVisitUser.getIp(), blogVisitUser.getUuid());
     }
 
     /**
@@ -235,4 +227,5 @@ public class VisitLogAspect {
             return "";
         }
     }
+
 }

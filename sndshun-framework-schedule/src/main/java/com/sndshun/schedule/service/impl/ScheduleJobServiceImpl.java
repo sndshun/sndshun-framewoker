@@ -81,6 +81,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean pauseJobById(Long id) {
         LambdaUpdateWrapper<ScheduleJobEntity> wrapper = new LambdaUpdateWrapper<>();
         wrapper.set(ScheduleJobEntity::getStatus, Status.PAUSE.getValue());
@@ -91,6 +92,7 @@ public class ScheduleJobServiceImpl extends ServiceImpl<ScheduleJobMapper, Sched
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Boolean resumeJobById(Long id) {
         LambdaUpdateWrapper<ScheduleJobEntity> wrapper = new LambdaUpdateWrapper<>();
         wrapper.set(ScheduleJobEntity::getStatus, Status.WAIT.getValue());

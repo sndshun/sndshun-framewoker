@@ -24,7 +24,6 @@ public class ScheduleJobLogController {
     /**
      * 服务对象
      */
-
     private final ScheduleJobLogService scheduleJobLogService;
 
     @Autowired
