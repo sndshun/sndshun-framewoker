@@ -79,6 +79,7 @@ public class VisitLogAspect {
         String ip = ServletUtil.getClientIP(request);
         //校验访客标识码
         String identification = checkIdentification(ip, request);
+        log.info("访客UUID：{}", identification);
         //添加日志
         handleLog(joinPoint, visitLog, request, times, identification, ip);
         //添加访客
@@ -96,7 +97,7 @@ public class VisitLogAspect {
     private String checkIdentification(String ip, HttpServletRequest request) {
         String uuid = blogVisitLogService.getValueByKey(ip);
         //设略一些验证逻辑
-        if (uuid == null) {
+        if (uuid == null || "".equals(uuid)) {
             uuid = generateUUID(request);
         }
         return uuid;
@@ -122,9 +123,6 @@ public class VisitLogAspect {
         //根据时间戳、ip、userAgent生成UUID
         String assembleUuId = timestamp + ip + userAgent;
         String uuid = UUID.nameUUIDFromBytes(assembleUuId.getBytes()).toString().substring(19);
-        //添加访客标识码UUID至响应头
-        assert response != null;
-        response.addHeader("identification", uuid);
         //暴露自定义header供页面资源使用
         response.addHeader("Access-Control-Expose-Headers", "identification");
         return uuid;
@@ -167,7 +165,6 @@ public class VisitLogAspect {
      */
     private void getInformationViaIp(String uuid, String ip) {
         String ipMsg = IPUtils.getInfoIp(ip);
-        log.info("IP内容：{}",ipMsg);
         boolean itExist = blogVisitUserService.doesItExist(uuid, ip);
         if (!itExist) {
             BlogVisitUserEntity blogVisitUser = new BlogVisitUserEntity();
@@ -178,7 +175,6 @@ public class VisitLogAspect {
             String lat = result.getStr("lat");
             String lng = result.getStr("lng");
             String radius = result.getStr("radius");
-            log.info("国家：{} 省：{} 城市：{} lat：{} lng：{} 半径：{}", country, prov, city, lat, lng, radius);
             blogVisitUser.setUuid(uuid).setIp(ip).setCountry(country).setProv(prov).setCity(city).setLat(lat).setLng(lng).setRadius(radius);
             blogVisitUserService.save(blogVisitUser);
             blogVisitLogService.addVisitIpAndMark(blogVisitUser.getIp(), blogVisitUser.getUuid());

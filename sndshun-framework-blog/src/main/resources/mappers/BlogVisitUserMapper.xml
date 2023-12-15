@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sndshun.blog.mapper.BlogVisitUserMapper">
-
     <resultMap type="com.sndshun.blog.entity.BlogVisitUserEntity" id="BlogVisitUserMap">
         <result property="vid" column="vid" jdbcType="INTEGER"/>
         <result property="uuid" column="uuid" jdbcType="VARCHAR"/>
