@@ -53,6 +53,11 @@
             </if>
         </where>
     </select>
+    <select id="getUuidByiP" resultType="java.lang.String">
+        SELECT uuid
+        FROM blog_visit_user
+        WHERE ip = #{ip}
+    </select>
 
 
 </mapper>

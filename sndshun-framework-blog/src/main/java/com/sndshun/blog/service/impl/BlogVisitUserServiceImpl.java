@@ -19,9 +19,11 @@ import org.springframework.stereotype.Service;
 public class BlogVisitUserServiceImpl extends ServiceImpl<BlogVisitUserMapper, BlogVisitUserEntity> implements BlogVisitUserService {
     private final RedisTemplate<String, Object> restTemplate;
 
+    private final BlogVisitUserMapper blogVisitUserMapper;
     @Autowired
-    public BlogVisitUserServiceImpl(RedisTemplate<String, Object> restTemplate) {
+    public BlogVisitUserServiceImpl(RedisTemplate<String, Object> restTemplate, BlogVisitUserMapper blogVisitUserMapper) {
         this.restTemplate = restTemplate;
+        this.blogVisitUserMapper = blogVisitUserMapper;
     }
 
     @Override
@@ -32,6 +34,11 @@ public class BlogVisitUserServiceImpl extends ServiceImpl<BlogVisitUserMapper, B
         }else {
             return true;
         }
+    }
+
+    @Override
+    public String getUuidByiP(String ip) {
+        return null;
     }
 
     private boolean doesItExistDb(String uuid, String ip) {

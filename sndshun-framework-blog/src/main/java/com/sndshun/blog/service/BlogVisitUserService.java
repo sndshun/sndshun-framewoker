@@ -20,4 +20,12 @@ public interface BlogVisitUserService extends IService<BlogVisitUserEntity> {
      * @return 真假
      */
     boolean doesItExist(String uuid, String ip);
+
+    /**
+     * 通过ip获取访客识别码
+     *
+     * @param ip ip
+     * @return uuid
+     */
+    String getUuidByiP(String ip);
 }
