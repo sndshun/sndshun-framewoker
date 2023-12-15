@@ -19,11 +19,10 @@ import org.springframework.stereotype.Service;
 public class BlogVisitUserServiceImpl extends ServiceImpl<BlogVisitUserMapper, BlogVisitUserEntity> implements BlogVisitUserService {
     private final RedisTemplate<String, Object> restTemplate;
 
-    private final BlogVisitUserMapper blogVisitUserMapper;
+
     @Autowired
-    public BlogVisitUserServiceImpl(RedisTemplate<String, Object> restTemplate, BlogVisitUserMapper blogVisitUserMapper) {
+    public BlogVisitUserServiceImpl(RedisTemplate<String, Object> restTemplate) {
         this.restTemplate = restTemplate;
-        this.blogVisitUserMapper = blogVisitUserMapper;
     }
 
     @Override
@@ -31,14 +30,17 @@ public class BlogVisitUserServiceImpl extends ServiceImpl<BlogVisitUserMapper, B
         String result = (String) restTemplate.opsForValue().get("ip:" + ip);
         if (result == null) {
             return doesItExistDb(uuid, ip);
-        }else {
+        } else {
             return true;
         }
     }
 
     @Override
     public String getUuidByiP(String ip) {
-        return null;
+        LambdaQueryWrapper<BlogVisitUserEntity> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(BlogVisitUserEntity::getIp, ip);
+        BlogVisitUserEntity blogVisitUser = super.baseMapper.selectOne(wrapper);
+        return blogVisitUser.getUuid();
     }
 
     private boolean doesItExistDb(String uuid, String ip) {
