@@ -1,6 +1,7 @@
 package com.sndshun.file.service.strategy;
 
 import cn.hutool.core.util.StrUtil;
+import com.aliyun.oss.OSSClient;
 import com.qcloud.cos.utils.Jackson;
 import com.sndshun.commons.config.ResultCode;
 import com.sndshun.commons.tools.DateUtils;
@@ -15,6 +16,7 @@ import com.sndshun.file.pojo.vo.minio.BucketVo;
 import com.sndshun.file.pojo.vo.minio.MinioBucketVo;
 import io.minio.*;
 import io.minio.errors.*;
+import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import lombok.extern.slf4j.Slf4j;

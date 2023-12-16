@@ -6,7 +6,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,7 +46,7 @@ public class FileUtils {
         if (filename == null) {
             return false;
         }
-        return filename.matches("^[A-za-z0-9.]{1,255}$");
+        return filename.matches("^[A-za-z0-9.-]{1,255}$");
     }
 
     public static String calculateFileHash(InputStream inputStream) throws IOException, NoSuchAlgorithmException {
@@ -84,5 +88,21 @@ public class FileUtils {
             }
             return hexBuilder.toString();
         }
+    }
+
+    /** 通过读取流的方式获取文件大小
+     * @param inputStream 输入流
+     * @return long
+     * @author sndshun
+     * @date 2023/12/16 08:22:10
+     */
+    public static long getSizeFromInputStream(InputStream inputStream) throws IOException {
+        byte[] buffer = new byte[1024];
+        long size = 0;
+        int bytesRead;
+        while ((bytesRead = inputStream.read(buffer)) != -1) {
+            size += bytesRead;
+        }
+        return size;
     }
 }
