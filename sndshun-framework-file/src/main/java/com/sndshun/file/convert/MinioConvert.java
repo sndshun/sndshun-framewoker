@@ -1,11 +1,10 @@
 package com.sndshun.file.convert;
 
 import com.sndshun.commons.tools.DateUtils;
-import com.sndshun.file.vo.minio.MinioBucketVo;
+import com.sndshun.file.pojo.vo.minio.MinioBucketVo;
 import io.minio.messages.Item;
 
 import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.Map;
 
 /**

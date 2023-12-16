@@ -8,11 +8,11 @@ import com.sndshun.commons.tools.Result;
 import com.sndshun.commons.tools.StringUtils;
 import com.sndshun.file.config.OssProperties;
 import com.sndshun.file.convert.MinioConvert;
-import com.sndshun.file.entity.OssFile;
+import com.sndshun.file.pojo.dto.OssFileDto;
 import com.sndshun.file.service.OssService;
 import com.sndshun.file.util.FileUtils;
-import com.sndshun.file.vo.minio.BucketVo;
-import com.sndshun.file.vo.minio.MinioBucketVo;
+import com.sndshun.file.pojo.vo.minio.BucketVo;
+import com.sndshun.file.pojo.vo.minio.MinioBucketVo;
 import io.minio.*;
 import io.minio.errors.*;
 import io.minio.messages.Bucket;
@@ -21,7 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.InvalidKeyException;
@@ -52,6 +51,22 @@ public class MinioOssServiceImpl implements OssService {
     }
 
     @Override
+    public void initDefaultBucket() {
+        try {
+            log.info("MinioOssServiceImpl initDefaultBucket start");
+            String defaultBucketName = ossProperties.getDefaultBucketName();
+            boolean exist = bucketExist(defaultBucketName);
+            StringUtils.isBooleanTrue(exist);
+            /*不存在手动创建*/
+            makeBucket(ossProperties.getDefaultBucketName());
+            log.info("初始化默认桶成功~~~~~");
+            log.info("MinioOssServiceImpl initDefaultBucket end");
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
+        }
+    }
+
+    @Override
     public Result<String> listBuckets() {
         try {
             log.info("MinioOssServiceImpl listBuckets start");
@@ -76,15 +91,15 @@ public class MinioOssServiceImpl implements OssService {
     }
 
     @Override
-    public Result<String> bucketExists(String bucketName) {
+    public Boolean bucketExists(String bucketName) {
         try {
             log.info("MinioOssServiceImpl bucketExists start");
             boolean result = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
             log.info("MinioOssServiceImpl bucketExists end");
-            return result ? Result.ok(ResultCode.OSS_BUCKET_EXIST) : Result.error(ResultCode.OSS_BUCKET_IS_EXIST);
+            return result;
         } catch (Exception e) {
             log.error(e.getLocalizedMessage());
-            return Result.error(ResultCode.OSS_BUCKET_IS_EXIST);
+            return false;
         }
     }
 
@@ -117,18 +132,16 @@ public class MinioOssServiceImpl implements OssService {
     }
 
     @Override
-    public Result<String> upload(InputStream inputStream, String bucketName, String originalFileName) {
-        String uuidFileName = FileUtils.generateOssUuidFileName(originalFileName);
+    public OssFileDto upload(InputStream inputStream, String bucketName, String originalFileName) {
         try {
             if (StrUtil.isEmpty(bucketName)) {
                 bucketName = ossProperties.getDefaultBucketName();
             }
             uploadFileStream(bucketName, originalFileName, inputStream);
-            OssFile ossFile = new OssFile(uuidFileName, originalFileName);
-            return Result.ok(ResultCode.OSS_UPLOAD_OK, ossFile.toString());
+            return new OssFileDto().setOssFilePath(originalFileName).setOriginalFileName(originalFileName).setState(true);
         } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
-            return Result.error(ResultCode.OSS_UPLOAD_ERROR);
+            log.error("文件上传失败====================》",e);
+            return new OssFileDto().setState(false);
         } finally {
             if (inputStream != null) {
                 try {
@@ -138,6 +151,12 @@ public class MinioOssServiceImpl implements OssService {
                 }
             }
         }
+    }
+
+    @Override
+    public OssFileDto uploadPath(InputStream inputStream, String bucketName, String originalFileName) {
+        String uuidFileName = FileUtils.generateOssUuidFileName(originalFileName);
+        return upload(inputStream, bucketName, uuidFileName);
     }
 
     @Override
@@ -177,23 +196,6 @@ public class MinioOssServiceImpl implements OssService {
             log.error(e.getLocalizedMessage());
             log.info("MinioOssServiceImpl getBucketObjectMsg end");
             return Result.error(ResultCode.OSS_SEARCH_BUCKET_ERROR);
-        }
-    }
-
-    @Override
-    @PostConstruct
-    public void initDefaultBucket() {
-        try {
-            log.info("MinioOssServiceImpl initDefaultBucket start");
-            String defaultBucketName = ossProperties.getDefaultBucketName();
-            boolean exist = bucketExist(defaultBucketName);
-            StringUtils.isBooleanTrue(exist);
-            /*不存在手动创建*/
-            makeBucket(ossProperties.getDefaultBucketName());
-            log.info("初始化默认桶成功~~~~~");
-            log.info("MinioOssServiceImpl initDefaultBucket end");
-        } catch (Exception e) {
-            log.error(e.getLocalizedMessage());
         }
     }
 

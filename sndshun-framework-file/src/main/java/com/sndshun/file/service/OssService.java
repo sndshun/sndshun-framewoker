@@ -2,6 +2,7 @@ package com.sndshun.file.service;
 
 
 import com.sndshun.commons.tools.Result;
+import com.sndshun.file.pojo.dto.OssFileDto;
 
 
 import java.io.InputStream;
@@ -13,6 +14,11 @@ import java.io.InputStream;
  * @author mapleie
  */
 public interface OssService {
+
+    /**
+     * 初始化默认存储桶
+     */
+    void initDefaultBucket();
 
     /**
      * 查询所有存储桶
@@ -27,7 +33,7 @@ public interface OssService {
      * @param bucketName 桶名
      * @return 是否存在
      */
-    Result<String> bucketExists(String bucketName);
+    Boolean bucketExists(String bucketName);
 
     /**
      * 创建存储桶
@@ -36,6 +42,7 @@ public interface OssService {
      * @return 成功与否
      */
     Result<String> makeBucket(String bucketName);
+
 
     /**
      * 删除一个空桶
@@ -53,7 +60,16 @@ public interface OssService {
      * @param bucketName       桶名
      * @return OssFile
      */
-    Result<String> upload(InputStream inputStream, String bucketName, String originalFileName);
+    OssFileDto upload(InputStream inputStream, String bucketName, String originalFileName);
+    /**
+     * 上传文件 并自动设置路径
+     *
+     * @param inputStream      流
+     * @param originalFileName 原始文件名
+     * @param bucketName       桶名
+     * @return OssFile
+     */
+    OssFileDto uploadPath(InputStream inputStream, String bucketName, String originalFileName);
 
     /**
      * 获取桶中某个文件，此操作需要对此Object具有读权限。
@@ -72,9 +88,4 @@ public interface OssService {
      * @return 结果
      */
     Result<String> getBucketObjectMsg(String bucketName, boolean recursive);
-
-    /**
-     * 初始化默认存储桶
-     */
-    void initDefaultBucket();
 }

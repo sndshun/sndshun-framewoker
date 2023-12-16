@@ -3,24 +3,15 @@ package com.sndshun.file.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import com.google.common.base.Preconditions;
 import com.sndshun.commons.tools.Result;
-import javafx.util.Pair;
-import org.apache.logging.log4j.Logger;
+import com.sndshun.file.pojo.dto.OssFileDto;
 import org.junit.jupiter.api.Test;
-import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class OssServiceTest {
@@ -45,7 +36,7 @@ class OssServiceTest {
 
     @Test
     void bucketExists() throws JsonProcessingException {
-        Result<String> stringResult = ossService.bucketExists("test");
+        Boolean stringResult = ossService.bucketExists("test");
         String res = objectMapper.writeValueAsString(stringResult);
         System.out.println(res);
     }
@@ -67,7 +58,7 @@ class OssServiceTest {
     @Test
     void upload() throws IOException {
         File img = new File("D:/test/gp.webp");
-        Result<String> stringResult = ossService.upload(Files.newInputStream(img.toPath()), "test", "gp.webp");
+        OssFileDto stringResult = ossService.upload(Files.newInputStream(img.toPath()), "test", "gp.webp");
         String res = objectMapper.writeValueAsString(stringResult);
         System.out.println(res);
     }

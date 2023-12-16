@@ -61,6 +61,9 @@ public enum ResultCode {
     OSS_UPLOAD_OK(80005, "上传成功"),
     OSS_UPLOAD_ERROR(80006, "上传失败"),
     OSS_SEARCH_BUCKET_ERROR(80007, "暂无数据"),
+    OSS_FILE_NOT(80008, "文件不存在"),
+    OSS_FILE_EMPTY(80009, "无法上传空文件"),
+    OSS_FILE_NAME_ERROR(80010, "文件名不合法"),
 
 
     ;

@@ -29,6 +29,10 @@ spring:
     check-template-location: false
   #cache:
     #type: none #关闭缓存
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 10MB
 
 mybatis-plus:
   global-config:

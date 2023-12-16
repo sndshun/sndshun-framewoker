@@ -1,7 +1,7 @@
-package com.sndshun.file.entity;
+package com.sndshun.file.pojo.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * 文件对象
@@ -9,8 +9,8 @@ import lombok.Data;
  * @author mapleie
  */
 @Data
-@AllArgsConstructor
-public class OssFile {
+@Accessors(chain = true)
+public class OssFileDto {
     /**
      * OSS 存储时文件路径
      */
@@ -20,4 +20,9 @@ public class OssFile {
      * 原始文件名
      */
     String originalFileName;
+
+    /**
+     * 上传状态
+     */
+    Boolean state;
 }
