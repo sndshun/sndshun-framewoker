@@ -31,7 +31,7 @@ spring:
     #type: none #关闭缓存
   servlet:
     multipart:
-      max-file-size: 5MB
+      max-file-size: 2MB
       max-request-size: 10MB
 
 mybatis-plus:
@@ -51,6 +51,14 @@ server:
     enabled: true
     #压缩数据类型
     mime-types: application/json
+
+oss:
+  enabled: true
+  type: MINIO
+  endpoint: http://124.70.45.144:9000
+  access-key: gGjKMK90pnVyEk6zAWRn
+  secret-key: H99GsEl0MQy0MyCYLOfzugcRH6Dv0Wz9Gkskl84a
+  default-bucket-name: test
 
 system:
   cache: doublecache

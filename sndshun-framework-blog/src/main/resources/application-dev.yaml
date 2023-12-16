@@ -27,6 +27,10 @@ spring:
     connect-timeout: 3000
   freemarker:
     check-template-location: false
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 10MB
 
 mybatis-plus:
   global-config:
@@ -44,6 +48,14 @@ server:
     enabled: true
     #压缩数据类型
     mime-types: application/json
+
+oss:
+  enabled: true
+  type: MINIO
+  endpoint: http://124.70.45.144:9000
+  access-key: gGjKMK90pnVyEk6zAWRn
+  secret-key: H99GsEl0MQy0MyCYLOfzugcRH6Dv0Wz9Gkskl84a
+  default-bucket-name: test
 
 system:
   cache: no  #dev 关闭缓存

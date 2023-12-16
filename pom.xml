@@ -131,6 +131,11 @@
                 <version>${sndshun.framework.version}</version>
             </dependency>
             <dependency>
+                <groupId>com.sndshun</groupId>
+                <artifactId>sndshun-framework-file</artifactId>
+                <version>${sndshun.framework.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.connector.version}</version>

@@ -38,6 +38,10 @@
             <groupId>com.sndshun</groupId>
             <artifactId>sndshun-framework-schedule</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sndshun</groupId>
+            <artifactId>sndshun-framework-file</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
