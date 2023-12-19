@@ -40,7 +40,7 @@ public class BlogVisitUserServiceImpl extends ServiceImpl<BlogVisitUserMapper, B
         LambdaQueryWrapper<BlogVisitUserEntity> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(BlogVisitUserEntity::getIp, ip);
         BlogVisitUserEntity blogVisitUser = super.baseMapper.selectOne(wrapper);
-        return blogVisitUser.getUuid();
+        return null!=blogVisitUser?blogVisitUser.getUuid():null;
     }
 
     private boolean doesItExistDb(String uuid, String ip) {
