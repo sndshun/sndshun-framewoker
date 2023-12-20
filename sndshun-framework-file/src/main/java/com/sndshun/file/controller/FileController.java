@@ -1,6 +1,5 @@
 package com.sndshun.file.controller;
 
-import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.file.FileNameUtil;
 import cn.hutool.core.util.StrUtil;
 import com.sndshun.commons.config.ResultCode;
@@ -8,20 +7,21 @@ import com.sndshun.commons.tools.Result;
 import com.sndshun.commons.tools.StringUtils;
 import com.sndshun.file.config.OssProperties;
 import com.sndshun.file.entity.FileEntity;
+import com.sndshun.file.pojo.dto.FileAttributesDto;
 import com.sndshun.file.pojo.dto.OssFileDto;
 import com.sndshun.file.service.FileService;
 import com.sndshun.file.service.OssService;
 import com.sndshun.file.util.FileUtils;
-import org.apache.commons.compress.utils.FileNameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
 import java.security.NoSuchAlgorithmException;
 import java.util.Map;
 
@@ -88,14 +88,17 @@ public class FileController extends BaseController {
      */
     @PostMapping("upload")
     @Transactional(rollbackFor = Exception.class)
-    public Result<OssFileDto> uploadFile(@RequestParam("file") MultipartFile file) throws IOException, NoSuchAlgorithmException {
+    public Result<OssFileDto> uploadFile(MultipartFile file) throws IOException, NoSuchAlgorithmException {
         if (file.isEmpty()) return Result.error(ResultCode.OSS_FILE_EMPTY);
 
+        //创建临时文件
+        File tempFile = FileUtils.saveMultipartFileToTempFile(file);
+
         //获取基本信息
-        String contentType = file.getContentType();
-        String originalFilename = file.getOriginalFilename();
-        long size = file.getSize();
-        return handleFileUpload(file.getInputStream(), contentType, originalFilename, size);
+        FileAttributesDto fileAttributes = FileUtils.getFileAttributes(tempFile);
+        fileAttributes.setMimeType(file.getContentType());
+
+        return handleFileUpload(fileAttributes, tempFile);
     }
 
     /**
@@ -115,70 +118,59 @@ public class FileController extends BaseController {
             // 获取基本信息
             String contentType = URLConnection.guessContentTypeFromName(map.get("url"));
             String originalFilename = FileNameUtil.getName(map.get("url"));
-            long size = -1; // 由于从 URL 中获取文件大小可能不方便，可以设为 -1 或者尝试其他方式获取
 
-            return handleFileUpload(webUrl.openStream(), contentType, originalFilename, size);
-        } catch (IOException | NoSuchAlgorithmException e) {
+            return Result.ok(null);
+        } catch (IOException e) {
             log.error("文件上传失败---------->", e);
             return Result.error(ResultCode.ERROR);
         }
     }
 
-    private Result<OssFileDto> handleFileUpload(InputStream inputStream, String contentType, String originalFilename, long size)
+    private Result<OssFileDto> handleFileUpload(FileAttributesDto fileAttributes,File file)
             throws IOException, NoSuchAlgorithmException {
 
         OssFileDto fileDto = new OssFileDto();
 
-        if (size == -1) {
-            // 尝试通过其他方式获取文件大小
-            size = FileUtils.getSizeFromInputStream(inputStream);
-        }
 
         //获取基本信息
-        String pathAndName = FileUtils.generateOssUuidFileName(originalFilename);
-        String type = FileNameUtil.getSuffix(originalFilename);
+        String pathAndName = FileUtils.generateOssUuidFileName(fileAttributes.getName());
+        String type = FileNameUtil.getSuffix(fileAttributes.getName());
 
-        //if (!FileUtils.validateStringFilenameUsingRegex(originalFilename)) return Result.error(ResultCode.OSS_FILE_NAME_ERROR);
+        if (!FileUtils.validateStringFilenameUsingRegex(fileAttributes.getName())) return Result.error(ResultCode.OSS_FILE_NAME_ERROR);
         if (StrUtil.isEmpty(type)) return Result.error(ResultCode.OSS_FILE_NAME_ERROR);
+        if (!type.equals(fileAttributes.getFileType())) return Result.error(ResultCode.OSS_FILE_TYPE_ERROR);
 
         //验证hash
-        String hash = null;
-        try {
-            hash = FileUtils.calculateFileHash(inputStream);
-            FileEntity fileByHash = fileService.getFileByHash(hash);
-            if (null != fileByHash) {
-                fileDto.setState(true);
-                fileDto.setOssFilePath(fileByHash.getConnectPath());
-                fileDto.setOriginalFileName(originalFilename);
-                fileByHash.setOriginalFileName(originalFilename);
-                fileService.save(fileByHash);
-                return Result.ok(fileDto);
-            }
-        } catch (NoSuchAlgorithmException e) {
-            log.error("文件上传hash校验失败---------->", e);
-            return Result.error(ResultCode.ERROR);
+        FileEntity fileByHash = fileService.getFileByHash(fileAttributes.getFileHash());
+        if (null != fileByHash) {
+            fileDto.setState(true);
+            fileDto.setOssFilePath(fileByHash.getConnectPath());
+            fileDto.setOriginalFileName(fileAttributes.getName());
+            fileByHash.setOriginalFileName(fileAttributes.getName());
+            fileService.save(fileByHash);
+            return Result.ok(fileDto);
         }
 
 
         //保存入库
         FileEntity fileEntity = new FileEntity();
         fileEntity.setBucket(bucketName);
-        fileEntity.setOriginalFileName(originalFilename);
-        fileEntity.setName(originalFilename);
-        fileEntity.setFileSize(size);
-        fileEntity.setFileType(type);
-        fileEntity.setMimeType(contentType);
-        fileEntity.setFileHash(hash);
+        fileEntity.setOriginalFileName(fileAttributes.getName());
+        fileEntity.setName(fileAttributes.getName());
+        fileEntity.setFileSize(fileAttributes.getSize());
+        fileEntity.setFileType(fileAttributes.getFileType());
+        fileEntity.setMimeType(fileAttributes.getMimeType());
+        fileEntity.setFileHash(fileAttributes.getFileHash());
         fileEntity.setFilePath(pathAndName);
         fileEntity.setConnectPath(StrUtil.SLASH+ossProperties.getType().getName()+StrUtil.SLASH+bucketName+pathAndName);
         fileService.save(fileEntity);
 
         fileDto.setState(true);
         fileDto.setOssFilePath(fileEntity.getConnectPath());
-        fileDto.setOriginalFileName(originalFilename);
+        fileDto.setOriginalFileName(fileAttributes.getName());
         // 文件上传
-        ossService.upload(inputStream, bucketName, pathAndName);
-
+        ossService.upload(Files.newInputStream(file.toPath()), bucketName, pathAndName);
+        boolean delete = file.delete();
         return Result.ok(fileDto);
     }
 

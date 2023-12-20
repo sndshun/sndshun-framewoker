@@ -1,16 +1,19 @@
 package com.sndshun.file.util;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.util.StrUtil;
+import com.sndshun.file.pojo.dto.FileAttributesDto;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.security.DigestInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +25,33 @@ import java.util.UUID;
  *
  * @author mapleie
  */
+@Slf4j
 public class FileUtils {
+
+    public static final String tempPath;
+
+
+    static {
+        tempPath = crateTempPath();
+    }
+
+    private static String crateTempPath() {
+        File upload = null;
+        try {
+            File path = new File(ResourceUtils.getURL("classpath:").getPath());
+            if (!path.exists()) {
+                path = new File("");
+            }
+            upload = new File(path.getAbsolutePath(), "temp/");
+            if (!upload.exists()) {
+                upload.mkdirs();
+            }
+        } catch (FileNotFoundException e) {
+            log.error("系统临时目录创建失败---------:", e);
+        }
+        return upload.getAbsolutePath() + StrUtil.SLASH;
+    }
+
 
     /**
      * 生成随机文件名，防止重复
@@ -49,6 +78,14 @@ public class FileUtils {
         return filename.matches("^[A-za-z0-9.-]{1,255}$");
     }
 
+    /**
+     * 文件hash值运算
+     *
+     * @param inputStream 输入流
+     * @return {@link String }
+     * @author sndshun
+     * @date 2023/12/20 02:35:24
+     */
     public static String calculateFileHash(InputStream inputStream) throws IOException, NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");
         try (DigestInputStream digestInputStream = new DigestInputStream(inputStream, md)) {
@@ -58,7 +95,6 @@ public class FileUtils {
                 // 读取操作
             }
         }
-
         // 获取计算得到的哈希值
         byte[] hashBytes = md.digest();
 
@@ -71,7 +107,9 @@ public class FileUtils {
         return hashStringBuilder.toString();
     }
 
-    /**获取文件头信息
+    /**
+     * 获取文件头信息
+     *
      * @param file 输入流
      * @return {@link String }
      * @author sndshun
@@ -90,7 +128,9 @@ public class FileUtils {
         }
     }
 
-    /** 通过读取流的方式获取文件大小
+    /**
+     * 通过读取流的方式获取文件大小
+     *
      * @param inputStream 输入流
      * @return long
      * @author sndshun
@@ -104,5 +144,45 @@ public class FileUtils {
             size += bytesRead;
         }
         return size;
+    }
+
+    /**
+     * 保存临时文件
+     *
+     * @param multipartFile multipart 文件
+     * @return {@link File }
+     * @author sndshun
+     * @date 2023/12/20 04:01:02
+     */
+    public static File saveMultipartFileToTempFile(MultipartFile multipartFile) throws IOException {
+        File tempFile = new File(tempPath + multipartFile.getOriginalFilename());
+        multipartFile.transferTo(tempFile);
+        return tempFile;
+    }
+
+    /**
+     * 获取文件属性
+     *
+     * @param file 文件
+     * @return {@link FileAttributesDto }
+     * @author sndshun
+     * @date 2023/12/20 04:40:18
+     */
+    public static FileAttributesDto getFileAttributes(File file) {
+        FileAttributesDto dto = new FileAttributesDto();
+        // 一次性获取文件的基本属性
+        try {
+            BasicFileAttributes fileAttributes = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+            String hashCode = calculateFileHash(Files.newInputStream(file.toPath()));
+
+            dto.setName(file.getName());
+            dto.setFileType(FileTypeUtil.getType(file));
+            dto.setFileHash(hashCode);
+            dto.setSize(fileAttributes.size());
+        } catch (IOException | NoSuchAlgorithmException e) {
+            log.error("文件属性读取失败：", e);
+        }
+
+        return dto;
     }
 }

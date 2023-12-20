@@ -64,6 +64,7 @@ public enum ResultCode {
     OSS_FILE_NOT(80008, "文件不存在"),
     OSS_FILE_EMPTY(80009, "无法上传空文件"),
     OSS_FILE_NAME_ERROR(80010, "文件名不合法"),
+    OSS_FILE_TYPE_ERROR(80011, "文件类型错误"),
 
 
     ;
