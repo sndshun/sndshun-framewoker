@@ -1,18 +1,20 @@
 package com.sndshun.blog.controller.admin;
 
 
-
-import com.sndshun.blog.vo.BlogCategoryTreeVo;
-import com.sndshun.commons.tools.Result;
-import com.sndshun.blog.entity.BlogCategoryEntity;
-import com.sndshun.blog.service.BlogCategoryService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.sndshun.blog.entity.BlogCategoryEntity;
+import com.sndshun.blog.service.BlogCategoryService;
+import com.sndshun.blog.vo.BlogCategoryTreeVo;
+import com.sndshun.commons.tools.Result;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 分类表(BlogCategory)表控制层
@@ -47,9 +49,23 @@ public class BlogCategoryAdminController {
      * @author sndshun
      * @date 2023/12/12 01:49:42
      */
+    @Cacheable(cacheNames = "blog:category",key = "#root.methodName")
     @GetMapping("tree")
-    public Result<List<BlogCategoryTreeVo>> getTree() {
+    public Result<List<BlogCategoryTreeVo>> getAdminTree() {
         return Result.ok(this.blogCategoryService.getCategoryAllTree());
+    }
+
+    /** 返回所有分类map形式
+     * @return {@link Result }<{@link Map }<{@link String },{@link String }>>
+     * @author sndshun
+     * @date 2023/12/21 09:10:41
+     */
+    @Cacheable(cacheNames = "blog:category",key = "#root.methodName")
+    @GetMapping("map")
+    public Result<Map<Long,String>> getAdminMap() {
+        List<BlogCategoryEntity> list = this.blogCategoryService.getCategoryDict();
+        Map<Long, String> collect = list.stream().collect(Collectors.toMap(BlogCategoryEntity::getId, BlogCategoryEntity::getName));
+        return Result.ok(collect);
     }
 
     /**

@@ -704,11 +704,32 @@
                     <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
+                    <option name="comment" value="标签背景颜色" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="bgColor" />
+                    <option name="type" value="java.lang.String" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
                     <option name="comment" value="是否启用; 0: 禁用, 1: 启用" />
                     <option name="custom" value="false" />
                     <option name="ext" value="{}" />
                     <option name="name" value="isActive" />
                     <option name="type" value="java.lang.Integer" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="所属分类;所属分类id" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="categoryId" />
+                    <option name="type" value="java.lang.Long" />
+                  </ColumnInfoDTO>
+                  <ColumnInfoDTO>
+                    <option name="comment" value="所属分类;所属分类名" />
+                    <option name="custom" value="false" />
+                    <option name="ext" value="{}" />
+                    <option name="name" value="categoryName" />
+                    <option name="type" value="java.lang.String" />
                   </ColumnInfoDTO>
                   <ColumnInfoDTO>
                     <option name="comment" value="租户号" />
@@ -766,7 +787,7 @@
               <option name="saveModelName" value="sndshun-framework-blog" />
               <option name="savePackageName" value="com.sndshun.blog" />
               <option name="savePath" value="./sndshun-framework-blog/src/main/java/com/sndshun/blog" />
-              <option name="templateGroupName" value="" />
+              <option name="templateGroupName" value="MybatisPlusFramework" />
             </TableInfoDTO>
           </value>
         </entry>

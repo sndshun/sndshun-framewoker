@@ -14,6 +14,8 @@ import java.util.List;
  */
 public interface BlogCategoryService extends IService<BlogCategoryEntity> {
 
+    List<BlogCategoryEntity> getCategoryDict();
+
     /**
      * 获取简略分类树
      * @return {@link List }<{@link BlogCategoryTreeVo }>

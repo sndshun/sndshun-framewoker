@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sndshun.blog.entity.BlogTagEntity;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 标签表(BlogTag)表服务接口
@@ -21,6 +22,14 @@ public interface BlogTagService extends IService<BlogTagEntity> {
      * @date 2023/12/03 07:13:39
      */
     List<BlogTagEntity> getAllCaChe();
+
+
+    /**map形式查询所有
+     * @return {@link List }<{@link Map }<{@link String }, {@link String }>>
+     * @author sndshun
+     * @date 2023/12/22 01:38:22
+     */
+    Map<Long, String> getTagsMapCache();
 
 
 

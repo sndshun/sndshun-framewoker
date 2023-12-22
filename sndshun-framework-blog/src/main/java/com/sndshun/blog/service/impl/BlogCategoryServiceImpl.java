@@ -24,7 +24,17 @@ import java.util.List;
 @Service("blogCategoryService")
 public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, BlogCategoryEntity> implements BlogCategoryService {
 
-    @Cacheable(cacheNames = "blog:category",key = "#root.methodName")
+    @Override
+    public List<BlogCategoryEntity> getCategoryDict() {
+        LambdaQueryWrapper<BlogCategoryEntity> select = Wrappers.<BlogCategoryEntity>lambdaQuery()
+                .select(BlogCategoryEntity::getId,
+                        BlogCategoryEntity::getName)
+                .eq(BlogCategoryEntity::getIsActive, Status.YES.getValue())
+                .orderByAsc(BlogCategoryEntity::getSort);
+        return super.list(select);
+    }
+
+    @Cacheable(cacheNames = "blog:category", key = "#root.methodName")
     @Override
     public List<BlogCategoryTreeVo> getCategoryTreeCache() {
         LambdaQueryWrapper<BlogCategoryEntity> select = Wrappers.<BlogCategoryEntity>lambdaQuery().select(BlogCategoryEntity::getId,
@@ -41,7 +51,7 @@ public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, Blo
         List<BlogCategoryTreeVo> blogCategoryTreeVos = BlogCategoryTreeVo.convertToBlogCategoryTreeVo(list);
 
         //定义排序规则 sort 为空给设置为0 负数可以作为置顶功能
-        Comparator<BlogCategoryTreeVo> comparator = Comparator.comparing(vo->null==vo.getSort()?0:vo.getSort());
+        Comparator<BlogCategoryTreeVo> comparator = Comparator.comparing(vo -> null == vo.getSort() ? 0 : vo.getSort());
         List<BlogCategoryTreeVo> treeParents = TreeUtils.treeParent(blogCategoryTreeVos, BlogCategoryTreeVo::getId, BlogCategoryTreeVo::getParentId, BlogCategoryTreeVo::getChildren, comparator);
 
         return treeParents;
@@ -52,7 +62,7 @@ public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, Blo
         List<BlogCategoryEntity> list = super.list();
         List<BlogCategoryTreeVo> blogCategoryTreeVos = BlogCategoryTreeVo.convertToBlogCategoryTreeVo(list);
         //定义排序规则 sort 为空给设置为0 负数可以作为置顶功能
-        Comparator<BlogCategoryTreeVo> comparator = Comparator.comparing(vo->null==vo.getSort()?0:vo.getSort());
+        Comparator<BlogCategoryTreeVo> comparator = Comparator.comparing(vo -> null == vo.getSort() ? 0 : vo.getSort());
         List<BlogCategoryTreeVo> treeParents = TreeUtils.treeParent(blogCategoryTreeVos, BlogCategoryTreeVo::getId, BlogCategoryTreeVo::getParentId, BlogCategoryTreeVo::getChildren, comparator);
 
         return treeParents;

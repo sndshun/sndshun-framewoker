@@ -53,6 +53,7 @@ public class BlogPostAdminController {
                         BlogPostEntity::getTags,
                         BlogPostEntity::getPublishedTime,
                         BlogPostEntity::getCategoryId,
+                        BlogPostEntity::getType,
                         BlogPostEntity::getComments,
                         BlogPostEntity::getCoverImageUrl)
                 .eq(null!=blogPost.getIsPublished(),BlogPostEntity::getIsPublished,blogPost.getIsPublished())

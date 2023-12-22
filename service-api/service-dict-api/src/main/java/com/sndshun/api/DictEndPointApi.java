@@ -39,7 +39,7 @@ public interface DictEndPointApi {
             @ApiResponse(responseCode = "200", description = "成功"),
     })
     @Parameter(name = "code",required = true,description = "父级Code",in = ParameterIn.PATH)
-    @GetMapping("/code")
+    @GetMapping("/code/map")
     Result<Map<String,String>> getDictByCodeToMap(@RequestParam String code);
 
 }
