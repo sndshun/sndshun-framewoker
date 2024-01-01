@@ -12,6 +12,7 @@
         <option value="$PROJECT_DIR$/sendshun-framework-schedule/pom.xml" />
         <option value="$PROJECT_DIR$/service-api/service-blog-api/pom.xml" />
         <option value="$PROJECT_DIR$/sndshun-framework-dependencies/pom.xml" />
+        <option value="$PROJECT_DIR$/sndshun-framework-jpa-hibernate-starter/pom.xml" />
       </set>
     </option>
   </component>

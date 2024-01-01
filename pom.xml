@@ -14,7 +14,6 @@
         <module>sndshun-framework-email</module>
         <module>sndshun-spring-boot-starter-test</module>
         <module>sndshun-test</module>
-        <module>sndshun-framework-jpa-hibernate-starter</module>
         <module>sndshun-framework-mybatis-plus-starter</module>
         <module>sndshun-framework-template</module>
         <module>sndshun-spring-boot-starter-caffeine</module>
