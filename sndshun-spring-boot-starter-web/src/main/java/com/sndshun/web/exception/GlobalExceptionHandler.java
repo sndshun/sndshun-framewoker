@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author maple
  */
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalExceptionHandler {
 
     /**

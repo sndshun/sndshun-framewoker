@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.sndshun.blog.service.BlogCategoryService;
-import com.sndshun.blog.vo.BlogCategoryTreeVo;
+import com.sndshun.blog.pojo.vo.BlogCategoryTreeVo;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

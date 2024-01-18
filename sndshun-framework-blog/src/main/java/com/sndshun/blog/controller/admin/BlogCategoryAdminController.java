@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sndshun.blog.entity.BlogCategoryEntity;
 import com.sndshun.blog.service.BlogCategoryService;
-import com.sndshun.blog.vo.BlogCategoryTreeVo;
+import com.sndshun.blog.pojo.vo.BlogCategoryTreeVo;
 import com.sndshun.commons.tools.Result;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;

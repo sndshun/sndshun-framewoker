@@ -1,4 +1,4 @@
-package com.sndshun.blog.vo;
+package com.sndshun.blog.pojo.vo;
 
 
 import com.sndshun.blog.entity.BlogCategoryEntity;

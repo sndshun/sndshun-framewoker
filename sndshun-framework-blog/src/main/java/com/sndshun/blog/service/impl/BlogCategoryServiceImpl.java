@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.sndshun.blog.entity.BlogCategoryEntity;
 import com.sndshun.blog.mapper.BlogCategoryMapper;
 import com.sndshun.blog.service.BlogCategoryService;
-import com.sndshun.blog.vo.BlogCategoryTreeVo;
+import com.sndshun.blog.pojo.vo.BlogCategoryTreeVo;
 import com.sndshun.commons.constant.Status;
 import com.sndshun.commons.tools.TreeUtils;
 import org.springframework.cache.annotation.Cacheable;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 分类表(BlogCategory)表服务实现类
@@ -66,5 +68,13 @@ public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, Blo
         List<BlogCategoryTreeVo> treeParents = TreeUtils.treeParent(blogCategoryTreeVos, BlogCategoryTreeVo::getId, BlogCategoryTreeVo::getParentId, BlogCategoryTreeVo::getChildren, comparator);
 
         return treeParents;
+    }
+
+    @Cacheable(cacheNames = "blog:category", key = "#root.methodName")
+    @Override
+    public Map<Long, String> getCategoryNameMapCache() {
+        LambdaQueryWrapper<BlogCategoryEntity> queryWrapper = Wrappers.<BlogCategoryEntity>lambdaQuery().select(BlogCategoryEntity::getId, BlogCategoryEntity::getName);
+        List<BlogCategoryEntity> list = super.list(queryWrapper);
+        return list.stream().collect(Collectors.toMap(BlogCategoryEntity::getId, BlogCategoryEntity::getName));
     }
 }

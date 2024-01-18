@@ -1,19 +1,15 @@
-package com.sndshun.blog.vo;
+package com.sndshun.blog.pojo.vo;
 
 
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.baomidou.mybatisplus.extension.activerecord.Model;
-
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.sndshun.blog.entity.BlogMenuEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**

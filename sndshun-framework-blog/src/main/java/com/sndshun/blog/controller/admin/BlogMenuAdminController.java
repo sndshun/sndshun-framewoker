@@ -1,7 +1,7 @@
 package com.sndshun.blog.controller.admin;
 
 
-import com.sndshun.blog.vo.BlogMenuTreeVo;
+import com.sndshun.blog.pojo.vo.BlogMenuTreeVo;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.blog.entity.BlogMenuEntity;
 import com.sndshun.blog.service.BlogMenuService;

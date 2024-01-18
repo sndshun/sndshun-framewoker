@@ -3,7 +3,7 @@ package com.sndshun.blog.controller.endpoint;
 
 import com.sndshun.blog.entity.BlogMenuEntity;
 import com.sndshun.blog.service.BlogMenuService;
-import com.sndshun.blog.vo.BlogMenuTreeVo;
+import com.sndshun.blog.pojo.vo.BlogMenuTreeVo;
 import com.sndshun.commons.tools.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

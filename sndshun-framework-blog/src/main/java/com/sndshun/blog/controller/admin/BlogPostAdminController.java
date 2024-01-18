@@ -3,6 +3,7 @@ package com.sndshun.blog.controller.admin;
 
 import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.enums.VisitEnum;
+import com.sndshun.blog.pojo.body.BlogPostAdminUpdateBody;
 import com.sndshun.commons.tools.Result;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -54,10 +55,12 @@ public class BlogPostAdminController {
                         BlogPostEntity::getPublishedTime,
                         BlogPostEntity::getCategoryId,
                         BlogPostEntity::getType,
+                        BlogPostEntity::getViewCount,
                         BlogPostEntity::getComments,
                         BlogPostEntity::getCoverImageUrl)
                 .eq(null!=blogPost.getIsPublished(),BlogPostEntity::getIsPublished,blogPost.getIsPublished())
-                .eq(null!=blogPost.getLogicDelete(),BlogPostEntity::getLogicDelete,blogPost.getLogicDelete());
+                .eq(null!=blogPost.getLogicDelete(),BlogPostEntity::getLogicDelete,blogPost.getLogicDelete())
+                .orderByDesc(BlogPostEntity::getPublishedTime);
         return Result.ok(this.blogPostService.page(page, select));
     }
 
@@ -81,11 +84,11 @@ public class BlogPostAdminController {
     @VisitLog(VisitEnum.ARCHIVE)
     @CacheEvict(cacheNames = "blog:post",allEntries = true,condition = "#blogPost.isPublished==1")
     @PostMapping
-    public Result<Boolean> insert(@RequestBody BlogPostEntity blogPost) {
+    public Result<Boolean> insert(@RequestBody BlogPostAdminUpdateBody blogPost) {
         if (null == blogPost.getPublishedTime()) {
             blogPost.setPublishedTime(new Date());
         }
-        return Result.ok(this.blogPostService.save(blogPost));
+        return Result.ok(this.blogPostService.saveOrUpdate(BlogPostAdminUpdateBody.convertToBlogPostEntity(blogPost)));
     }
 
     /**

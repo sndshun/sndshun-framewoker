@@ -2,7 +2,7 @@ package com.sndshun.blog.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.sndshun.blog.entity.BlogMenuEntity;
-import com.sndshun.blog.vo.BlogMenuTreeVo;
+import com.sndshun.blog.pojo.vo.BlogMenuTreeVo;
 
 import java.util.List;
 
