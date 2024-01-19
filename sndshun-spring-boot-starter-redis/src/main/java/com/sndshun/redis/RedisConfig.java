@@ -2,10 +2,12 @@ package com.sndshun.redis;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -41,16 +43,24 @@ import java.time.format.DateTimeFormatter;
 @EnableCaching   //开启缓存功能，作用于缓存配置类上或者作用于springboot启动类上
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
-    /** 默认日期时间格式 */
+    /**
+     * 默认日期时间格式
+     */
     public static final String DEFAULT_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-    /** 默认日期格式 */
+    /**
+     * 默认日期格式
+     */
     public static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
-    /** 默认时间格式 */
+    /**
+     * 默认时间格式
+     */
     public static final String DEFAULT_TIME_FORMAT = "HH:mm:ss";
+
     /**
      * 创建一个RedisTemplate实例，用于操作Redis数据库。
      * 其中，redisTemplate是一个泛型为<String, Object>的模板对象，可以存储键值对数据；
-     * @param factory   factory是一个Redis连接工厂对象，用于建立与Redis服务器的连接
+     *
+     * @param factory factory是一个Redis连接工厂对象，用于建立与Redis服务器的连接
      * @return
      */
     @Bean
@@ -74,10 +84,12 @@ public class RedisConfig extends CachingConfigurerSupport {
         //设置ObjectMapper对象的属性访问器可见性，使其能够访问所有的属性。
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         //启用默认类型识别，避免在序列化过程中出现类型错误。
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        //TODO 去掉已经被弃用的方法
+        //om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        //新的方法
+        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
         //忽略null属性
         om.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-
         //将ObjectMapper对象设置为JSON序列化器的属性访问器。
         jackson2JsonRedisSerializer.setObjectMapper(om);
         //将ObjectMapper对象设置为JSON序列化器的属性访问器。
@@ -92,12 +104,13 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
 
     /**
-     *  创建一个CacheManager实例，用于管理缓存。
-     *  其中，cacheManager是一个缓存管理器对象，用于管理缓存的生命周期和策略等；
+     * 创建一个CacheManager实例，用于管理缓存。
+     * 其中，cacheManager是一个缓存管理器对象，用于管理缓存的生命周期和策略等；
+     *
      * @param factory
      * @return
      */
-    @ConditionalOnProperty(prefix = "system",name = "cache",havingValue = "redis")
+    @ConditionalOnProperty(prefix = "system", name = "cache", havingValue = "redis")
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
         //第一个序列化器用于将字符串类型的数据转换为二进制格式，第二个序列化器用于将Java对象序列化为JSON格式。
@@ -106,7 +119,8 @@ public class RedisConfig extends CachingConfigurerSupport {
         //解决查询缓存转换异常的问题
         ObjectMapper om = new ObjectMapper();
         om.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
-        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+//        om.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        om.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.WRAPPER_ARRAY);
         jackson2JsonRedisSerializer.setObjectMapper(om);
         // 配置序列化（解决乱码的问题）,过期时间14天
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
@@ -124,6 +138,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     /**
      * 配置redis查询失败时处理方法 不影响继续向数据库查询
+     *
      * @return {@link CacheErrorHandler }
      * @author sndshun
      * @date 2023/11/29 04:47:34

@@ -42,7 +42,12 @@
             <groupId>com.sndshun</groupId>
             <artifactId>sndshun-framework-file</artifactId>
         </dependency>
-
+<!--        &lt;!&ndash;对应ES版本7.6.2&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.data</groupId>-->
+<!--            <artifactId>spring-data-elasticsearch</artifactId>-->
+<!--            <version>4.0.9.RELEASE</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
@@ -72,13 +77,13 @@
                         <phase>package</phase>
                         <configuration>
                             <!--3.0.0版本以下用这个-->
-<!--                            <tasks>-->
-<!--                                <copy todir="${copy.jar.directory}" overwrite="true">-->
-<!--                                    <fileset dir="${project.build.directory}">-->
-<!--                                        <include name="${project.artifactId}-${project.version}.jar"/>-->
-<!--                                    </fileset>-->
-<!--                                </copy>-->
-<!--                            </tasks>-->
+                            <!--                            <tasks>-->
+                            <!--                                <copy todir="${copy.jar.directory}" overwrite="true">-->
+                            <!--                                    <fileset dir="${project.build.directory}">-->
+                            <!--                                        <include name="${project.artifactId}-${project.version}.jar"/>-->
+                            <!--                                    </fileset>-->
+                            <!--                                </copy>-->
+                            <!--                            </tasks>-->
                             <!--3.0.0版本以上用这个-->
                             <target>
                                 <copy todir="${copy.jar.directory}/blog" overwrite="true"

@@ -6,12 +6,16 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.enums.VisitEnum;
+import com.sndshun.blog.es.BlogPostRepository;
 import com.sndshun.blog.service.BlogPostService;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.web.pojo.QueryPage;
 import com.sndshun.web.utils.JacksonUtil;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -33,10 +37,12 @@ public class BlogPostEndpointController {
 
     private final BlogPostService blogPostService;
 
+    private final BlogPostRepository blogPostRepository;
 
     @Autowired
-    public BlogPostEndpointController(BlogPostService blogPostService) {
+    public BlogPostEndpointController(BlogPostService blogPostService, BlogPostRepository blogPostRepository) {
         this.blogPostService = blogPostService;
+        this.blogPostRepository = blogPostRepository;
     }
 
 
@@ -102,6 +108,9 @@ public class BlogPostEndpointController {
         return Result.ok(arrayNode);
     }
 
-
-
+//    @GetMapping("/search")
+//    public Result<String> searchBlogPost(@RequestParam("title") String title) {
+//        BoolQueryBuilder esQuery = QueryBuilders.boolQuery();
+//
+//    }
 }

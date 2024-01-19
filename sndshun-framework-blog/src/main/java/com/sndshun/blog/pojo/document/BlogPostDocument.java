@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * @author sndshun
  * @since 2023-12-02 22:03:11
  */
-@Document(indexName = "blog",createIndex = true)
+@Document(indexName = "blog")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,23 +34,23 @@ public class BlogPostDocument {
     /**
      * 标题
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String title;
     /**
      * 内容
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String content;
 
     /**
      * 封面图片URL
      */
-    @Field(index = false,type = FieldType.Keyword)
+    @Field(index = false, type = FieldType.Keyword)
     private String coverImageUrl;
     /**
      * 简介
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String summary;
     /**
      * 分类ID
@@ -66,48 +66,48 @@ public class BlogPostDocument {
     /**
      * 排序
      */
-    @Field(index = false,type = FieldType.Integer)
+    @Field(index = false, type = FieldType.Integer)
     private Integer sort;
     /**
      * 发布时间
      */
-    @Field(index = false,type = FieldType.Date,format = DateFormat.date_time)
+    @Field(index = false, type = FieldType.Date, format = DateFormat.date_time)
     private Date publishedTime;
     /**
      * 作者姓名
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String authorName;
     /**
      * 作者简介
      */
-    @Field(index = false,type = FieldType.Text)
+    @Field(index = false, type = FieldType.Text)
     private String authorBio;
     /**
      * SEO标题
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String seoTitle;
     /**
      * SEO描述
      */
-    @Field(type = FieldType.Text,analyzer = "ik_max_word")
+    @Field(type = FieldType.Text, analyzer = "ik_max_word")
     private String seoDescription;
 
     /**
      * 最后更新时间
      */
-    @Field(index = false,type = FieldType.Date,format = DateFormat.date_time)
+    @Field(index = false, type = FieldType.Date, format = DateFormat.date_time)
     private Date updatedTime;
 
     /**
      * 创建时间
      */
-    @Field(index = false,type = FieldType.Date,format = DateFormat.date_time)
+    @Field(index = false, type = FieldType.Date, format = DateFormat.date_time)
     private Date createdTime;
 
 
-    public static BlogPostDocument convertToBlogPostDocument(BlogPostEntity item, Map<Long,String> categoryMap) {
+    public static BlogPostDocument convertToBlogPostDocument(BlogPostEntity item, Map<Long, String> categoryMap) {
         if (item == null) {
             return null;
         }
@@ -130,10 +130,10 @@ public class BlogPostDocument {
         return result;
     }
 
-    public static List<BlogPostDocument> convertToBlogPostEntityList(List<BlogPostEntity> list, Map<Long,String> categoryMap) {
+    public static List<BlogPostDocument> convertToBlogPostEntityList(List<BlogPostEntity> list, Map<Long, String> categoryMap) {
         if (list.isEmpty()) {
             return new ArrayList<>();
         }
-        return list.stream().map(item->convertToBlogPostDocument(item,categoryMap)).collect(Collectors.toList());
+        return list.stream().map(item -> convertToBlogPostDocument(item, categoryMap)).collect(Collectors.toList());
     }
 }
