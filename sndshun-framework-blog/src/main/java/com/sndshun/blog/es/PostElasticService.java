@@ -9,6 +9,7 @@ import java.util.List;
 public interface PostElasticService<T, ID> {
 
     /**
+     * TODO 不能使用
      * 创建索引并推送映射
      */
     boolean createIndex();
