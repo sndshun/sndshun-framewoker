@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.commons.tools.Result;
 
+
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
