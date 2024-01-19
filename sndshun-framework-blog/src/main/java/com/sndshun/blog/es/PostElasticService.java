@@ -60,6 +60,13 @@ public interface PostElasticService<T, ID> {
      */
     List<BlogPostDocument> selectByViewCountDesc(String index);
 
+    /**
+     * 组合搜索
+     *
+     * @return
+     */
+    List<BlogPostDocument> selectCombinedSearch(String value1, String value2, String index);
+
     @Resource
     ElasticsearchRepository<BlogPostDocument, String> getRepository();
 }

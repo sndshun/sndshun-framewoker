@@ -93,4 +93,12 @@ public class es {
             log.error("分页查询的结果为：{}", blogs);
         });
     }
+
+    @Test
+    void esSelectCombinedSearch() {
+        List list = postElasticService.selectCombinedSearch("深入", "理解", "blog");
+        list.forEach(bs -> {
+            log.error("组合查询的结果为：{}", list);
+        });
+    }
 }

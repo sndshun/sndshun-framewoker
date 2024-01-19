@@ -4,14 +4,18 @@ import com.sndshun.blog.es.PostElasticService;
 import com.sndshun.blog.pojo.document.BlogPostDocument;
 import com.sndshun.blog.service.BlogCategoryService;
 import com.sndshun.blog.service.BlogPostService;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
@@ -141,11 +145,28 @@ public class PostElasticServiceImpl<M extends ElasticsearchRepository<T, ID>, T,
     public List<BlogPostDocument> selectByViewCountDesc(String index) {
         List<BlogPostDocument> blogPostDocuments = new ArrayList<>();
         try {
-
+            NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
         } catch (Exception e) {
 
         }
         return null;
+    }
+
+    @Override
+    public List<BlogPostDocument> selectCombinedSearch(String value1, String value2, String index) {
+        List<BlogPostDocument> blogPostDocuments = new ArrayList<>();
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        // must表示同时满足，should满足其中一个，must_not表示同时不满足
+        boolQueryBuilder.must(QueryBuilders.matchQuery("title", value1));
+        boolQueryBuilder.must(QueryBuilders.matchQuery("title", value2));
+        NativeSearchQueryBuilder builder = new NativeSearchQueryBuilder();
+        builder.withFilter(boolQueryBuilder);
+        NativeSearchQuery query = builder.build();
+        SearchHits<BlogPostDocument> search = elasticsearchRestTemplate.search(query, BlogPostDocument.class, IndexCoordinates.of(index));
+        search.forEach(min -> {
+            blogPostDocuments.add(min.getContent());
+        });
+        return blogPostDocuments;
     }
 
 
