@@ -64,6 +64,12 @@ public class BlogPostDocument {
     private List<String> tags;
 
     /**
+     * 标签数量
+     */
+    @Field(index = false, type = FieldType.Integer)
+    private Integer tagCount;
+
+    /**
      * 排序
      */
     @Field(index = false, type = FieldType.Integer)
@@ -118,7 +124,9 @@ public class BlogPostDocument {
         result.setCoverImageUrl(item.getCoverImageUrl());
         result.setSummary(item.getSummary());
         result.setCategory(categoryMap.get(item.getCategoryId()));
-        result.setTags(Arrays.asList(item.getTags().split(",")));
+        List<String> list = Arrays.asList(item.getTags().split(","));
+        result.setTags(list);
+        result.setTagCount(list.size());
         result.setSort(item.getSort());
         result.setPublishedTime(item.getPublishedTime());
         result.setAuthorName(item.getAuthorName());

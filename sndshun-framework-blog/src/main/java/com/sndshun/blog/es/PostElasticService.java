@@ -4,13 +4,22 @@ import com.sndshun.blog.pojo.document.BlogPostDocument;
 import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
 import javax.annotation.Resource;
+import java.io.Serializable;
 import java.util.List;
 
-public interface PostElasticService<T, ID> {
+public interface PostElasticService {
 
     /**
-     * TODO 不能使用
-     * 创建索引并推送映射
+     * 文章高亮搜索
+     * @param keyword 关键词
+     * @return {@link List }<{@link BlogPostDocument }>
+     * @author sndshun
+     * @date 2024/01/22 06:55:58
+     */
+    List<BlogPostDocument> search(String keyword);
+
+    /**
+     * 创建索引并推送映射 正常
      */
     boolean createIndex();
 
@@ -31,7 +40,7 @@ public interface PostElasticService<T, ID> {
      */
     BlogPostDocument selectAllById(String id, String index);
 
-    void deleteById(ID id);
+    void deleteById(Serializable id);
 
     /**
      * 高亮搜索
@@ -67,6 +76,4 @@ public interface PostElasticService<T, ID> {
      */
     List<BlogPostDocument> selectCombinedSearch(String value1, String value2, String index);
 
-    @Resource
-    ElasticsearchRepository<BlogPostDocument, String> getRepository();
 }

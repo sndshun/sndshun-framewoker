@@ -131,7 +131,7 @@
     </springProfile>
 
     <!-- root级别默认DEBUG -->
-    <springProfile name="test,stage,prod,default">
+    <springProfile name="stage,prod,default">
         <root level="info">
             <!-- 控制台输出 -->
             <appender-ref ref="CONSOLE"/>
@@ -139,6 +139,25 @@
             <appender-ref ref="ERROR"/>
             <appender-ref ref="INFO"/>
             <appender-ref ref="app"/>
+        </root>
+    </springProfile>
+
+    <springProfile name="test">
+        <logger name="org.springframework" level="info"/>
+        <logger name="_org.springframework" level="info"/>
+        <logger name="org.apache" level="info"/>
+        <logger name="org.mybatis" level="info"/>
+        <logger name="com.zaxxer" level="info"/>
+        <logger name="com.baomidou" level="info"/>
+        <logger name="io.netty" level="info"/>
+        <logger name="io.lettuce" level="info"/>
+        <logger name="reactor.util" level="info"/>
+        <logger name="io.swagger" level="info"/>
+        <logger name="org.springdoc" level="info"/>
+
+        <logger name="com.sndshun" level="debug"/>
+        <root level="debug">
+            <appender-ref ref="CONSOLE"/>
         </root>
     </springProfile>
 

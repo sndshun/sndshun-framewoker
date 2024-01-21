@@ -7,6 +7,8 @@ import com.sndshun.blog.annotation.VisitLog;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.enums.VisitEnum;
 import com.sndshun.blog.es.BlogPostRepository;
+import com.sndshun.blog.es.PostElasticService;
+import com.sndshun.blog.pojo.document.BlogPostDocument;
 import com.sndshun.blog.service.BlogPostService;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.web.pojo.QueryPage;
@@ -37,12 +39,12 @@ public class BlogPostEndpointController {
 
     private final BlogPostService blogPostService;
 
-    private final BlogPostRepository blogPostRepository;
+    private final PostElasticService postElasticService;
 
     @Autowired
-    public BlogPostEndpointController(BlogPostService blogPostService, BlogPostRepository blogPostRepository) {
+    public BlogPostEndpointController(BlogPostService blogPostService, PostElasticService postElasticService) {
         this.blogPostService = blogPostService;
-        this.blogPostRepository = blogPostRepository;
+        this.postElasticService = postElasticService;
     }
 
 
@@ -108,9 +110,9 @@ public class BlogPostEndpointController {
         return Result.ok(arrayNode);
     }
 
-//    @GetMapping("/search")
-//    public Result<String> searchBlogPost(@RequestParam("title") String title) {
-//        BoolQueryBuilder esQuery = QueryBuilders.boolQuery();
-//
-//    }
+    //todo 不合理的搜索接口
+    @GetMapping("/search")
+    public Result<List<BlogPostDocument>> searchBlogPost(@RequestParam("keyword") String keyword) {
+        return Result.ok(postElasticService.search(keyword));
+    }
 }

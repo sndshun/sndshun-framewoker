@@ -87,10 +87,18 @@ public class es {
     }
 
     @Test
+    void search(){
+        List<BlogPostDocument> list = postElasticService.search("实践");
+        list.forEach(blogPostDocument ->{
+            log.debug("搜索结果为：{}", blogPostDocument);
+        });
+    }
+
+    @Test
     void esSelectPage() {
         List blog = postElasticService.selectPage(1, 10, "blog");
         blog.forEach(blogs -> {
-            log.error("分页查询的结果为：{}", blogs);
+            log.debug("分页查询的结果为：{}", blogs);
         });
     }
 

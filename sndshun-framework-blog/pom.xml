@@ -42,12 +42,6 @@
             <groupId>com.sndshun</groupId>
             <artifactId>sndshun-framework-file</artifactId>
         </dependency>
-<!--        &lt;!&ndash;对应ES版本7.6.2&ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.data</groupId>-->
-<!--            <artifactId>spring-data-elasticsearch</artifactId>-->
-<!--            <version>4.0.9.RELEASE</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-elasticsearch</artifactId>

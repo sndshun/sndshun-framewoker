@@ -100,11 +100,6 @@
                 <artifactId>service-api</artifactId>
                 <version>${sndshun.framework.version}</version>
             </dependency>
-<!--            <dependency>-->
-<!--                <groupId>com.sndshun</groupId>-->
-<!--                <artifactId>sndshun-framework-jpa-hibernate-starter</artifactId>-->
-<!--                <version>${sndshun.framework.version}</version>-->
-<!--            </dependency>-->
             <dependency>
                 <groupId>com.sndshun</groupId>
                 <artifactId>sndshun-framework-mybatis-plus-starter</artifactId>
