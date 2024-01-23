@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
 import org.springframework.data.elasticsearch.core.query.*;
+
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,9 +75,9 @@ public class es {
     }
 
     @Test
-    void search(){
+    void search() {
         List<BlogPostDocument> list = postElasticService.search("实践");
-        list.forEach(blogPostDocument ->{
+        list.forEach(blogPostDocument -> {
             log.debug("搜索结果为：{}", blogPostDocument);
         });
     }
@@ -96,8 +97,15 @@ public class es {
             log.error("组合查询的结果为：{}", list);
         });
     }
+
     @Test
-    void esFilterQuery(){
+    void esFilterQuery() {
         List<BlogPostDocument> blogPostDocuments = postElasticService.FilterQuery(1, 10);
+    }
+
+    @Test
+    void esIsIndexExists() {
+        boolean indexExists = postElasticService.isIndexExists("1");
+        log.error("当前主键是否存在：{}", indexExists);
     }
 }

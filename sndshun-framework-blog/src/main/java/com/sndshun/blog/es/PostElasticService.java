@@ -77,9 +77,11 @@ public interface PostElasticService {
     List<BlogPostDocument> selectCombinedSearch(String value1, String value2, String index);
 
     /**
+     * 验证是否存在
+     *
      * @return
      */
-    boolean isIndexExists();
+    boolean isIndexExists(String id);
 
     /**
      * 过滤查询
@@ -89,4 +91,11 @@ public interface PostElasticService {
      * @return 集合
      */
     List<BlogPostDocument> FilterQuery(int term1, int term2);
+
+    /**
+     * 根据BlogPostDocument添加数据
+     * @param document 对象
+     * @return
+     */
+    boolean saveIndexByBlogPostDocument(BlogPostDocument document);
 }

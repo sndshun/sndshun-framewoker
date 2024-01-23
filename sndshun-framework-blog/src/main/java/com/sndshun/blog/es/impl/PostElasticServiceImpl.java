@@ -179,21 +179,28 @@ public class PostElasticServiceImpl implements PostElasticService {
     }
 
     @Override
-    public boolean isIndexExists() {
-        return false;
+    public boolean isIndexExists(String id) {
+        return elasticsearchRestTemplate.exists(id, BlogPostDocument.class);
     }
 
     @Override
     public List<BlogPostDocument> FilterQuery(int term1, int term2) {
         BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
-        RangeQueryBuilder balance = QueryBuilders.rangeQuery("title").gte(term1).lte(term2);
+        RangeQueryBuilder balance = QueryBuilders.rangeQuery("category").gte(term1).lte(term2);
         boolQueryBuilder.filter(balance);
         NativeSearchQuery query = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder).build();
         SearchHits<BlogPostDocument> search = elasticsearchRestTemplate.search(query, BlogPostDocument.class);
         search.forEach(sd -> {
+            System.out.println("显示内容");
             System.out.println(sd.getContent());
         });
         return null;
+    }
+
+    @Override
+    public boolean saveIndexByBlogPostDocument(BlogPostDocument document) {
+        BlogPostDocument save = elasticsearchRestTemplate.save(document);
+        return save == null ? true : false;
     }
 
     /**
