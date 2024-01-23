@@ -8,9 +8,8 @@ import com.sndshun.blog.constant.PublishStatus;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.mapper.BlogPostMapper;
 import com.sndshun.blog.service.BlogPostService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -83,5 +82,4 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
                         Collectors.toList()));
         return collect;
     }
-
 }

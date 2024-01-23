@@ -1,9 +1,7 @@
 package com.sndshun.blog.es;
 
 import com.sndshun.blog.pojo.document.BlogPostDocument;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
@@ -11,6 +9,7 @@ public interface PostElasticService {
 
     /**
      * 文章高亮搜索
+     *
      * @param keyword 关键词
      * @return {@link List }<{@link BlogPostDocument }>
      * @author sndshun
@@ -18,10 +17,6 @@ public interface PostElasticService {
      */
     List<BlogPostDocument> search(String keyword);
 
-    /**
-     * 创建索引并推送映射 正常
-     */
-    boolean createIndex();
 
     /**
      * 删除索引
@@ -40,6 +35,11 @@ public interface PostElasticService {
      */
     BlogPostDocument selectAllById(String id, String index);
 
+    /**
+     * 根据ID删除数据
+     *
+     * @param id
+     */
     void deleteById(Serializable id);
 
     /**
@@ -76,4 +76,17 @@ public interface PostElasticService {
      */
     List<BlogPostDocument> selectCombinedSearch(String value1, String value2, String index);
 
+    /**
+     * @return
+     */
+    boolean isIndexExists();
+
+    /**
+     * 过滤查询
+     *
+     * @param term1 值1
+     * @param term2 值2
+     * @return 集合
+     */
+    List<BlogPostDocument> FilterQuery(int term1, int term2);
 }

@@ -7,18 +7,11 @@ import com.sndshun.blog.service.BlogCategoryService;
 import com.sndshun.blog.service.BlogPostService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
-
 import org.springframework.data.elasticsearch.core.IndexedObjectInformation;
-import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.data.elasticsearch.core.query.*;
-
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,12 +46,6 @@ public class es {
         }
         List<IndexedObjectInformation> indexedObjectInformations = elasticsearchRestTemplate.bulkIndex(indexQueries, BlogPostDocument.class);
         indexedObjectInformations.forEach(System.out::println);
-    }
-
-    @Test
-    void test03() {
-        boolean index = postElasticService.createIndex();
-        log.error("添加索引并映射的结果为：{}", index);
     }
 
     @Test
@@ -108,5 +95,9 @@ public class es {
         list.forEach(bs -> {
             log.error("组合查询的结果为：{}", list);
         });
+    }
+    @Test
+    void esFilterQuery(){
+        List<BlogPostDocument> blogPostDocuments = postElasticService.FilterQuery(1, 10);
     }
 }

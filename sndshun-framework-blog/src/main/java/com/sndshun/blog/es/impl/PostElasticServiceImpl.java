@@ -7,31 +7,24 @@ import com.sndshun.blog.service.BlogPostService;
 import org.elasticsearch.index.query.*;
 import org.elasticsearch.script.Script;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchRestTemplate;
 import org.springframework.data.elasticsearch.core.IndexOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
-import org.springframework.data.elasticsearch.core.document.Document;
 import org.springframework.data.elasticsearch.core.mapping.IndexCoordinates;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 
 /**
  * 实现类
- *
  */
 @Service
 public class PostElasticServiceImpl implements PostElasticService {
@@ -39,7 +32,6 @@ public class PostElasticServiceImpl implements PostElasticService {
     private final ElasticsearchRestTemplate elasticsearchRestTemplate;
     private final BlogCategoryService blogCategoryService;
     private final BlogPostService blogPostService;
-    //简单用这个
 
     @Autowired
     public PostElasticServiceImpl(ElasticsearchRestTemplate elasticsearchRestTemplate, BlogCategoryService blogCategoryService, BlogPostService blogPostService) {
@@ -67,16 +59,9 @@ public class PostElasticServiceImpl implements PostElasticService {
         //将多字段查询添加到布尔查询中
         boolQueryBuilder.should(multiMatchQueryBuilder);
         //将布尔查询添加到查询构建器中
-        queryBuilder.withQuery(boolQueryBuilder)
-                .withPageable(PageRequest.of(0, 20));
+        queryBuilder.withQuery(boolQueryBuilder).withPageable(PageRequest.of(0, 20));
         //高亮
-        HighlightBuilder highlightBuilder = new HighlightBuilder()
-                .field("title")
-                .field("content")
-                .field("tags")
-                .field("summary")
-                .field("category")
-                .field("authorName");
+        HighlightBuilder highlightBuilder = new HighlightBuilder().field("title").field("content").field("tags").field("summary").field("category").field("authorName");
 
         queryBuilder.withHighlightBuilder(highlightBuilder);
         //执行查询
@@ -86,43 +71,12 @@ public class PostElasticServiceImpl implements PostElasticService {
         List<BlogPostDocument> list = new ArrayList<>();
         for (SearchHit<BlogPostDocument> hit : search.getSearchHits()) {
             BlogPostDocument content = hit.getContent();
-            if (hit.getHighlightFields().get("title") != null) {
-                content.setTitle(hit.getHighlightFields().get("title").get(0));
-            }
-            if (hit.getHighlightFields().get("tags") != null) {
-                content.setContent(hit.getHighlightFields().get("tags").get(0));
-            }
-            if (hit.getHighlightFields().get("category") != null) {
-                content.setSummary(hit.getHighlightFields().get("category").get(0));
-            }
-            if (hit.getHighlightFields().get("authorName") != null) {
-                content.setAuthorName(hit.getHighlightFields().get("authorName").get(0));
-            }
-            if (hit.getHighlightFields().get("summary") != null) {
-                content.setSummary(String.join("", hit.getHighlightFields().get("summary")));
-            }else {
-                content.setSummary("");
-            }
-            if (hit.getHighlightFields().get("content") != null) {
-                content.setContent(String.join("", hit.getHighlightFields().get("content")));
-            } else {
-                content.setContent("");
-            }
+
+            handleHighlightText(hit, content);
+
             list.add(content);
         }
         return list;
-    }
-
-    @Override
-    public boolean createIndex() {
-        IndexOperations indexOps = elasticsearchRestTemplate.indexOps(BlogPostDocument.class);
-        boolean flag = indexOps.create();
-        if (flag) {
-            //推送映射
-            Document mapping = indexOps.createMapping();
-            return indexOps.putMapping(mapping);
-        }
-        return false;
     }
 
     @Override
@@ -224,4 +178,52 @@ public class PostElasticServiceImpl implements PostElasticService {
         return blogPostDocuments;
     }
 
+    @Override
+    public boolean isIndexExists() {
+        return false;
+    }
+
+    @Override
+    public List<BlogPostDocument> FilterQuery(int term1, int term2) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        RangeQueryBuilder balance = QueryBuilders.rangeQuery("title").gte(term1).lte(term2);
+        boolQueryBuilder.filter(balance);
+        NativeSearchQuery query = new NativeSearchQueryBuilder().withQuery(boolQueryBuilder).build();
+        SearchHits<BlogPostDocument> search = elasticsearchRestTemplate.search(query, BlogPostDocument.class);
+        search.forEach(sd -> {
+            System.out.println(sd.getContent());
+        });
+        return null;
+    }
+
+    /**
+     * 处理高光文字
+     *
+     * @param hit
+     * @param content
+     */
+    private void handleHighlightText(SearchHit<BlogPostDocument> hit, BlogPostDocument content) {
+        if (hit.getHighlightFields().get("title") != null) {
+            content.setTitle(hit.getHighlightFields().get("title").get(0));
+        }
+        if (hit.getHighlightFields().get("tags") != null) {
+            content.setContent(hit.getHighlightFields().get("tags").get(0));
+        }
+        if (hit.getHighlightFields().get("category") != null) {
+            content.setSummary(hit.getHighlightFields().get("category").get(0));
+        }
+        if (hit.getHighlightFields().get("authorName") != null) {
+            content.setAuthorName(hit.getHighlightFields().get("authorName").get(0));
+        }
+        if (hit.getHighlightFields().get("summary") != null) {
+            content.setSummary(String.join("", hit.getHighlightFields().get("summary")));
+        } else {
+            content.setSummary("");
+        }
+        if (hit.getHighlightFields().get("content") != null) {
+            content.setContent(String.join("", hit.getHighlightFields().get("content")));
+        } else {
+            content.setContent("");
+        }
+    }
 }
