@@ -27,7 +27,7 @@ spring:
     connect-timeout: 3000
   freemarker:
     check-template-location: false
-  #cache:
+    #cache:
     #type: none #关闭缓存
   elasticsearch:
     uris:
@@ -36,7 +36,10 @@ spring:
     multipart:
       max-file-size: 2MB
       max-request-size: 10MB
-
+  #控制是否将特定路径的资源文件添加到URL路径映射中。
+  web:
+    resources:
+      add-mappings: true
 mybatis-plus:
   global-config:
     db-config:
@@ -54,6 +57,9 @@ server:
     enabled: true
     #压缩数据类型
     mime-types: application/json
+  error:
+    whitelabel:
+      enabled: true
 
 oss:
   enabled: true
