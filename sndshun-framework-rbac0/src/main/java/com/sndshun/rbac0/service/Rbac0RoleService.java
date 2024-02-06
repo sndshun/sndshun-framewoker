@@ -18,6 +18,6 @@ public interface Rbac0RoleService extends MPJBaseService<Rbac0RoleEntity> {
      * @author sndshun
      * @date 2023/12/14 05:09:03
      */
-    public RoleJoinPermissionDto selectRolePermission(Integer id);
+    RoleJoinPermissionDto selectRolePermission(Integer id);
 
 }

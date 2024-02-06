@@ -1,19 +1,12 @@
 package com.sndshun.rbac0.entity;
 
 
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.extension.activerecord.Model;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.List;
-
-import com.github.yulichang.annotation.EntityMapping;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
 /**
  * 用户角色表(Rbac0Role)表实体类
@@ -22,9 +15,8 @@ import lombok.NoArgsConstructor;
  * @since 2023-12-14 03:50:51
  */
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
+@Setter
 @TableName("rbac0_role")
 public class Rbac0RoleEntity extends Model<Rbac0RoleEntity> {
     /**

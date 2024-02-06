@@ -3,6 +3,8 @@ package com.sndshun.rbac0.entity;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.baomidou.mybatisplus.annotation.TableName;
 
@@ -29,12 +31,11 @@ public class Rbac0RolePermissionEntity extends Model<Rbac0RolePermissionEntity> 
     /**
      * 角色id
      */
-
+    @TableId(type = IdType.NONE)
     private Integer roleId;
     /**
      * 权限id
      */
-
     private Integer permsId;
     /**
      * 更新者

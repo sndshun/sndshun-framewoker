@@ -31,7 +31,7 @@ public class Rbac0RoleServiceImpl extends MPJBaseServiceImpl<Rbac0RoleMapper, Rb
                 .selectAll(Rbac0PermissionEntity.class)
                 .selectCollection(Rbac0PermissionEntity.class, RoleJoinPermissionDto::getPermissions)
                 .leftJoin(Rbac0RolePermissionEntity.class, Rbac0RolePermissionEntity::getRoleId,Rbac0RoleEntity::getId)
-                .rightJoin(Rbac0PermissionEntity.class, Rbac0PermissionEntity::getId, Rbac0RolePermissionEntity::getPermsId)
+                .leftJoin(Rbac0PermissionEntity.class, Rbac0PermissionEntity::getId, Rbac0RolePermissionEntity::getPermsId)
                 .eq(Rbac0RoleEntity::getId, id);
         return super.selectJoinOne(RoleJoinPermissionDto.class, select);
     }
