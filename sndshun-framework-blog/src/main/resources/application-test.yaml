@@ -63,6 +63,29 @@ server:
     whitelabel:
       enabled: true
 
+jetcache:
+  statIntervalMinutes: 60  #用于统计缓存调用相关信息的统计间隔（分钟），0表示不统计。
+  areaInCacheName: false  #缓存实例名称cacheName会作为缓存key的前缀，2.4.3以前的版本总是把areaName加在cacheName中，因此areaName也出现在key前缀中。我们一般设置为false。
+  local:
+    default:
+      type: caffeine #other choose：linkedhashmap
+      keyConvertor: jackson #other choose：fastjson/jackson
+      limit: 1000 #每个缓存实例存储的缓存数量的全局配置，仅本地缓存需要配置，如果缓存实例没有指定则使用全局配置，请结合实例的业务场景进行配置该参数。
+  remote:
+    default:
+      type: redis.springdata
+      keyConvertor: jackson #other choose：fastjson/jackson
+      broadcastChannel: blog
+      valueEncoder: java #other choose：kryo/kryo5
+      valueDecoder: java #other choose：kryo/kryo5
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+      host: ${spring.redis.host}
+      port: ${spring.redis.port}
+      password: ${spring.redis.password}
+
 oss:
   enabled: true
   type: MINIO
