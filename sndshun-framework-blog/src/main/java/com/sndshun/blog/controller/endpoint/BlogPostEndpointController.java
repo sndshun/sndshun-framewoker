@@ -13,11 +13,13 @@ import com.sndshun.blog.service.BlogPostService;
 import com.sndshun.commons.tools.Result;
 import com.sndshun.web.pojo.QueryPage;
 import com.sndshun.web.utils.JacksonUtil;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
+//import org.elasticsearch.index.query.BoolQueryBuilder;
+//import org.elasticsearch.index.query.QueryBuilders;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.elasticsearch.annotations.Query;
+//import org.springframework.data.elasticsearch.annotations.Query;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -34,6 +36,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/blog/endpoint/post")
+@Slf4j
 public class BlogPostEndpointController {
 
 
@@ -59,6 +62,11 @@ public class BlogPostEndpointController {
     @VisitLog(VisitEnum.INDEX)
     @GetMapping("page")
     public Result<?> getPostPage(QueryPage page) {
+        try {
+            new NullPointerException();
+        }catch (Exception e) {
+            log.error(Marker.ANY_MARKER,e.fillInStackTrace());
+        }
         Page<BlogPostEntity> query = new Page<BlogPostEntity>().setCurrent(page.getCurrent()).setSize(page.getSize());
         return Result.ok(blogPostService.getPostPageCache(query));
     }
