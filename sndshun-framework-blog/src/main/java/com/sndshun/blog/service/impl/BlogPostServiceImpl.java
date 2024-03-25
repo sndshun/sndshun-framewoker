@@ -8,6 +8,8 @@ import com.sndshun.blog.constant.PublishStatus;
 import com.sndshun.blog.entity.BlogPostEntity;
 import com.sndshun.blog.mapper.BlogPostMapper;
 import com.sndshun.blog.service.BlogPostService;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Marker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,6 +28,7 @@ import java.util.stream.Collectors;
  * @since 2023-12-02 22:03:59
  */
 @Service("blogPostService")
+@Slf4j
 public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEntity> implements BlogPostService {
 
 
@@ -47,6 +50,11 @@ public class BlogPostServiceImpl extends ServiceImpl<BlogPostMapper, BlogPostEnt
     @Cacheable(cacheNames = "blog:post:id", key = "#id")
     @Override
     public BlogPostEntity getPostByIdCache(Long id) {
+        try {
+            new NullPointerException();
+        } catch (Exception e) {
+            log.error(Marker.ANY_MARKER,e.fillInStackTrace());
+        }
         LambdaQueryWrapper<BlogPostEntity> select = Wrappers.<BlogPostEntity>lambdaQuery()
                 .select(BlogPostEntity::getId,
                         BlogPostEntity::getTitle,
